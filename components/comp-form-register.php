@@ -16,4 +16,5 @@
         <label for="register-check" class="form-check-label">Set as Master Account?</label>
     </div>
     <button type="submit" class="btn btn-success">Create</button>
+    <div id="feedback"></div>
 </form>

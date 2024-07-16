@@ -21,20 +21,34 @@
     define('ROOT', 'http://localhost/_capstone-project/');
     define('PATH', $_SERVER['DOCUMENT_ROOT'] . '\/_capstone-project/');
 
-// account controlls
-
     if (isset($_POST['action'])) {
-        if ($_POST['action'] == 'register' && $dbstatus == true) { 
-            echo 'reached register';
-            register(); 
-        }
-        else if ($_POST['action'] == 'login' && $dbstatus == true) {
-            echo 'reached login';
-            login(); 
-        }
-        else if ($_POST['action'] == 'logout' && $dbstatus == true) {
-            echo 'reached logout';
-            logout();
+
+        if($dbstatus == true) {
+            switch ($_POST['action']) {
+                case 'register':
+                    register();
+                    break;
+                case 'login':
+                    login();
+                    break;
+                case 'logout':
+                    logout();
+                    break;
+                case 'select account':
+                    selectAccount($_POST['account_id']);
+                    break;
+                default:
+                    break;
+            };
+        } 
+        else { 
+            echo (
+                '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Warning!</strong> Something went wrong with the database connection.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>'
+            );
+            exit();
         }
     }
 
@@ -45,7 +59,7 @@
         $name = $_POST['name'];
         $password = $_POST['password'];
         $password_rep = $_POST['password_rep'];
-        $acc_type = $_POST['acc_type'] ? 1 : 0;
+        $acc_type = $_POST['acc_type'] == 'true' ? 1 : 0;
 
         // check: filled
         if (empty($name) || empty($password) || empty($password_rep)) {
@@ -61,14 +75,16 @@
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         
-        $acc_type = $acc_type ? 'master' : 'regular';
+        $acc_type = $acc_type ? 'officer' : 'master';
 
         $stmt = $conn -> prepare ("INSERT INTO dispatch_officers (name, password, role) VALUES (?, ?, ?)");
         $stmt -> bind_param("sss", $name, $hashed_password, $acc_type);
 
         $stmt -> execute();
 
-        echo 'Registered successfully.';
+        getAccounts ();
+
+        echo '<div class="alert alert-success">Registered successfully.</div>';
 
     }
 
@@ -94,15 +110,23 @@
         
     }
 
-    // function getAccounts () {
+    function getAccounts () {
         
-    //     global $conn;
+        global $conn;
 
-    //     $stmt = $conn -> prepare("SELECT id, name, role, created_at, updated_at FROM dispatch_officers");
-    //     $stmt -> execute();
-    //     $stmt -> bind_result($db_id, $db_name, $db_role, $db_created_at, $db_updated_at);
+        $stmt = $conn -> prepare("SELECT id, name, role, created_at, updated_at FROM dispatch_officers");
+        $stmt -> execute();
+        $result = $stmt -> get_result();
 
-    // }
+        $officers = [];
+        while ($row = $result->fetch_assoc()) {
+            $officers[] = $row;
+        }
+
+        // session_start();
+        $_SESSION['officers'] = $officers;
+
+    }
 
     function login() {
 
@@ -144,6 +168,12 @@
         session_unset();
         session_destroy();
         
+    }
+
+    function selectAccount($info) {
+        
+        session_start();
+        $_SESSION['selected_account'] = $info;
 
     }
 

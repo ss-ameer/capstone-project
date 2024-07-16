@@ -29,14 +29,15 @@
 <div class="row h-100">
 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
 <!-- master list -->
-<div class="col"> 
+<div class="col mh-100 overflow-auto p-3"> 
     <ul class="list-group">
+
     <li class="list-group-item">
         <div data-bs-toggle="collapse" data-bs-target="#master-register">
             <a class="" href="#">Create an Account</a>
         </div>
 
-        <div class="collapse" id="master-register">
+        <div class="collapse container" id="master-register">
             <hr>
             <!-- register form -->
             <?php include_once('../components/comp-form-register.php') ?>
@@ -48,32 +49,13 @@
             <a class="" href="#">View Accounts</a>
         </div>
 
-        <div class="collapse" id="master-view">
+        <div class="collapse container" id="master-view">
             <hr>
-            <!-- view master list -->
-            <?php // include_once('../components/comp-list-master.php') ?>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Created At</th>
-                        <th scope="col">Updated At</th>
-                        <th scope="col">Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>test id</td>
-                        <td>test name</td>
-                        <td>test created</td>
-                        <td>test updated</td>
-                        <td>test role</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- officers table -->
+            <?php include_once('../components/comp-table-officers.php') ?>
         </div>
     </li>
+
     </ul>
 </div>
 </div>
@@ -82,6 +64,6 @@
 </main>
 <footer>
 
-</footer>    
+</footer>
 </body>
 </html>

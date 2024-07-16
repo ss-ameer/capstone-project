@@ -5,20 +5,45 @@ $(document).ready(function(){
 
 // navigation
 
-    function loadContent(data) {
-        var display_selected = data;
+    // function loadContent(data) {
+    //     var display_selected = data;
+    //     $.ajax({
+    //         url: '../configs/config-function.php',
+    //         type: 'GET',
+    //         data: display_selected,
+    //         success: function(response) {
+    //             console.log(response);
+    //             $('#display-main').load(location.href + "#display-main");
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown) {
+    //             console.error('Error loading content:', textStatus, errorThrown);
+    //         }
+    //     })
+    // }
+
+    // navigation 
+
+    function goToIndex() {
+        window.location.href = '../index.php';
+    }
+
+    function selectAccount(id) {
+        var data = {
+            account_id: id,
+            action: 'select account'
+        }
         $.ajax({
             url: '../configs/config-function.php',
-            type: 'GET',
-            data: display_selected,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
             success: function(response) {
-                console.log(response);
-                $('#display-main').load(location.href + "#display-main");
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Error loading content:', textStatus, errorThrown);
+                
             }
-        })
+        });
+        console.log(data['account_id']);
+
+
     }
 
     // account
@@ -28,7 +53,7 @@ $(document).ready(function(){
             name: $('#register-name').val(),
             password: $('#register-password').val(),
             password_rep: $('#register-password_rep').val(),
-            acc_type: $('#register-check').val(),
+            acc_type: $('#register-check').prop('checked'),
             action: 'register'
         };
 
@@ -39,6 +64,7 @@ $(document).ready(function(){
             success: function(response) {
                 console.log("Success" + response);
                 $('#feedback').html(response);
+                // $('#master-view').location.reload();
             }
         })
     }
@@ -58,8 +84,7 @@ $(document).ready(function(){
                 $('#feedback').html(response);
                 if(response.includes('success')){
                     $('#feedback').html(response);
-                    window.location.href = '../index.php'; // Redirect to the login page
-
+                    goToIndex(); // Redirect to the login page
                 }
             }
         })
@@ -73,7 +98,7 @@ $(document).ready(function(){
             success: function(response) {
                 console.log("Success" + response);
                 $('#feedback').html(response);
-                window.location.href = '../index.php'; // Redirect to the login page
+                goToIndex(); // Redirect to the login page
             }
         })
     }
@@ -96,6 +121,19 @@ $(document).ready(function(){
     $('#side-master').click(function(event){
         event.preventDefault();
         setActive('master');
+    })
+
+    $('#table-officers').on('click', '.officer-account', function(event){
+        event.preventDefault();
+
+        var classes = 'table-active';
+
+        $('.officer-account').removeClass(classes);
+        $(this).addClass(classes);
+
+        console.log($(this).attr('class'));
+
+        selectAccount($(this).data('id'));
     })
 
 });
