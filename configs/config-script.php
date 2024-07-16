@@ -3,23 +3,11 @@
 
 $(document).ready(function(){
 
-// navigation
+    // popover
 
-    // function loadContent(data) {
-    //     var display_selected = data;
-    //     $.ajax({
-    //         url: '../configs/config-function.php',
-    //         type: 'GET',
-    //         data: display_selected,
-    //         success: function(response) {
-    //             console.log(response);
-    //             $('#display-main').load(location.href + "#display-main");
-    //         },
-    //         error: function(jqXHR, textStatus, errorThrown) {
-    //             console.error('Error loading content:', textStatus, errorThrown);
-    //         }
-    //     })
-    // }
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    // const popover = new bootstrap.Popover('.popover-dismiss', { trigger: 'focus' });
 
     // navigation 
 
@@ -42,8 +30,6 @@ $(document).ready(function(){
             }
         });
         console.log(data['account_id']);
-
-
     }
 
     // account
@@ -129,7 +115,10 @@ $(document).ready(function(){
         var classes = 'table-active';
 
         $('.officer-account').removeClass(classes);
+        $('.officer-account .btn').hide();
+
         $(this).addClass(classes);
+        $(this).find('.btn').show();
 
         console.log($(this).attr('class'));
 

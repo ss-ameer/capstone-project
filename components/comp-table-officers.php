@@ -18,6 +18,21 @@
             <td><?= $officer['created_at'] ?></td>
             <td><?= $officer['updated_at'] ?></td>
             <td><?= $officer['role'] ?></td>
+            <td>
+                <div class="dropdown">
+                <button class="btn" style="display: none;" id="btn-options-officers" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <span><i class="bi bi-pencil-fill"></i> Edit</span>
+                    </li>
+                    <li class="dropdown-item">
+                        <span><i class="bi bi-person-x-fill"></i> Delete</span>
+                    </li>
+                </ul>
+                </div>
+            </td>
         </tr>
         <?php endforeach;?>
     </tbody>
