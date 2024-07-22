@@ -32,6 +32,31 @@ $(document).ready(function(){
         console.log(data['account_id']);
     }
 
+    // function setActive ()
+
+    function deleteAccount(id) {
+        if (confirm('Confirm to Delete this account.')) {
+            var data = {
+                account_id: id,
+                action: 'delete account'
+            }
+            $.ajax({
+                url: '../configs/config-function.php',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                    
+                    if (response == 'success'){
+                        $('#table-officers').find(`[data-id='${id}']`).remove();
+                    } else {
+                        alert('Failed to delete account.');
+                    }
+                }
+            });
+        }
+    }
+
     // account
 
     function register(){
@@ -123,6 +148,13 @@ $(document).ready(function(){
         console.log($(this).attr('class'));
 
         selectAccount($(this).data('id'));
+    })
+
+    // delete account
+    $('#table-officers').on('click', '.delete-account', function(event){
+        // event.stopPropagation();
+        var accountId = $(this).closest('.officer-account').data('id');
+        deleteAccount(accountId);
     })
 
 });

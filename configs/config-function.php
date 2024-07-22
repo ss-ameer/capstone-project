@@ -1,5 +1,5 @@
-<!-- config-function.php -->
 <?php 
+// config-function.php
 
 // database initialization
 
@@ -36,6 +36,9 @@
                     break;
                 case 'select account':
                     selectAccount($_POST['account_id']);
+                    break;
+                case 'delete account':
+                    deleteAccount($_POST['account_id']);
                     break;
                 default:
                     break;
@@ -174,6 +177,19 @@
         
         session_start();
         $_SESSION['selected_account'] = $info;
+
+    }
+
+    function deleteAccount($id) {
+        global $conn;
+
+        $stmt = $conn -> prepare("DELETE FROM dispatch_officers WHERE id = ?");
+        $stmt -> bind_param("i", $id);
+        
+        if ($stmt -> execute()) {
+            echo 'success';
+        } else  echo 'error'; 
+
 
     }
 
