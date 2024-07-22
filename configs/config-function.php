@@ -40,6 +40,9 @@
                 case 'delete account':
                     deleteAccount($_POST['account_id']);
                     break;
+                case 'sidenav select':
+                    sidenavSelect($_POST['selected']);
+                    break;
                 default:
                     break;
             };
@@ -189,8 +192,10 @@
         if ($stmt -> execute()) {
             echo 'success';
         } else  echo 'error'; 
-
-
     }
 
-?>
+    function sidenavSelect($selected) {
+        // session_start();
+        $_SESSION['sidenav_selected'] = $selected;
+        echo $_SESSION['sidenav_selected'];
+    }

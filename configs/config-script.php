@@ -15,6 +15,28 @@ $(document).ready(function(){
         window.location.href = '../index.php';
     }
 
+    function sidenavSelect(name) {
+        var data = {
+            action: 'sidenav select',
+            selected: name
+        };
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log(response + ' was selected');
+                if (response != data['selected']) {
+                    // goToIndex();
+                    console.log('gone');
+                } else { console.log('same'); }
+            }
+        })
+    }
+
+    // account functions
+
     function selectAccount(id) {
         var data = {
             account_id: id,
@@ -31,8 +53,6 @@ $(document).ready(function(){
         });
         console.log(data['account_id']);
     }
-
-    // function setActive ()
 
     function deleteAccount(id) {
         if (confirm('Confirm to Delete this account.')) {
@@ -129,10 +149,14 @@ $(document).ready(function(){
         logout();
     })
 
+    // sidenav
+
     $('#side-master').click(function(event){
         event.preventDefault();
-        setActive('master');
+        sidenavSelect('master');
     })
+
+    // office table
 
     $('#table-officers').on('click', '.officer-account', function(event){
         event.preventDefault();

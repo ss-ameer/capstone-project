@@ -1,6 +1,7 @@
 <!-- page-master.php -->
 <?php 
     session_start();
+    $_SESSION['sidenav_active'] = 'master';
     include_once('../configs/config-function.php')
 ?>
 <!DOCTYPE html>
