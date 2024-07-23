@@ -1,6 +1,6 @@
 <!-- comp-table-officers.php -->
 <table class="table table-hover table-borderless caption-top" id="table-officers">
-    <caption><?= isset($_POST['selected account']) ? 'set' : 'not set'; ?></caption>
+    <caption>Accounts</caption>
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -22,7 +22,7 @@
             <td><?= $officer['role'] ?></td>
             <td>
                 <div class="dropdown">
-                <button class="btn p-0 m-0" style="display: none;" id="btn-options-officers" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn p-0 m-0 option" style="display: none;" id="btn-options-officers" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-three-dots-vertical"></i>
                 </button>
                 <ul class="dropdown-menu">

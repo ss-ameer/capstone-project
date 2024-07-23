@@ -6,8 +6,6 @@
     include_once('./configs/config-function.php');
 
     if (isset($_SESSION['user_info'])) {
-        // If user is logged in, redirect
-
         if (isset($_SESSION['sidenav_active']) && isset($_SESSION['sidenav_selected'])) {
             if ($_SESSION['sidenav_active'] != $_SESSION['sidenav_selected']) {
                 switch($_SESSION['sidenav_selected']) {

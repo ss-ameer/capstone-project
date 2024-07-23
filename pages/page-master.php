@@ -30,7 +30,7 @@
 <div class="row h-100">
 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
 <!-- master list -->
-<div class="col mh-100 overflow-auto p-3"> 
+<div class="col mh-100 overflow-auto p-3 border"> 
     <ul class="list-group">
 
     <li class="list-group-item">
