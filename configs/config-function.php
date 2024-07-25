@@ -195,7 +195,9 @@
     }
 
     function sidenavSelect($selected) {
-        // session_start();
-        $_SESSION['sidenav_selected'] = $selected;
-        echo $_SESSION['sidenav_selected'];
+        session_start();
+        if ($_SESSION['sidenav_active'] != $selected) {
+            $_SESSION['sidenav_active'] = $selected;
+            echo'success';
+        } else echo 'failed';
     }

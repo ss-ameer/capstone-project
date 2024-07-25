@@ -6,18 +6,21 @@
     include_once('./configs/config-function.php');
 
     if (isset($_SESSION['user_info'])) {
-        if (isset($_SESSION['sidenav_active']) && isset($_SESSION['sidenav_selected'])) {
-            if ($_SESSION['sidenav_active'] != $_SESSION['sidenav_selected']) {
-                switch($_SESSION['sidenav_selected']) {
-                    case 'master':
-                        header('Location: pages/page-master.php');
-                        break;
-                    default:
-                        break;
-                }
+
+        if (isset($_SESSION['sidenav_active'])) {
+
+            switch($_SESSION['sidenav_active']) {
+                case 'master':
+                    header('Location: pages/page-master.php');
+                    break;
+                case 'dashboard':
+                    header('Location: pages/page-dashboard.php');
+                    break;
+                default:
+                    break;
             }
-        }
-        else { header('Location: pages/page-master.php'); }
+            
+        } else { header('Location: pages/page-dashboard.php'); }
         
     } else if (!isset($_SESSION['user_info'])) {
         header('Location: pages/page-login.php');

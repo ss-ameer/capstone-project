@@ -26,11 +26,12 @@ $(document).ready(function(){
             type: 'POST',
             data: data,
             success: function(response) {
-                console.log(response + ' was selected');
-                if (response != data['selected']) {
-                    // goToIndex();
-                    console.log('gone');
-                } else { console.log('same'); }
+                console.log('Response: ' + response);
+                console.log('Selected: ' , data['selected']);
+                if (response == 'success') {
+                    goToIndex();
+                    console.log('redirecting');
+                } else { console.log('not redirecting'); }
             }
         })
     }
@@ -154,6 +155,11 @@ $(document).ready(function(){
     $('#side-master').click(function(event){
         event.preventDefault();
         sidenavSelect('master');
+    })
+
+    $('#side-dashboard').click(function(event){
+        event.preventDefault();
+        sidenavSelect('dashboard');
     })
 
     // office table
