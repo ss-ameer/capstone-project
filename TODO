@@ -1,0 +1,59 @@
+Database:
+    Tables:
+        [x] dispatch officer
+        [x] trucks 
+        [ ] items
+        [ ] dispatch
+        [ ] logs
+Dashboard:
+    Notes:
+        1. Summary Metrics
+        Total Active Dispatches: Number of ongoing dispatches.
+        Available Trucks: Number of trucks ready for dispatch.
+        Drivers on Duty: Number of drivers currently active.
+        Pending Deliveries: Number of deliveries that are pending or delayed.
+        2. Recent Activity
+        Latest Dispatches: List of recent dispatches with details like destination, truck ID, driver name, and status.
+        Driver Activity: Recent logs of driver activities such as start/end of trips, breaks, etc.
+        3. Dispatch Map
+        Real-time Tracking Map: An interactive map showing the real-time location of all active trucks.
+        Route Information: Highlight routes for active dispatches and provide traffic updates.
+        4. Alerts and Notifications
+        Upcoming Deliveries: Alerts for deliveries that are due soon.
+        Maintenance Alerts: Notifications for trucks that require maintenance or have scheduled check-ups.
+        Incident Reports: Notifications for any incidents reported by drivers.
+        5. Performance Metrics
+        Delivery Time: Average delivery time over the last week/month.
+        Fuel Consumption: Average fuel consumption for the fleet.
+        Distance Covered: Total distance covered by all trucks in a given period.
+        6. Driver Information
+        Driver Availability: Status of drivers (available, on duty, on break, etc.).
+        Performance Metrics: Driver performance metrics such as on-time delivery rate, driving hours, and customer feedback.
+        7. Fleet Status
+        Truck Status: Overview of the fleet with status indicators (on route, in maintenance, idle, etc.).
+        Maintenance Schedule: Upcoming maintenance schedules and history for each truck.
+        8. Customer Information
+        Active Contracts: List of active contracts and their status.
+        Recent Feedback: Customer feedback and ratings for recent deliveries.
+        9. Revenue Metrics
+        Earnings Overview: Total earnings from dispatches over a period.
+        Profit Margins: Overview of profit margins for recent dispatches.
+        10. Task Management
+        To-Do List: List of tasks to be completed by the dispatcher or drivers.
+        Upcoming Tasks: Scheduled tasks and deadlines.
+        Additional Features:
+        Search and Filter: Ability to search and filter dispatches, drivers, and trucks based on different criteria.
+        Customizable Widgets: Allow users to customize the dashboard by adding/removing widgets according to their needs.
+        Reports and Analytics: Generate and download reports for detailed analytics.
+        Example Layout
+        Header: Quick summary metrics.
+        Left Sidebar: Navigation links (e.g., Dashboard, Dispatches, Trucks, Drivers, Reports, Settings).
+        Main Section:
+        Top: Summary Metrics, Alerts.
+        Middle Left: Real-time Tracking Map.
+        Middle Right: Recent Activity.
+        Bottom: Detailed Performance Metrics, Task Management.
+        Implementation Tips:
+        Responsive Design: Ensure the dashboard is responsive and works well on different devices.
+        Real-time Updates: Use technologies like WebSockets or AJAX for real-time data updates.
+        User-Friendly Interface: Focus on a clean, intuitive design that makes it easy to find information and take action.
