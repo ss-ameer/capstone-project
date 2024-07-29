@@ -1,6 +1,7 @@
 <?php 
 // config-function.php
 
+    session_start();
 // database initialization
 
     $servername = 'localhost';
@@ -177,27 +178,30 @@
     }
 
     function selectAccount($info) {
-        
-        session_start();
+
+        // session_start();
         $_SESSION['selected_account'] = $info;
 
     }
 
     function deleteAccount($id) {
+        
         global $conn;
-
         $stmt = $conn -> prepare("DELETE FROM dispatch_officers WHERE id = ?");
         $stmt -> bind_param("i", $id);
         
         if ($stmt -> execute()) {
             echo 'success';
-        } else  echo 'error'; 
+        } else  echo 'error';
+
     }
 
     function sidenavSelect($selected) {
-        session_start();
+        
+        // session_start();
         if ($_SESSION['sidenav_active'] != $selected) {
             $_SESSION['sidenav_active'] = $selected;
             echo'success';
         } else echo 'failed';
+
     }

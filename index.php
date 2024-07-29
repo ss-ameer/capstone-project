@@ -19,8 +19,11 @@
                 default:
                     break;
             }
-            
-        } else { header('Location: pages/page-dashboard.php'); }
+
+        } else {
+            $_SESSION['sidenav_active'] = 'dashboard';
+            header('Location: pages/page-dashboard.php');
+        }
         
     } else if (!isset($_SESSION['user_info'])) {
         header('Location: pages/page-login.php');

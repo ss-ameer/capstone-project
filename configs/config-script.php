@@ -26,12 +26,12 @@ $(document).ready(function(){
             type: 'POST',
             data: data,
             success: function(response) {
-                console.log('Response: ' + response);
-                console.log('Selected: ' , data['selected']);
+                console.log('response: ' + response);
+                console.log('selected:' , data['selected']);
                 if (response == 'success') {
+                    console.log('action: redirecting');
                     goToIndex();
-                    console.log('redirecting');
-                } else { console.log('not redirecting'); }
+                } else { console.log('action: not redirecting'); }
             }
         })
     }

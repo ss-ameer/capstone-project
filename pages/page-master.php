@@ -1,7 +1,5 @@
 <!-- page-master.php -->
 <?php 
-    session_start();
-    $_SESSION['sidenav_active'] = 'master';
     include_once('../configs/config-function.php')
 ?>
 <!DOCTYPE html>
@@ -20,47 +18,49 @@
     <script src="<?php echo ROOT . 'imports/bootstrap/js/bootstrap.bundle.js'?>"></script>
     <script src="<?php echo ROOT . 'imports/jquery/jquery-3.7.1.min.js' ?>"></script>
     <?php include_once(PATH . 'configs/config-script.php'); ?>
+
 </head>
 <body>
 <header>
 
 </header>
 <main>
-<div class="container-fluid vh-100">
-<div class="row h-100">
-<?php include_once(PATH . 'components/comp-nav-side.php'); ?>
-<!-- master list -->
-<div class="col mh-100 overflow-auto p-3 border"> 
-    <ul class="list-group">
+    <div class="container-fluid vh-100">
+    <div class="row h-100">
+    <!-- sidebar -->
+    <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
+    <!-- master list -->
+    <div class="col mh-100 overflow-auto p-3 border">
+        <p class="lead">Master</p>
+        <ul class="list-group">
+        <li class="list-group-item">
+            <div data-bs-toggle="collapse" data-bs-target="#master-register">
+                <a class="" href="#">Create an Account</a>
+            </div>
 
-    <li class="list-group-item">
-        <div data-bs-toggle="collapse" data-bs-target="#master-register">
-            <a class="" href="#">Create an Account</a>
-        </div>
+            <div class="collapse container" id="master-register">
+                <hr>
+                <!-- register form -->
+                <?php include_once('../components/comp-form-register.php') ?>
+            </div>        
+        </li>
 
-        <div class="collapse container" id="master-register">
-            <hr>
-            <!-- register form -->
-            <?php include_once('../components/comp-form-register.php') ?>
-        </div>        
-    </li>
+        <li class="list-group-item">
+            <div data-bs-toggle="collapse" data-bs-target="#master-view">
+                <a class="" href="#">View Accounts</a>
+            </div>
 
-    <li class="list-group-item">
-        <div data-bs-toggle="collapse" data-bs-target="#master-view">
-            <a class="" href="#">View Accounts</a>
-        </div>
+            <div class="collapse container" id="master-view">
+                <hr>
+                <!-- officers table -->
+                <?php include_once('../components/comp-table-officers.php') ?>
+            </div>
+        </li>
 
-        <div class="collapse container" id="master-view">
-            <hr>
-            <!-- officers table -->
-            <?php include_once('../components/comp-table-officers.php') ?>
-        </div>
-    </li>
-
-    </ul>
-</div>
-</div>
-</div>
+        </ul>
+    </div>
+    </div>
+    </div>
 
 </main>
 <footer>
