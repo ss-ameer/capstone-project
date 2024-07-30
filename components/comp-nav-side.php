@@ -9,19 +9,19 @@
 <ul class="nav flex-column" style="color: white;">
 <li class="nav-item">
     <a class="nav-link text-reset" href="#" id="side-dashboard">
-        <i class="bi bi-speedometer"></i> Dashboard
+        <i class="bi bi-speedometer"></i> <span class="ms-3">Dashboard</span>
     </a>
 </li>
 
 <li class="nav-item">
     <a class="nav-link text-reset" href="#" id="side-stock">
-        <i class="bi bi-star"></i> Stock
+        <i class="bi bi-box2"></i> <span class="ms-3">Stock</span>
     </a>
 </li>
 
 <li class="nav-item">
     <a class="nav-link text-reset" href="#" id="side-master">
-        <i class="bi bi-star"></i> Master
+        <i class="bi bi-star"></i> <span class="ms-3">Master</span>
     </a>
 </li>
 </ul>
