@@ -162,6 +162,11 @@ $(document).ready(function(){
         sidenavSelect('dashboard');
     })
 
+    $('#side-stock').click(function(event){
+        event.preventDefault();
+        sidenavSelect('stock');
+    })
+
     // office table
 
     $('#table-officers').on('click', '.officer-account', function(event){

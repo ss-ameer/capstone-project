@@ -6,12 +6,19 @@
 </div>
 
 <!-- navigation -->
-<ul class="nav bg-warning">
+<ul class="nav flex-column" style="color: white;">
 <li class="nav-item">
     <a class="nav-link text-reset" href="#" id="side-dashboard">
         <i class="bi bi-speedometer"></i> Dashboard
     </a>
 </li>
+
+<li class="nav-item">
+    <a class="nav-link text-reset" href="#" id="side-stock">
+        <i class="bi bi-star"></i> Stock
+    </a>
+</li>
+
 <li class="nav-item">
     <a class="nav-link text-reset" href="#" id="side-master">
         <i class="bi bi-star"></i> Master

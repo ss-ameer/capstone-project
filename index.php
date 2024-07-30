@@ -16,6 +16,8 @@
                 case 'dashboard':
                     header('Location: pages/page-dashboard.php');
                     break;
+                case 'stock':
+                    header('Location: pages/page-stock.php');
                 default:
                     break;
             }
