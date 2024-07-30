@@ -14,7 +14,7 @@
     <tbody class="table-group-divider">
         <?php getAccounts(); ?>
         <?php foreach ($_SESSION['officers'] as $officer) : ?>
-        <tr class="officer-account" data-id="<?= $officer['id'] ?>">
+        <tr class="officer-account" data-id_officer="<?= $officer['id'] ?>">
             <td><?= $officer['id'] ?></td>
             <td><?= $officer['name'] ?></td>
             <td><?= $officer['created_at'] ?></td>
@@ -36,6 +36,6 @@
                 </div>
             </td>
         </tr>
-        <?php endforeach;?>
+        <?php endforeach; ?>
     </tbody>
 </table>

@@ -69,7 +69,7 @@ $(document).ready(function(){
                     console.log(response);
                     
                     if (response == 'success'){
-                        $('#table-officers').find(`[data-id='${id}']`).remove();
+                        $('#table-officers').find(`[data-id_officer='${id}']`).remove();
                     } else {
                         alert('Failed to delete account.');
                     }

@@ -117,6 +117,23 @@
         
     }
 
+    function getStocks () {
+
+        global $conn;
+
+        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, unit_of_measure, quantity_in_stock, price FROM items");
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $items = [];
+        while ($row = $result -> fetch_assoc()) {
+            $items[] = $row;
+        }
+
+        $_SESSION['items'] = $items;
+
+    }
+
     function getAccounts () {
         
         global $conn;
@@ -126,7 +143,7 @@
         $result = $stmt -> get_result();
 
         $officers = [];
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $result -> fetch_assoc()) {
             $officers[] = $row;
         }
 
