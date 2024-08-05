@@ -69,7 +69,7 @@
             <hr>
             <div class="d-flex">
                 <div class="w-50 border rounded shadow-sm p-3">
-                    <table class="table table-hover table-borderless">
+                    <table class="table table-hover table-borderless" id="master-stock-preview">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -97,6 +97,7 @@
                 </div>
                 <!-- --- -->
                 <div class="ms-3 w-50">
+                    <!-- add item form -->
                     <form class="border rounded p-3 mb-3 shadow-sm" id="item-add">
                     <label class="form-label">Add Item</label>
                     <div class="form-floating mb-1">
@@ -111,24 +112,24 @@
                         <label for="item-add_category">Category</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <select name="uom" id="item-add_oum" placeholder="oum" class="form-select">
+                        <select name="uom" id="item-add_uom" placeholder="oum" class="form-select">
                             <option selected>Choose</option>
                             <option value="test">Test</option>
                         </select>
                         <label for="item-add_oum">Unit</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input name="price" type="number" id="item-add_name" class="form-control" placeholder="Price">
-                        <label for="item-add_name">Price</label>
+                        <input name="price" type="number" id="item-add_price" class="form-control" placeholder="Price">
+                        <label for="item-add_price">Price</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <textarea name="description" id="item-add_description" class="form-control" placeholder="Description"></textarea>
-                        <label for="item-add_description">Description</label>
+                        <textarea name="description" id="item-add_desc" class="form-control" placeholder="Description"></textarea>
+                        <label for="item-add_desc">Description</label>
                     </div>
                     <button class="btn btn-success ms-auto" type="submit">Add</button>
                     </form>
                     <!-- --- -->
-                    <form class="border rounded p-3 shadow-sm">
+                    <form class="border rounded p-3 shadow-sm" id="stock-add">
                     <label class="form-label">Add Stocks</label>
                     <div class="input-group mb-1">
                         <span class="input-group-text">ID</span>
@@ -140,7 +141,7 @@
                     </div>
                     <div class="input-group mb-1">
                         <span class="input-group-text">Quantity</span>
-                        <input type="number" id="stock-add_quantity" class="form-control" value="placeholder">
+                        <input type="number" id="stock-add_qty" class="form-control" value="placeholder">
                     </div>
                     <button class="btn btn-success ms-auto" type="submit">Add</button>
                     </form>

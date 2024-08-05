@@ -4,13 +4,76 @@
 $(document).ready(function(){
 
     // popover
-
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     // const popover = new bootstrap.Popover('.popover-dismiss', { trigger: 'focus' });
 
-    // navigation 
+    // stocks
+    function itemAdd() {
+        var data = {
+            item_name: $('#item-add_name').val(),
+            item_category: $('#item-add_category').val(),
+            item_uom: $('#item-add_uom').val(),
+            item_price: $('#item-add_price').val(),
+            item_desc: $('#item-add_desc').val(),
+            action: 'item add'
+        }
 
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log(response);
+                if (response !== 'success') {
+                    console.log('error');
+                }
+            }
+        })
+    }
+
+    function stockAdd() {
+        var data = {
+            item_id: $('#stock-add_id').val(),
+            qty: $('#stock-add_qty').val(),
+            action: 'stock add'
+        }
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log(response);
+                if (response == 'success') {
+
+                    $('#master-stock-preview').reload();
+                    location.reload();
+                }
+            }
+        })
+    }
+
+    function stockGet() {
+        var data = {
+            action: 'get stocks'
+        }
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log(response);
+                // if (response.startsWith('success:')) {
+                //     var stock = JSON.parse(response.slice(8));
+                //     $('#stock-preview').html(stockTable(stock));
+                // }
+            }
+        })
+    }
+
+    // navigation 
     function goToIndex() {
         window.location.href = '../index.php';
     }
@@ -47,12 +110,10 @@ $(document).ready(function(){
             url: '../configs/config-function.php',
             type: 'POST',
             data: data,
-            dataType: 'json',
             success: function(response) {
-                
+                console.log(data['account_id']);
             }
         });
-        console.log(data['account_id']);
     }
 
     function deleteAccount(id) {
@@ -79,7 +140,6 @@ $(document).ready(function(){
     }
 
     // account
-
     function register(){
         var data = {
             name: $('#register-name').val(),
@@ -167,8 +227,7 @@ $(document).ready(function(){
         sidenavSelect('stock');
     })
 
-    // office table
-
+    // officers table
     $('#table-officers').on('click', '.officer-account', function(event){
         event.preventDefault();
 
@@ -190,6 +249,17 @@ $(document).ready(function(){
         // event.stopPropagation();
         var accountId = $(this).closest('.officer-account').data('id');
         deleteAccount(accountId);
+    })
+
+    // stocks
+    $('#item-add').submit(function(event){
+        event.preventDefault();
+        itemAdd();
+    });
+
+    $('#stock-add').submit(function(event){ 
+        event.preventDefault();
+        stockAdd();
     })
 
 });

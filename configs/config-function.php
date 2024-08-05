@@ -2,6 +2,7 @@
 // config-function.php
 
     session_start();
+
 // database initialization
 
     $servername = 'localhost';
@@ -44,6 +45,15 @@
                 case 'sidenav select':
                     sidenavSelect($_POST['selected']);
                     break;
+                case 'get stocks':
+                    getStocks();
+                    break;
+                case 'item add':
+                    addItem();
+                case 'stock add':
+                    addStock();
+                    break;
+                case 'item update':
                 default:
                     break;
             };
@@ -57,6 +67,59 @@
             );
             exit();
         }
+    }
+
+    function addStock() {
+        global $conn;
+
+        $item_id = $_POST['item_id'];
+        $qty = $_POST['qty'];
+
+        $stmt = $conn -> prepare ("UPDATE items SET quantity_in_stock = quantity_in_stock +? WHERE item_id =?");
+        $stmt -> bind_param("ii", $qty, $item_id);
+
+        if ($stmt -> execute()) {
+            echo'success';
+        } else  echo 'error';
+
+        $stmt->close();
+
+    }
+
+    function getStocks () {
+        global $conn;
+
+        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, unit_of_measure, quantity_in_stock, price FROM items");
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $items = [];
+        while ($row = $result -> fetch_assoc()) {
+            $items[] = $row;
+        }
+
+        $_SESSION['items'] = $items;
+        $stmt->close();
+    }
+
+    function addItem() {
+
+        global $conn;
+
+        $item_name = $_POST['item_name'];
+        $item_category = $_POST['item_category'];
+        $item_uom = $_POST['item_uom'];
+        $item_price = $_POST['item_price'];
+        $item_desc = $_POST['item_desc'];
+
+        $stmt = $conn -> prepare ("INSERT INTO items (item_name, category, unit_of_measure, price, description) VALUES (?, ?, ?, ?, ?)");
+        $stmt -> bind_param("sssis", $item_name, $item_category, $item_uom, $item_price, $item_desc);
+
+        if($stmt -> execute()){
+            echo'success';
+        }
+
+        $stmt->close();
     }
 
     function register() {
@@ -115,23 +178,6 @@
             'updated_at' => $db_updated_at
         );
         
-    }
-
-    function getStocks () {
-
-        global $conn;
-
-        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, unit_of_measure, quantity_in_stock, price FROM items");
-        $stmt -> execute();
-        $result = $stmt -> get_result();
-
-        $items = [];
-        while ($row = $result -> fetch_assoc()) {
-            $items[] = $row;
-        }
-
-        $_SESSION['items'] = $items;
-
     }
 
     function getAccounts () {
@@ -195,7 +241,6 @@
     }
 
     function selectAccount($info) {
-
         // session_start();
         $_SESSION['selected_account'] = $info;
 
@@ -213,6 +258,7 @@
 
     }
 
+    // sidenav
     function sidenavSelect($selected) {
         
         // session_start();
