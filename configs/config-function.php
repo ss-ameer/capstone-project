@@ -53,7 +53,8 @@
                 case 'stock add':
                     addStock();
                     break;
-                case 'item update':
+                case 'stock select':
+                    selectStock($_POST['stock_id']);
                 default:
                     break;
             };
@@ -260,11 +261,17 @@
 
     // sidenav
     function sidenavSelect($selected) {
-        
-        // session_start();
+
         if ($_SESSION['sidenav_active'] != $selected) {
             $_SESSION['sidenav_active'] = $selected;
             echo'success';
         } else echo 'failed';
+
+    }
+
+    function selectStock($selected) {
+        
+            $_SESSION['stock_active'] = $selected;
+            echo'success';
 
     }

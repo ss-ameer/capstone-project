@@ -73,6 +73,23 @@ $(document).ready(function(){
         })
     }
 
+    function stockSelect(id) {
+        var data = {
+            stock_id: id,
+            action: 'stock select'
+        };
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log('response: ' + response);
+                console.log('selected:' , data['stock_id']);
+            }
+        });
+    }
+
     // navigation 
     function goToIndex() {
         window.location.href = '../index.php';
@@ -241,7 +258,7 @@ $(document).ready(function(){
 
         console.log($(this).attr('class'));
 
-        selectAccount($(this).data('id'));
+        selectAccount($(this).data('id_officer'));
     })
 
     // delete account
@@ -260,6 +277,17 @@ $(document).ready(function(){
     $('#stock-add').submit(function(event){ 
         event.preventDefault();
         stockAdd();
+    })
+
+    $('#master-stock-preview').on('click', '.item', function(event){
+        event.preventDefault();
+        
+        var classes = 'table-active';
+
+        $('.item').removeClass(classes);
+        $(this).addClass(classes);
+
+        stockSelect($(this).data('id_item'));
     })
 
 });
