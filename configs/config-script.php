@@ -73,6 +73,30 @@ $(document).ready(function(){
         })
     }
 
+    function stockDelete(id) {
+        if (confirm('Confirm to Delete this stock.')) {
+            var data = {
+                stock_id: id,
+                action: 'stock delete'
+            }
+            $.ajax({
+                url: '../configs/config-function.php',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    console.log('ID: ', data['stock_id']);
+                    console.log(response);
+                    
+                    if (response =='success'){
+                        $('#master-stock-preview').find(`[data-id_item='${id}']`).remove();
+                    } else {
+                        alert('Failed to delete stock.');
+                    }
+                }
+            });
+        }
+    }
+
     function stockSelect(id) {
         var data = {
             stock_id: id,
@@ -264,7 +288,7 @@ $(document).ready(function(){
     // delete account
     $('#table-officers').on('click', '.delete-account', function(event){
         // event.stopPropagation();
-        var accountId = $(this).closest('.officer-account').data('id');
+        var accountId = $(this).closest('.officer-account').data('id_officer');
         deleteAccount(accountId);
     })
 
@@ -272,6 +296,12 @@ $(document).ready(function(){
     $('#item-add').submit(function(event){
         event.preventDefault();
         itemAdd();
+    });
+
+    $('#stock-delete').on('click', function(event){
+        event.preventDefault();
+        var stockId = $('#master-stock-preview tr.table-active').data('id_item');
+        stockDelete(stockId);
     });
 
     $('#stock-add').submit(function(event){ 

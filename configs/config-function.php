@@ -50,11 +50,16 @@
                     break;
                 case 'item add':
                     addItem();
+                    break;
                 case 'stock add':
                     addStock();
                     break;
                 case 'stock select':
                     selectStock($_POST['stock_id']);
+                    break;
+                case 'stock delete':
+                    deleteStock($_POST['stock_id']);
+                    break;
                 default:
                     break;
             };
@@ -245,6 +250,17 @@
         // session_start();
         $_SESSION['selected_account'] = $info;
 
+    }
+
+    function deleteStock($id){
+        
+        global $conn;
+        $stmt = $conn -> prepare("DELETE FROM items WHERE item_id = ?");
+        $stmt -> bind_param("i", $id);
+        
+        if ($stmt -> execute()) {
+            echo 'success';
+        } else  echo 'error';
     }
 
     function deleteAccount($id) {
