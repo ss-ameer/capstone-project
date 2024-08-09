@@ -71,7 +71,7 @@
             <!-- left column -->
             <div class="w-50 border rounded shadow-sm p-3">
                 <!-- items option -->
-                <div class="d-grid gap-2 p-3 rounded bg-light sticky-top">
+                <div class="d-grid gap-2 p-3 rounded sticky-top" style="background: white;">
                     <button class="btn btn-primary btn-sm w-20">Edit</button>
                     <button class="btn btn-danger btn-sm w-20" id="stock-delete">Delete</button>
                 </div>

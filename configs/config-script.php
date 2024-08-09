@@ -84,13 +84,13 @@ $(document).ready(function(){
                 type: 'POST',
                 data: data,
                 success: function(response) {
-                    console.log('ID: ', data['stock_id']);
-                    console.log(response);
                     
                     if (response =='success'){
                         $('#master-stock-preview').find(`[data-id_item='${id}']`).remove();
+                        console.log('Item Delete: \nSUCCESS \n - item id:', data['stock_id']);
                     } else {
-                        alert('Failed to delete stock.');
+                        alert('Failed to delete item. \n (item id:', data['stock_id']);
+                        console.log('Item Delete: \nFAILED \n - item id:', data['stock_id']);
                     }
                 }
             });
@@ -114,7 +114,7 @@ $(document).ready(function(){
         });
     }
 
-    // navigation 
+// navigation 
     function goToIndex() {
         window.location.href = '../index.php';
     }
@@ -140,8 +140,7 @@ $(document).ready(function(){
         })
     }
 
-    // account functions
-
+// account functions
     function selectAccount(id) {
         var data = {
             account_id: id,
@@ -197,7 +196,6 @@ $(document).ready(function(){
             success: function(response) {
                 console.log("Success" + response);
                 $('#feedback').html(response);
-                // $('#master-view').location.reload();
             }
         })
     }

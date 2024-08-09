@@ -13,7 +13,7 @@
     </a>
 </li>
 
-<li class="nav-item">
+<li class="nav-item active">
     <a class="nav-link text-reset" href="#" id="side-stock">
         <i class="bi bi-box2"></i> <span class="ms-3">Stock</span>
     </a>
