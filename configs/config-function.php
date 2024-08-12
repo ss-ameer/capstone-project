@@ -61,6 +61,7 @@
                     deleteStock($_POST['stock_id']);
                     break;
                 case 'stock edit':
+                    editStock();
                     break;
                 default:
                     break;
@@ -125,6 +126,28 @@
 
         if($stmt -> execute()){
             echo'success';
+        }
+
+        $stmt->close();
+    }
+
+    function editStock() {
+        global $conn;
+
+        $stock_id = $_POST['stock_id'];
+        $name = $_POST['name'];
+        $category = $_POST['category'];
+        $uom = $_POST['uom'];
+        $price = $_POST['price'];
+        $description = $_POST['description'];
+
+        $stmt = $conn->prepare("UPDATE items SET item_name = ?, category = ?, unit_of_measure = ?, price = ?, description = ? WHERE item_id = ?");
+        $stmt->bind_param("sssisi", $name, $category, $uom, $price, $description, $stock_id);
+
+        if ($stmt->execute()) {
+            echo 'success';
+        } else {
+            echo 'error';
         }
 
         $stmt->close();

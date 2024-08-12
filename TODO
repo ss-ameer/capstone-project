@@ -2,7 +2,8 @@ Database:
     Tables:
         [x] dispatch officer
         [x] trucks 
-        [ ] items
+        [x] items
+        [ ] orders
         [ ] dispatch
         [ ] logs
 Dashboard:

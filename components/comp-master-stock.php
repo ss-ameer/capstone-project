@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <form>
+                    <form id="stock-edit-form">
                         <div class="form-floating mb-1">
                             <input name="name" type="text" id="item-edit_id" class="form-control" placeholder="Name" disabled>
                             <label for="item-edit_id">ID</label>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="mo">Submit</button>
+                    <button class="btn btn-secondary" id="stock-edit-form-submit">Submit</button>
                 </div>
 
             </div>

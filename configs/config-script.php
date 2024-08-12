@@ -330,6 +330,42 @@ $(document).ready(function(){
         $('#item-edit_desc').val(description);
     })
 
+    $('#stock-edit-form-submit').on('click', function(){
+        $('#stock-edit-form').submit();
+    })
+
+    $('#stock-edit-form').submit(function(event){
+        event.preventDefault();
+
+        var data = {
+            stock_id: $('#item-edit_id').val(),
+            name: $('#item-edit_name').val(),
+            category: $('#item-edit_category').val(),
+            uom: $('#item-edit_uom').val(),
+            price: $('#item-edit_price').val(),
+            description: $('#item-edit_desc').val(),
+            action: 'stock edit'
+        };
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                if(response == 'success') {
+                alert('Item updated successfully.');
+                location.reload(); // Reload to reflect changes
+                } else {
+                    alert('Failed to update item. Please try again.');
+                }
+            },
+            error: function() {
+                alert('An error occurred. Please try again.');
+            }
+        });
+        
+    })
+
 });
 
 </script>
