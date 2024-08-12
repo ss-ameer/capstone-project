@@ -307,7 +307,7 @@ $(document).ready(function(){
         stockAdd();
     })
 
-    $('#master-stock-preview').on('click', '.item', function(event){
+    $('#master-stock-preview tbody').on('click', 'tr', function(event){
         event.preventDefault();
         
         var classes = 'table-active';
@@ -316,6 +316,16 @@ $(document).ready(function(){
         $(this).addClass(classes);
 
         stockSelect($(this).data('id_item'));
+
+        var id = $(this).find('td').eq(0).text();
+        var name = $(this).find('td').eq(1).text();
+        var category = $(this).find('td').eq(2).text();
+        var price = $(this).find('td').eq(3).text();
+
+        $('#item-edit_id').val(id);
+        $('#item-edit_name').val(name);
+        $('#item-edit_category').val(category);
+        $('#item-edit_price').val(price);
     })
 
 });

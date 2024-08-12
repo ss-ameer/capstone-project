@@ -60,6 +60,8 @@
                 case 'stock delete':
                     deleteStock($_POST['stock_id']);
                     break;
+                case 'stock edit':
+                    break;
                 default:
                     break;
             };
