@@ -8,7 +8,6 @@
         <button class="btn btn-danger btn-sm" id="stock-delete">Delete</button>
     </div>
     <!-- edit item modal -->
-    <!-- i want to set the value of these input based on the selected item in the stock preview -->
     <div class="modal fade" id="item-edit-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -21,7 +20,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-floating mb-1">
-                            <input name="name" type="text" id="item-edit_id" class="form-control" placeholder="Name">
+                            <input name="name" type="text" id="item-edit_id" class="form-control" placeholder="Name" disabled>
                             <label for="item-edit_id">ID</label>
                         </div>
                         <div class="form-floating mb-1">
@@ -52,7 +51,7 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="mo">Submit</button>
                 </div>
@@ -80,6 +79,7 @@
             <td><?= $item['category'] ?></td>
             <td><?= $item['price'] ?></td>
             <td class="text-center"><?= $item['quantity_in_stock'] ?></td>
+            <td class="d-none"><?= $item['description'] ?></td>
         </tr>
         <?php endforeach; ?>
         </tbody>

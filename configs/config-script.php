@@ -321,11 +321,13 @@ $(document).ready(function(){
         var name = $(this).find('td').eq(1).text();
         var category = $(this).find('td').eq(2).text();
         var price = $(this).find('td').eq(3).text();
+        var description = $(this).find('td').eq(5).text();
 
         $('#item-edit_id').val(id);
         $('#item-edit_name').val(name);
         $('#item-edit_category').val(category);
         $('#item-edit_price').val(price);
+        $('#item-edit_desc').val(description);
     })
 
 });
