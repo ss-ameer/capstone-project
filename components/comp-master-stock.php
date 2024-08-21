@@ -89,7 +89,7 @@
 <!-- right column -->
 <div class="ms-3 w-50">
     <!-- add item form -->
-    <form class="border rounded p-3 shadow-sm" id="item-add">
+    <form class="border rounded p-3 shadow-sm" id="item-add-form">
         <label class="form-label">Add Item</label>
         <div class="form-floating mb-1">
             <input name="name" type="text" id="item-add_name" class="form-control" placeholder="Name">

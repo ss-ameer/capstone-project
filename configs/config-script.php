@@ -28,9 +28,9 @@ $(document).ready(function(){
                 if (response !== 'success') {
                     console.log('error');
                 } else {
-                    // alert(item_name, ' successfully added.');
-                    $('#master-stock-preview').load(location.href + ' #master-stock-preview');
+                    $('#master-stock-preview').load(location.href + ' #master-stock-preview').reload();
                     $('#item-add-form')[0].reset();
+                    alert(data['item_name'] + ' successfully added.');
                 };
             }
         })
@@ -295,7 +295,7 @@ $(document).ready(function(){
     })
 
     // stocks
-    $('#item-add').submit(function(event){
+    $('#item-add-form').submit(function(event){
         event.preventDefault();
         itemAdd();
     });
