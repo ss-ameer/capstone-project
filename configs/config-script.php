@@ -27,7 +27,11 @@ $(document).ready(function(){
                 console.log(response);
                 if (response !== 'success') {
                     console.log('error');
-                }
+                } else {
+                    // alert(item_name, ' successfully added.');
+                    $('#master-stock-preview').load(location.href + ' #master-stock-preview');
+                    $('#item-add-form')[0].reset();
+                };
             }
         })
     }
