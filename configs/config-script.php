@@ -28,7 +28,7 @@ $(document).ready(function(){
                 if (response !== 'success') {
                     console.log('error');
                 } else {
-                    $('#master-stock-preview').load(location.href + ' #master-stock-preview').reload();
+                    $('#master-stock-preview').load(location.href + ' #master-stock-preview');
                     $('#item-add-form')[0].reset();
                     alert(data['item_name'] + ' successfully added.');
                 };
@@ -51,8 +51,8 @@ $(document).ready(function(){
                 console.log(response);
                 if (response == 'success') {
 
-                    $('#master-stock-preview').reload();
-                    location.reload();
+                    // $('#master-stock-preview').reload();
+                    // location.reload();
                 }
             }
         })
@@ -309,6 +309,10 @@ $(document).ready(function(){
     $('#stock-add').submit(function(event){ 
         event.preventDefault();
         stockAdd();
+    })
+
+    $('.item').on('click', function(event){
+        console.log('ip man')
     })
 
     $('#master-stock-preview tbody').on('click', 'tr', function(event){
