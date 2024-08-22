@@ -20,7 +20,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-orders">
-                <i class="bi bi-star"></i> <span class="ms-3">Orders</span>
+                <i class="bi bi-receipt"></i> <span class="ms-3">Orders</span>
             </a>
         </li>
 
