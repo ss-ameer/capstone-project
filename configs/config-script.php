@@ -28,7 +28,7 @@ $(document).ready(function(){
                 if (response !== 'success') {
                     console.log('error');
                 } else {
-                    $('#master-stock-preview').load(location.href + ' #master-stock-preview');
+                    $('#master-stock-preview').load(' #master-stock-preview');
                     $('#item-add-form')[0].reset();
                     alert(data['item_name'] + ' successfully added.');
                 };
