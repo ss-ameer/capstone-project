@@ -58,3 +58,110 @@ Dashboard:
         Responsive Design: Ensure the dashboard is responsive and works well on different devices.
         Real-time Updates: Use technologies like WebSockets or AJAX for real-time data updates.
         User-Friendly Interface: Focus on a clean, intuitive design that makes it easy to find information and take action.
+
+To Fix:
+[ ] master-stock-preview, table refresh and stock select conflict
+    Note: 
+    To resolve the issue where you can't select an item after adding a new one, there are a few key areas to check:
+
+    ### 1. **Check `#master-stock-preview` Refresh Mechanism**
+    After adding a new item, you attempt to reload the `#master-stock-preview` element with this code:
+    ```javascript
+    $('#master-stock-preview').load(' #master-stock-preview');
+    ```
+    However, this might not fully reload the `tbody` element with the new item.
+    
+    ### 2. **Bind Event Listeners After Content Reload**
+    Event listeners for dynamically loaded content might not work if they are not correctly bound after content is refreshed. Ensure that any `click` events are correctly reattached to the dynamically loaded content.
+    
+    ### Solution
+    1. **Replace the `#master-stock-preview` reload mechanism** with a full reload or proper `load` function.
+    
+    2. **Rebind event listeners** after reloading the content.
+    
+    ### Code Fix
+    
+    Here's how you can modify the script:
+    
+    ```javascript
+    $(document).ready(function(){
+    
+        function reloadStockPreview() {
+            $('#master-stock-preview').load(' #master-stock-preview > *', function() {
+                bindStockPreviewEvents();
+            });
+        }
+    
+        function bindStockPreviewEvents() {
+            // Bind click event to newly loaded items
+            $('#master-stock-preview tbody').on('click', 'tr', function(event){
+                event.preventDefault();
+                
+                var classes = 'table-active';
+    
+                $('.item').removeClass(classes);
+                $(this).addClass(classes);
+    
+                stockSelect($(this).data('id_item'));
+    
+                var id = $(this).find('td').eq(0).text();
+                var name = $(this).find('td').eq(1).text();
+                var category = $(this).find('td').eq(2).text();
+                var price = $(this).find('td').eq(3).text();
+                var description = $(this).find('td').eq(5).text();
+    
+                $('#item-edit_id').val(id);
+                $('#item-edit_name').val(name);
+                $('#item-edit_category').val(category);
+                $('#item-edit_price').val(price);
+                $('#item-edit_desc').val(description);
+            });
+        }
+    
+        // Initial binding of events
+        bindStockPreviewEvents();
+    
+        function itemAdd() {
+            var data = {
+                item_name: $('#item-add_name').val(),
+                item_category: $('#item-add_category').val(),
+                item_uom: $('#item-add_uom').val(),
+                item_price: $('#item-add_price').val(),
+                item_desc: $('#item-add_desc').val(),
+                action: 'item add'
+            };
+    
+            $.ajax({
+                url: '../configs/config-function.php',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    if (response === 'success') {
+                        reloadStockPreview();
+                        $('#item-add-form')[0].reset();
+                        alert(data['item_name'] + ' successfully added.');
+                    } else {
+                        alert('Failed to add item.');
+                    }
+                }
+            });
+        }
+    
+        // Form submission for adding an item
+        $('#item-add-form').submit(function(event){
+            event.preventDefault();
+            itemAdd();
+        });
+    
+        // Other event bindings...
+    });
+    ```
+    
+    ### Explanation:
+    1. **reloadStockPreview() Function**: This reloads the `#master-stock-preview` container and rebinds the event listeners after the content has been reloaded.
+    
+    2. **bindStockPreviewEvents() Function**: This function is responsible for attaching click events to each item row. This ensures that newly added items are selectable.
+    
+    3. **Call `bindStockPreviewEvents()`** after the DOM is ready and after the content is reloaded.
+    
+    This should resolve the issue and make sure that you can select new items after they have been added to the list.
