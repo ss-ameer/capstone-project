@@ -1,6 +1,6 @@
 <!-- page-master.php -->
 <?php 
-    include_once('../configs/config-function.php');
+    include_once '../configs/config-function.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

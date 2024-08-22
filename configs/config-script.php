@@ -124,7 +124,7 @@ $(document).ready(function(){
     }
 
     function sidenavSelect(name) {
-        var data = {
+        var data = {    
             action: 'sidenav select',
             selected: name
         };
@@ -268,6 +268,11 @@ $(document).ready(function(){
     $('#side-stock').click(function(event){
         event.preventDefault();
         sidenavSelect('stock');
+    })
+
+    $('#side-orders').click(function(event){
+        event.preventDefault();
+        sidenavSelect('orders');
     })
 
     // officers table
