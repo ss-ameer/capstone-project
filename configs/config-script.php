@@ -427,20 +427,24 @@ $(document).ready(function(){
         
     })
 
+    $(document).on('click', '#order-item-remove', function() {
+        $(this).closest('tr').remove();
+    })
+
     function addItemToTable(id, name, unit, price) {
         var newRow = 
                     '<tr>' +
                         '<td>' + id + '</td>' +
                         '<td>' + name + '</td>' +
                         '<td>' + 
-                            '<div class="input-group input-group-sm pe-2">' + 
+                            '<div class="input-group input-group-sm pe-3">' + 
                                 '<button class="btn btn-outline-danger input-group-text">-</button>' + 
                                 '<input type="text" class="form-control">' + 
                                 '<button class="btn btn-outline-success input-group-text">+</button>' + 
                             '</div>' + 
                         '</td>' +
                         '<td>' + price + '</td>' +
-                        '<td><i class="bi bi-x-circle-fill"></i></td>'
+                        '<td><i class="bi bi-x-circle" id="order-item-remove"></i></td>'
                     '</tr>';
         
         $('#order-items-table tbody').append(newRow);
