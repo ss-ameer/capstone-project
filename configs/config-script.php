@@ -422,7 +422,8 @@ $(document).ready(function(){
         console.log('clicked');
         console.log('item id: ' + itemId);
         addItemToTable(itemId, itemName, itemUnit, itemPrice);
-        $("#item-suggestions").hide();
+        $('#item-search').val('');
+        $('#item-suggestions').hide();
         
     })
 

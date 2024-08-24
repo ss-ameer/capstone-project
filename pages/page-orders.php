@@ -79,12 +79,12 @@
                             </form>
                         </div>
                         <div class="col">
-                            <form action="" class="d-flex">
+                            <div class="input-group">
                                 <input type="search" name="item search" autocomplete="off" class="form-control me-2" id="item-search">
-                                <button type="submit" class="btn btn-outline-success">Add</button>
-                            </form>
+                                <span class="input-group-text"><i class="bi bi-search"> Search</i></span>
+                            </div>
 
-                            <ul id="item-suggestions" class="list-group position-absolute" style="z-index: 1000; display: none;"></ul>
+                            <ul id="item-suggestions" class="list-group position-absolute mt-2" style="z-index: 1000; display: none; width: 30%"></ul>
 
                             <table class="table" id="order-items-table">
                                 <thead>
