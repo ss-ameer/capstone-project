@@ -433,13 +433,14 @@ $(document).ready(function(){
                         '<td>' + id + '</td>' +
                         '<td>' + name + '</td>' +
                         '<td>' + 
-                            '<div class="input-group input-group-sm">' + 
+                            '<div class="input-group input-group-sm pe-2">' + 
                                 '<button class="btn btn-outline-danger input-group-text">-</button>' + 
                                 '<input type="text" class="form-control">' + 
                                 '<button class="btn btn-outline-success input-group-text">+</button>' + 
                             '</div>' + 
                         '</td>' +
                         '<td>' + price + '</td>' +
+                        '<td><i class="bi bi-x-circle-fill"></i></td>'
                     '</tr>';
         
         $('#order-items-table tbody').append(newRow);

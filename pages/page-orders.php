@@ -90,9 +90,10 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 10%;">ID</th>
-                                        <th scope="col" style="width: 45%;">Name</th>
+                                        <th scope="col" style="width: 35%;">Name</th>
                                         <th scope="col" style="width: 30%;">QTY(cbm)</th>
                                         <th scope="col" style="width: 15%;">Price</th>
+                                        <th scope="col" style="width: 10%;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
