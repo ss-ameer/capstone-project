@@ -63,6 +63,9 @@
                 case 'stock edit':
                     editStock();
                     break;
+                case 'item search':
+                    itemSearch();
+                    break;
                 default:
                     break;
             };
@@ -76,6 +79,25 @@
             );
             exit();
         }
+    }
+
+    function itemSearch() {
+        global $conn;
+        $query = $_POST['query'];
+
+        $sql = "SELECT * FROM items WHERE item_name LIKE ?";
+        $stmt = $conn -> prepare($sql);
+        $search_param = "%" . $query . "%";
+        $stmt -> bind_param("s", $search_param);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $items = [];
+        while ($row = $result -> fetch_assoc()) {
+            $items[] = $row;
+        }
+
+        echo json_encode($items);
     }
 
     function addStock() {
@@ -154,7 +176,6 @@
     }
 
     function register() {
-
         global $conn;
 
         $name = $_POST['name'];

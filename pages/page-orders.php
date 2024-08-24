@@ -17,7 +17,7 @@
     <!-- javascript -->
     <script src="<?php echo ROOT . 'imports/bootstrap/js/bootstrap.bundle.js'?>"></script>
     <script src="<?php echo ROOT . 'imports/jquery/jquery-3.7.1.min.js' ?>"></script>
-    <?php include_once (PATH . 'configs/config-script.php'); ?>
+    <?php include_once PATH . 'configs/config-script.php'; ?>
 
 </head>
 <body>
@@ -25,6 +25,7 @@
         
     </header>
     <main>
+
         <div class="container-fluid vh-100">
             <div class="row h-100">
                 <!-- side-nav -->
@@ -79,25 +80,32 @@
                         </div>
                         <div class="col">
                             <form action="" class="d-flex">
-                                <input type="search" name="search" class="form-control me-2">
+                                <input type="search" name="item search" autocomplete="off" class="form-control me-2" id="item-search">
                                 <button type="submit" class="btn btn-outline-success">Add</button>
                             </form>
-                            <table class="table">
+
+                            <ul id="item-suggestions" class="list-group position-absolute" style="z-index: 1000; display: none;"></ul>
+
+                            <table class="table" id="order-items-table">
                                 <thead>
                                     <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">QTY</th>
+                                        <th scope="col" style="width: 10%;">ID</th>
+                                        <th scope="col" style="width: 45%;">Name</th>
+                                        <th scope="col" style="width: 30%;">QTY(cbm)</th>
+                                        <th scope="col" style="width: 15%;">Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if(isset($_SESSION['order_item'])): ?>
-                                    <?php foreach($_SESSION['order_item'] as $order): ?>
-
-                                    <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    <?php // if(isset($_SESSION['order_item'])): ?>
+                                    <?php // foreach($_SESSION['order_item'] as $order): ?>
+                                        
+                                    <?php // endforeach; ?>
+                                    <?php // endif; ?>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
                         </div>
                     </div>
                 </div>

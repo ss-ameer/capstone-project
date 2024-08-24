@@ -379,6 +379,70 @@ $(document).ready(function(){
         
     })
 
+    $("#item-search").on("keyup", function() {
+        let query = $(this).val();
+        let data = {
+            query: query,
+            action: 'item search'
+        };
+
+        if (query.length >= 1) {
+            $.ajax({
+                url: "../configs/config-function.php",
+                type: "POST",
+                data: data,
+                success: function(data) {
+                    let items = JSON.parse(data);
+                    let suggestions = '';
+                    items.forEach(function(item) {
+                        suggestions += '<li class="list-group-item suggestion-item" data-id="' + item.item_id + '" data-name="' + item.item_name + '" data-uom="' + item.unit_of_measure + '" data-price="' + item.price + '" data-description="' + item.description + '" ><span class="badge bg-dark">' + item.item_id + '</span> ' + item.item_name + '</li>';
+                    });
+                    $("#item-suggestions").html(suggestions).show();
+                }
+            });
+        } else {
+            $("#item-suggestions").hide();
+        }
+    });
+
+    // $(document).on("click", ".suggestion-item", function() {
+    //     let itemName = $(this).text();
+    //     let itemId = $(this).data("id");
+    //     $("#item-search").val(itemName);
+    //     $("#item-suggestions").hide();
+    // })
+
+    $(document).on('click', '#item-suggestions li', function(){
+        var itemId = $(this).data('id');
+        var itemName = $(this).data('name');
+        var itemUnit = $(this).data('uom');
+        var itemDescription = $(this).data('description');
+        var itemPrice = $(this).data('price');
+        
+        console.log('clicked');
+        console.log('item id: ' + itemId);
+        addItemToTable(itemId, itemName, itemUnit, itemPrice);
+        $("#item-suggestions").hide();
+        
+    })
+
+    function addItemToTable(id, name, unit, price) {
+        var newRow = 
+                    '<tr>' +
+                        '<td>' + id + '</td>' +
+                        '<td>' + name + '</td>' +
+                        '<td>' + 
+                            '<div class="input-group input-group-sm">' + 
+                                '<button class="btn btn-outline-danger input-group-text">-</button>' + 
+                                '<input type="text" class="form-control">' + 
+                                '<button class="btn btn-outline-success input-group-text">+</button>' + 
+                            '</div>' + 
+                        '</td>' +
+                        '<td>' + price + '</td>' +
+                    '</tr>';
+        
+        $('#order-items-table tbody').append(newRow);
+    }
 });
 
 </script>
