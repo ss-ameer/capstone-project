@@ -444,6 +444,7 @@ $(document).ready(function(){
                             '</div>' + 
                         '</td>' +
                         '<td>' + price + '</td>' +
+                        '<td>' + price + '</td>' +
                         '<td><i class="bi bi-x-circle" id="order-item-remove"></i></td>'
                     '</tr>';
         
