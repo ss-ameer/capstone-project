@@ -39,34 +39,36 @@
                             </div>
                         </div>
 
-                        <div class="row g-3">
-                            <div class="col-12 text-center border rounded">
-                                <span class="fs-6">Create Order</span>
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <div class="border rounded-5 text-center p-1">
+                                    <span class="fs-5">Create Order</span>
+                                </div>
                             </div>
                             <div class="col-6">
-                                <form action="" id="order-form" class="border p-2 rounded">
+                                <form action="" id="order-form" class="border p-3 rounded" style="height: 50vh;">
                                     <div class="form-floating mb-1">
                                         <input type="text" class="form-control" id="order-form-name" placeholder="Client Name">
-                                        <label for="order-from-name">Client Name</label>
+                                        <label for="order-form-name">Client Name</label>
                                     </div>
                                     <!-- address -->
                                     <div class="input-group mb-1">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="order-form-address_city" placeholder="City">
-                                            <label for="order-from-address_city">City</label>
+                                            <label for="order-form-address_city">City</label>
                                         </div>
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="order-form-address_brgy" placeholder="Barangay">
-                                            <label for="order-from-address_brgy">Barangay</label>
+                                            <label for="order-form-address_brgy">Barangay</label>
                                         </div>
 
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="order-form-address_street" placeholder="Street">
-                                            <label for="order-from-address_street">Street</label>
+                                            <label for="order-form-address_street">Street</label>
                                         </div>
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="order-form-address_number" placeholder="Number">
-                                            <label for="order-from-address_number">Number</label>
+                                            <label for="order-form-address_number">Number</label>
                                         </div>
                                     </div>
                                     <!-- contact -->
@@ -81,34 +83,35 @@
                                 </form>
                             </div>
                             <div class="col-6">
-                                <div class="input-group p-2 border rounded">
-                                    <input type="search" name="item search" autocomplete="off" class="form-control" id="item-search">
-                                    <span class="input-group-text"><i class="bi bi-search"> Search</i></span>
+                                <div class="p-3 border rounded overflow-auto" style="height: 50vh;">
+                                    <div class="input-group">
+                                        <input type="search" name="item search" autocomplete="off" class="form-control" id="item-search">
+                                        <span class="input-group-text"><i class="bi bi-search"> Search</i></span>
+                                    </div>
+                                    <ul id="item-suggestions" class="list-group mt-2 w-100 mh-100" style="display: none;"></ul>
                                 </div>
-
-                                <ul id="item-suggestions" class="list-group mt-2 w-100" style="display: none; width: 35%">
-
-                                </ul>
                             </div>
                             <div class="col-12 d-flex justify-content-center">
                                 <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
                             </div>
-                            <div class="col-12 border">
-                                <table class="table bg-warning" id="order-items-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" style="width: 5%;">ID</th>
-                                            <th scope="col" style="width: 25%;">Name</th>
-                                            <th scope="col" style="width: 25%;">QTY(cbm)</th>
-                                            <th scope="col" style="width: 20%;">Price</th>
-                                            <th scope="col" style="width: 20%;">TPrice</th>
-                                            <th scope="col" style="width: 5%;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="mh-100 overflow-y-auto">
-                                        
-                                    </tbody>
-                                </table>
+                            <div class="col-12">
+                                <div class="border rounded p-3">
+                                    <table class="table" id="order-items-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" scope="col" style="width: 5%;">ID</th>
+                                                <th scope="col" style="width: 30%;">Name</th>
+                                                <th scope="col" style="width: 20%;">QTY(cbm)</th>
+                                                <th scope="col" style="width: 20%;">Price</th>
+                                                <th scope="col" style="width: 20%;">TPrice</th>
+                                                <th class="d-none" scope="col" style="width: 5%;"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="">
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 
