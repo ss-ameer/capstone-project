@@ -316,11 +316,7 @@ $(document).ready(function(){
         stockAdd();
     })
 
-    $('.item').on('click', function(event){
-        console.log('ip man')
-    })
-
-    $('#master-stock-preview tbody').on('click', 'tr', function(event){
+    $(document).on('click', '#master-stock-preview tbody tr', function(event){
         event.preventDefault();
         
         var classes = 'table-active';
@@ -398,6 +394,7 @@ $(document).ready(function(){
                         suggestions += '<li class="list-group-item suggestion-item" data-id="' + item.item_id + '" data-name="' + item.item_name + '" data-uom="' + item.unit_of_measure + '" data-price="' + item.price + '" data-description="' + item.description + '" ><span class="badge bg-dark">' + item.item_id + '</span> ' + item.item_name + '</li>';
                     });
                     $("#item-suggestions").html(suggestions).show();
+                    $('#item-suggestions li:gt(4)').remove();
                 }
             });
         } else {
@@ -405,12 +402,86 @@ $(document).ready(function(){
         }
     });
 
-    // $(document).on("click", ".suggestion-item", function() {
-    //     let itemName = $(this).text();
-    //     let itemId = $(this).data("id");
-    //     $("#item-search").val(itemName);
-    //     $("#item-suggestions").hide();
-    // })
+    $('#order-form').submit(function(event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+        var orderItems = [];
+
+        $('#order-items-table tbody tr').each(function() {
+            var item = {
+                item_id: $this.find('.item-id').text(),
+                quantity: $his.find('.item-qty').val(),
+                price: $this.find('.item-price').text(),
+                total: $this.find('.item-total').text()
+            };
+
+            orderItems.push(item);
+
+        });
+
+        var orderData = {
+            client_name: $('#order-form-name').val(),
+            client_number: $('#order-form-number').val(),
+            client_email: $('#order-form-email').val(),
+
+
+        }
+
+        //     city: $('#order-form-address_city').val,
+        //     barangay: $('order-form-address_barangay').val(),
+        //     street: $('#order-form-address_street').val(),
+        //     number: $('order-form-address_number').val(),
+        //     action: 'create order'
+
+        $.ajax ({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                const orderId = response.order_id;
+                saveOrderItems(orderId);
+            },
+            error: function() {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    });
+
+    // function saveOrderItems($orderId) {
+    //     let orderItems = [];
+
+    //     $('#order-items-table tbody tr').each(function() {
+    //         let item = {
+    //             // make sure you add this classess and id's
+    //             itemName = $(this).find('.item-name').val();
+    //             quantity = $(this).find('.item-qty').val();
+    //             price = $(this).find('.item-price').val();
+    //         }
+            
+    //         orderItems.push ({
+    //             item_id: itemId,
+    //             quantity: quantity,
+    //             price: price
+    //         });
+    //     });
+
+    //     $.ajax ({
+    //         url: '../configs/config-function.php',
+    //         type: 'POST',
+    //         data: {
+    //             order_id: orderId,
+    //             items: orderItems,
+    //             action: 'add order items'
+    //         },
+    //         success: function(response) {
+    //             console.log(response);
+    //         },
+    //         error: function() {
+    //             alert('An error occurred. Please try again.');
+    //         }
+    //     })
+    // }
 
     $(document).on('click', '#item-suggestions li', function(){
         var itemId = $(this).data('id');
@@ -431,24 +502,88 @@ $(document).ready(function(){
         $(this).closest('tr').remove();
     })
 
+    $(document).on('click', '#order-items-table tbody tr .inc-qty', function(){
+        var $input = $(this).closest('.input-group').find('.item-qty');
+        var qty = parseInt($input.val());
+        console.log('clicked: inc qty');
+        $input.val(qty + 1);
+        updateOrderTable($(this).closest('tr'));
+    });
+    
+    $(document).on('click', '#order-items-table tbody tr .dec-qty', function(){
+        var $input = $(this).closest('.input-group').find('.item-qty');
+        var qty = parseInt($input.val());
+        console.log('clicked: dec qty');
+        if(qty > 1) {
+            $input.val(qty - 1);
+            updateOrderTable($(this).closest('tr'));
+        }
+    });
+
+    $(document).on('input', '#order-items-table tbody tr .item-qty', function(){
+        console.log('input: item qty');
+        var $row = $(this).closest('tr');
+        updateOrderTable($row);
+    });
+
+    function updateOrderTable($row) {
+        if(!$row) {
+            $('#order-items-table tbody tr').each(function() {
+                var $thisRow = $(this);
+                var qty = parseInt($thisRow.find('.item-qty').val());
+                var price = parseFloat($thisRow.find('.item-price').text());
+                var total = qty * price;
+                $thisRow.find('.item-total').text(total.toFixed(2));
+            });
+        } else {
+            var qty = parseInt($row.find('.item-qty').val());
+            var price = parseFloat($row.find('.item-price').text());
+            var total = qty * price;
+            $row.find('.item-total').text(total.toFixed(2));
+        }
+        calculateOrderSummary();
+    }
+
+    function calculateOrderSummary() {
+        var totalQty = 0;
+        var totalPrice = 0;
+        
+        $('#order-items-table tbody tr').each(function() {
+            var qty = parseInt($(this).find('.item-qty').val());
+            var total = parseFloat($(this).find('.item-total').text());
+
+            totalQty += qty;
+            totalPrice += total;
+        });
+
+        
+        $('#order-items-total_qty').text(`Total QTY: ${totalQty}`);
+        $('#order-items-total_price').text(`Total Price: ${totalPrice}`);
+
+        console.log('Total QTY:' + totalQty);
+        console.log('Total Price:' + totalPrice);
+
+    }
+
     function addItemToTable(id, name, unit, price) {
         var newRow = 
-                    '<tr>' +
-                        '<td>' + id + '</td>' +
+                    '<tr class="">' +
+                        '<td class="item-id">' + id + '</td>' +
                         '<td>' + name + '</td>' +
                         '<td>' + 
-                            '<div class="input-group input-group-sm pe-3">' + 
-                                '<button class="btn btn-outline-danger input-group-text">-</button>' + 
-                                '<input type="text" class="form-control">' + 
-                                '<button class="btn btn-outline-success input-group-text">+</button>' + 
+                            '<div class="input-group input-group-sm mh-100">' + 
+                                '<button class="btn btn-outline-danger input-group-text dec-qty">-</button>' + 
+                                '<input type="text" class="form-control item-qty text-center" value="1" inputmode="numeric">' + 
+                                '<button class="btn btn-outline-success input-group-text inc-qty">+</button>' + 
                             '</div>' + 
                         '</td>' +
-                        '<td>' + price + '</td>' +
-                        '<td>' + price + '</td>' +
-                        '<td><i class="bi bi-x-circle" id="order-item-remove"></i></td>'
+                        '<td class="item-price">' + price + '</td>' +
+                        '<td class="item-total">' + price + '</td>' +
+                        '<td class="text-center"><i class="bi bi-x-circle fs-6" id="order-item-remove"></i></td>'
                     '</tr>';
         
         $('#order-items-table tbody').append(newRow);
+        updateOrderTable();
     }
 });
 

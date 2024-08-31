@@ -91,30 +91,34 @@
                                     <ul id="item-suggestions" class="list-group mt-2 w-100 mh-100" style="display: none;"></ul>
                                 </div>
                             </div>
-                            <div class="col-12 d-flex justify-content-center">
-                                <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
-                            </div>
                             <div class="col-12">
                                 <div class="border rounded p-3">
                                     <table class="table" id="order-items-table">
-                                        <thead>
+                                        <thead class="table-primary">
                                             <tr>
                                                 <th class="text-center" scope="col" style="width: 5%;">ID</th>
                                                 <th scope="col" style="width: 30%;">Name</th>
                                                 <th scope="col" style="width: 20%;">QTY(cbm)</th>
                                                 <th scope="col" style="width: 20%;">Price</th>
                                                 <th scope="col" style="width: 20%;">TPrice</th>
-                                                <th class="d-none" scope="col" style="width: 5%;"></th>
+                                                <th class="" scope="col" style="width: 5%;"></th>
                                             </tr>
                                         </thead>
                                         <tbody class="">
-                                            
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="p-3 border rounded d-flex justify-content-between">
+                                    <div class="">
+                                        <button class="btn btn-outline fw-light" id="order-items-total_qty">Total QTY: 00</button>
+                                        <button class="btn btn-outline fw-light" id="order-items-total_price">Total Price: 00.00</button>
+                                    </div>
+                                    <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
+                                </div>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
