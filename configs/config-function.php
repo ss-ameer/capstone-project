@@ -66,6 +66,9 @@
                 case 'item search':
                     itemSearch();
                     break;
+                case 'create order':
+                    saveOrder();
+                    break;
                 default:
                     break;
             };
@@ -336,4 +339,67 @@
             $_SESSION['stock_active'] = $selected;
             echo'success';
 
+    }
+
+    function saveOrder() {
+        
+        global $conn;
+
+        mysqli_begin_transaction($conn);
+
+        try {
+            $client_name = $_POST['client_name'];
+            $client_number = $_POST['client_number'];
+            $client_email = $_POST['client_email'];
+
+            // client information
+            $insertClientQuery = "INSERT INTO clients (name, contact_number, email) VALUES (?, ?, ?)";
+            $stmt = $conn -> prepare($insertClientQuery);
+            $stmt -> bind_param("sss", $client_name, $client_number, $client_email);
+            $stmt -> execute();
+            $client_id = $conn -> insert_id;
+
+            // address information
+            $city = $_POST['address']['city'];
+            $barangay = $_POST['address']['barangay'];
+            $street = $_POST['address']['street'];
+            $number = $_POST['address']['number'];
+            
+            $insertAddressQuery = 'INSERT INTO addresses (client_id, city, barangay, street, house_number) VALUES (?, ?, ?, ?, ?)';
+            $stmt = $conn -> prepare($insertAddressQuery);
+            $stmt -> bind_param("issss", $client_id, $city, $barangay, $street, $number);
+            $stmt -> execute();
+            $address_id = $conn -> insert_id;
+
+            // order information
+            $total_amount = $_POST['total_amount'];
+            $total_qty = $_POST['total_qty'];
+            $insertOrderQuery = "INSERT INTO orders (client_id, address_id, total_qty, total_amount) VALUES (?, ?, ?, ?)";
+            $stmt = $conn -> prepare($insertOrderQuery);
+            $stmt -> bind_param("iiid", $client_id, $address_id, $total_qty, $total_amount);
+            $stmt -> execute();
+            $order_id = $conn -> insert_id;
+
+            // order item information
+            $order_items = $_POST['items'];
+
+            foreach($order_items as $item) {
+                $item_id = $item['item_id'];
+                $quantity = $item['quantity'];
+                $price = $item['price'];
+                $total = $item['total'];
+
+                $insertItemQuery = "INSERT INTO order_items (order_id, item_id, quantity, price, item_total) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $conn -> prepare($insertItemQuery);
+                $stmt -> bind_param("iiidd", $order_id, $item_id, $quantity, $price, $total);
+                $stmt -> execute();
+            }
+
+            mysqli_commit($conn);
+            echo json_encode(['status' => 'success', 'message' => 'Order saved successfully.']);
+
+        } catch(Exception $e) {
+            mysqli_rollback($conn);
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }

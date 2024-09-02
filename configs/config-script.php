@@ -405,15 +405,16 @@ $(document).ready(function(){
     $('#order-form').submit(function(event) {
         event.preventDefault();
 
-        var formData = $(this).serialize();
+        // var formData = $(this).serialize();
         var orderItems = [];
 
         $('#order-items-table tbody tr').each(function() {
+            var row = $(this);
             var item = {
-                item_id: $this.find('.item-id').text(),
-                quantity: $his.find('.item-qty').val(),
-                price: $this.find('.item-price').text(),
-                total: $this.find('.item-total').text()
+                item_id: row.find('.item-id').text(),
+                quantity: row.find('.item-qty').val(),
+                price: row.find('.item-price').text(),
+                total: row.find('.item-total').text()
             };
 
             orderItems.push(item);
@@ -424,23 +425,24 @@ $(document).ready(function(){
             client_name: $('#order-form-name').val(),
             client_number: $('#order-form-number').val(),
             client_email: $('#order-form-email').val(),
-
-
+            address: {
+                city: $('#order-form-address_city').val(),
+                barangay: $('#order-form-address_brgy').val(),
+                street: $('#order-form-address_street').val(),
+                number: $('#order-form-address_number').val(),
+            },
+            items: orderItems,
+            total_qty: parseInt($('#order-items-total_qty').val()),
+            total_amount: parseFloat($('#order-items-total_price').text()),
+            action: 'create order'
         }
-
-        //     city: $('#order-form-address_city').val,
-        //     barangay: $('order-form-address_barangay').val(),
-        //     street: $('#order-form-address_street').val(),
-        //     number: $('order-form-address_number').val(),
-        //     action: 'create order'
 
         $.ajax ({
             url: '../configs/config-function.php',
             type: 'POST',
-            data: data,
+            data: orderData,
             success: function(response) {
-                const orderId = response.order_id;
-                saveOrderItems(orderId);
+                console.log(response);
             },
             error: function() {
                 alert('An error occurred. Please try again.');
@@ -448,40 +450,6 @@ $(document).ready(function(){
         });
     });
 
-    // function saveOrderItems($orderId) {
-    //     let orderItems = [];
-
-    //     $('#order-items-table tbody tr').each(function() {
-    //         let item = {
-    //             // make sure you add this classess and id's
-    //             itemName = $(this).find('.item-name').val();
-    //             quantity = $(this).find('.item-qty').val();
-    //             price = $(this).find('.item-price').val();
-    //         }
-            
-    //         orderItems.push ({
-    //             item_id: itemId,
-    //             quantity: quantity,
-    //             price: price
-    //         });
-    //     });
-
-    //     $.ajax ({
-    //         url: '../configs/config-function.php',
-    //         type: 'POST',
-    //         data: {
-    //             order_id: orderId,
-    //             items: orderItems,
-    //             action: 'add order items'
-    //         },
-    //         success: function(response) {
-    //             console.log(response);
-    //         },
-    //         error: function() {
-    //             alert('An error occurred. Please try again.');
-    //         }
-    //     })
-    // }
 
     $(document).on('click', '#item-suggestions li', function(){
         var itemId = $(this).data('id');
@@ -500,6 +468,7 @@ $(document).ready(function(){
 
     $(document).on('click', '#order-item-remove', function() {
         $(this).closest('tr').remove();
+        // calculateOrderSummary();
     })
 
     $(document).on('click', '#order-items-table tbody tr .inc-qty', function(){
