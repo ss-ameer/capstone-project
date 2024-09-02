@@ -468,7 +468,7 @@ $(document).ready(function(){
 
     $(document).on('click', '#order-item-remove', function() {
         $(this).closest('tr').remove();
-        // calculateOrderSummary();
+        calculateOrderSummary();
     })
 
     $(document).on('click', '#order-items-table tbody tr .inc-qty', function(){
