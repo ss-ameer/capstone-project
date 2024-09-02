@@ -432,8 +432,8 @@ $(document).ready(function(){
                 number: $('#order-form-address_number').val(),
             },
             items: orderItems,
-            total_qty: parseInt($('#order-items-total_qty').val()),
-            total_amount: parseFloat($('#order-items-total_price').text()),
+            total_qty: parseInt($('#order-items-total_qty-input').val()),
+            total_amount: parseFloat($('#order-items-total_price-input').val()),
             action: 'create order'
         }
 
@@ -528,6 +528,9 @@ $(document).ready(function(){
         
         $('#order-items-total_qty').text(`Total QTY: ${totalQty}`);
         $('#order-items-total_price').text(`Total Price: ${totalPrice}`);
+
+        $('#order-items-total_qty-input').val(totalQty);
+        $('#order-items-total_price-input').val(totalPrice.toFixed(2));
 
         console.log('Total QTY:' + totalQty);
         console.log('Total Price:' + totalPrice);

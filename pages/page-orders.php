@@ -80,6 +80,11 @@
                                         <input type="text" class="form-control" id="order-form-email" placeholder="Email">
                                         <label for="order-form-email">Email</label>
                                     </div>
+
+                                    <div>
+                                        <input type="hidden" id="order-items-total_qty-input" name="total_qty" value="0">
+                                        <input type="hidden" id="order-items-total_price-input" name="total_amount" value="0.00">
+                                    </div>
                                 </form>
                             </div>
                             <div class="col-6">
