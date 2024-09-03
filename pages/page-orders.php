@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <form action="" id="order-form" class="border p-3 rounded" style="height: 50vh;">
+                                <form action="" id="order-form" class="border p-3 rounded" style="height: 50vh;" autocomplete="off">
                                     <div class="form-floating mb-1">
                                         <input type="text" class="form-control" id="order-form-name" placeholder="Client Name">
                                         <label for="order-form-name">Client Name</label>
