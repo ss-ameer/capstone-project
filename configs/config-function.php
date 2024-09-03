@@ -434,7 +434,7 @@
         global $conn;
 
         $query = $_POST['query'];
-        $searchQuery = "SELECT name FROM clients WHERE name LIKE ?";
+        $searchQuery = "SELECT name FROM clients WHERE name LIKE ? LIMIT 3";
         $stmt = $conn -> prepare($searchQuery);
         $searchTerm = '%' . $query . '%';
         $stmt -> bind_param("s", $searchTerm);
