@@ -463,6 +463,7 @@ $(document).ready(function(){
                 type: 'POST',
                 data: data,
                 success: function(response) {
+                    console.log(response);
                     var suggestions = JSON.parse(response);
                     var suggestionsList = $('#order-form-client-suggestions');
 
@@ -470,11 +471,9 @@ $(document).ready(function(){
 
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
-                            suggesstions.forEach(function(suggestion) {
-                                suggestionsList.appent('<li class="list-group-item suggestion-item">' + suggestion.name + '</li>');
-                            });
-                            suggestionsList.show();
+                            suggestionsList.append('<li class="list-group-item suggestion-item">' + suggestion.name + '</li>');
                         });
+                        suggestionsList.show();
                     } else {
                         suggestionsList.hide();
                     }

@@ -69,6 +69,9 @@
                 case 'create order':
                     saveOrder();
                     break;
+                case 'client search':
+                    searchClients();
+                    break;
                 default:
                     break;
             };
@@ -425,4 +428,23 @@
             mysqli_rollback($conn);
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
+    }
+
+    function searchClients() {
+        global $conn;
+
+        $query = $_POST['query'];
+        $searchQuery = "SELECT name FROM clients WHERE name LIKE ?";
+        $stmt = $conn -> prepare($searchQuery);
+        $searchTerm = '%' . $query . '%';
+        $stmt -> bind_param("s", $searchTerm);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $clients = [];
+        while ($row = $result -> fetch_assoc()) {
+            $clients[] = $row;
+        }
+
+        echo json_encode($clients);
     }
