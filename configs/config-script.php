@@ -450,6 +450,46 @@ $(document).ready(function(){
         });
     });
 
+    $('#order-form-name').on('input', function() {
+        var query = $(this).val();
+        var data = {
+            query: query,
+            action: 'client search'
+        };
+
+        if (query.length > 2) {
+            $.ajax({
+                url: '../configs/config-function.php',
+                type: 'POST',
+                data: data,
+                success: function(response) {
+                    var suggestions = JSON.parse(response);
+                    var suggestionsList = $('#order-form-client-suggestions');
+
+                    suggestionsList.empty();
+
+                    if (suggestions.length > 0) {
+                        suggestions.forEach(function(suggestion) {
+                            suggesstions.forEach(function(suggestion) {
+                                suggestionsList.appent('<li class="list-group-item suggestion-item">' + suggestion.name + '</li>');
+                            });
+                            suggestionsList.show();
+                        });
+                    } else {
+                        suggestionsList.hide();
+                    }
+                }
+            });
+        } else {
+            $('#order-form-client-suggestions').hide();
+        }
+    });
+
+    $(document).on('click', '.suggestion-item', function() {
+        var selectedName = $(this).text();
+        $('#order-form-name').val(selectedName);
+        $('#order-form-client-suggestions').hide();
+    });
 
     $(document).on('click', '#item-suggestions li', function(){
         var itemId = $(this).data('id');
