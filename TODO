@@ -104,7 +104,6 @@ To Fix:
         3. **Call `bindStockPreviewEvents()`** after the DOM is ready and after the content is reloaded.
         
         This should resolve the issue and make sure that you can select new items after they have been added to the list.
-
 To Add:
     Database:
         Tables:
@@ -117,8 +116,8 @@ To Add:
                 [x] order_items
             [] dispatch
             [] logs
-
     Main:
+        [x] Orders:
         [] Dispatch:
         [] Dashboard:
             Notes:
@@ -174,5 +173,8 @@ To Add:
                 User-Friendly Interface: Focus on a clean, intuitive design that makes it easy to find information and take action.
 
     Features:
+        [] Clear order forms and table when an order is successfully added.
         [] Show suggestions for clients and address.
         [] Remove item suggestion when the item is in the order items table.
+Additional Research:
+    
