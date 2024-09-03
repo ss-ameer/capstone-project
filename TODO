@@ -1,167 +1,178 @@
-Database:
-    Tables:
-        [x] dispatch officer
-        [x] trucks 
-        [x] items
-        [ ] orders
-        [ ] dispatch
-        [ ] logs
-Dashboard:
-    Notes:
-        1. Summary Metrics
-        Total Active Dispatches: Number of ongoing dispatches.
-        Available Trucks: Number of trucks ready for dispatch.
-        Drivers on Duty: Number of drivers currently active.
-        Pending Deliveries: Number of deliveries that are pending or delayed.
-        2. Recent Activity
-        Latest Dispatches: List of recent dispatches with details like destination, truck ID, driver name, and status.
-        Driver Activity: Recent logs of driver activities such as start/end of trips, breaks, etc.
-        3. Dispatch Map
-        Real-time Tracking Map: An interactive map showing the real-time location of all active trucks.
-        Route Information: Highlight routes for active dispatches and provide traffic updates.
-        4. Alerts and Notifications
-        Upcoming Deliveries: Alerts for deliveries that are due soon.
-        Maintenance Alerts: Notifications for trucks that require maintenance or have scheduled check-ups.
-        Incident Reports: Notifications for any incidents reported by drivers.
-        5. Performance Metrics
-        Delivery Time: Average delivery time over the last week/month.
-        Fuel Consumption: Average fuel consumption for the fleet.
-        Distance Covered: Total distance covered by all trucks in a given period.
-        6. Driver Information
-        Driver Availability: Status of drivers (available, on duty, on break, etc.).
-        Performance Metrics: Driver performance metrics such as on-time delivery rate, driving hours, and customer feedback.
-        7. Fleet Status
-        Truck Status: Overview of the fleet with status indicators (on route, in maintenance, idle, etc.).
-        Maintenance Schedule: Upcoming maintenance schedules and history for each truck.
-        8. Customer Information
-        Active Contracts: List of active contracts and their status.
-        Recent Feedback: Customer feedback and ratings for recent deliveries.
-        9. Revenue Metrics
-        Earnings Overview: Total earnings from dispatches over a period.
-        Profit Margins: Overview of profit margins for recent dispatches.
-        10. Task Management
-        To-Do List: List of tasks to be completed by the dispatcher or drivers.
-        Upcoming Tasks: Scheduled tasks and deadlines.
-        Additional Features:
-        Search and Filter: Ability to search and filter dispatches, drivers, and trucks based on different criteria.
-        Customizable Widgets: Allow users to customize the dashboard by adding/removing widgets according to their needs.
-        Reports and Analytics: Generate and download reports for detailed analytics.
-        Example Layout
-        Header: Quick summary metrics.
-        Left Sidebar: Navigation links (e.g., Dashboard, Dispatches, Trucks, Drivers, Reports, Settings).
-        Main Section:
-        Top: Summary Metrics, Alerts.
-        Middle Left: Real-time Tracking Map.
-        Middle Right: Recent Activity.
-        Bottom: Detailed Performance Metrics, Task Management.
-        Implementation Tips:
-        Responsive Design: Ensure the dashboard is responsive and works well on different devices.
-        Real-time Updates: Use technologies like WebSockets or AJAX for real-time data updates.
-        User-Friendly Interface: Focus on a clean, intuitive design that makes it easy to find information and take action.
-
 To Fix:
-[ ] master-stock-preview, table refresh and stock select conflict
-    Note: 
-    To resolve the issue where you can't select an item after adding a new one, there are a few key areas to check:
+    [x] master-stock-preview, table refresh and stock select conflict
+        Note: 
+        To resolve the issue where you can't select an item after adding a new one, there are a few key areas to check:
 
-    ### 1. **Check `#master-stock-preview` Refresh Mechanism**
-    After adding a new item, you attempt to reload the `#master-stock-preview` element with this code:
-    ```javascript
-    $('#master-stock-preview').load(' #master-stock-preview');
-    ```
-    However, this might not fully reload the `tbody` element with the new item.
-    
-    ### 2. **Bind Event Listeners After Content Reload**
-    Event listeners for dynamically loaded content might not work if they are not correctly bound after content is refreshed. Ensure that any `click` events are correctly reattached to the dynamically loaded content.
-    
-    ### Solution
-    1. **Replace the `#master-stock-preview` reload mechanism** with a full reload or proper `load` function.
-    
-    2. **Rebind event listeners** after reloading the content.
-    
-    ### Code Fix
-    
-    Here's how you can modify the script:
-    
-    ```javascript
-    $(document).ready(function(){
-    
-        function reloadStockPreview() {
-            $('#master-stock-preview').load(' #master-stock-preview > *', function() {
-                bindStockPreviewEvents();
-            });
-        }
-    
-        function bindStockPreviewEvents() {
-            // Bind click event to newly loaded items
-            $('#master-stock-preview tbody').on('click', 'tr', function(event){
-                event.preventDefault();
-                
-                var classes = 'table-active';
-    
-                $('.item').removeClass(classes);
-                $(this).addClass(classes);
-    
-                stockSelect($(this).data('id_item'));
-    
-                var id = $(this).find('td').eq(0).text();
-                var name = $(this).find('td').eq(1).text();
-                var category = $(this).find('td').eq(2).text();
-                var price = $(this).find('td').eq(3).text();
-                var description = $(this).find('td').eq(5).text();
-    
-                $('#item-edit_id').val(id);
-                $('#item-edit_name').val(name);
-                $('#item-edit_category').val(category);
-                $('#item-edit_price').val(price);
-                $('#item-edit_desc').val(description);
-            });
-        }
-    
-        // Initial binding of events
-        bindStockPreviewEvents();
-    
-        function itemAdd() {
-            var data = {
-                item_name: $('#item-add_name').val(),
-                item_category: $('#item-add_category').val(),
-                item_uom: $('#item-add_uom').val(),
-                item_price: $('#item-add_price').val(),
-                item_desc: $('#item-add_desc').val(),
-                action: 'item add'
-            };
-    
-            $.ajax({
-                url: '../configs/config-function.php',
-                type: 'POST',
-                data: data,
-                success: function(response) {
-                    if (response === 'success') {
-                        reloadStockPreview();
-                        $('#item-add-form')[0].reset();
-                        alert(data['item_name'] + ' successfully added.');
-                    } else {
-                        alert('Failed to add item.');
+        ### 1. **Check `#master-stock-preview` Refresh Mechanism**
+        After adding a new item, you attempt to reload the `#master-stock-preview` element with this code:
+        ```javascript
+        $('#master-stock-preview').load(' #master-stock-preview');
+        ```
+        However, this might not fully reload the `tbody` element with the new item.
+        
+        ### 2. **Bind Event Listeners After Content Reload**
+        Event listeners for dynamically loaded content might not work if they are not correctly bound after content is refreshed. Ensure that any `click` events are correctly reattached to the dynamically loaded content.
+        
+        ### Solution
+        1. **Replace the `#master-stock-preview` reload mechanism** with a full reload or proper `load` function.
+        
+        2. **Rebind event listeners** after reloading the content.
+        
+        ### Code Fix
+        
+        Here's how you can modify the script:
+        
+        ```javascript
+        $(document).ready(function(){
+        
+            function reloadStockPreview() {
+                $('#master-stock-preview').load(' #master-stock-preview > *', function() {
+                    bindStockPreviewEvents();
+                });
+            }
+        
+            function bindStockPreviewEvents() {
+                // Bind click event to newly loaded items
+                $('#master-stock-preview tbody').on('click', 'tr', function(event){
+                    event.preventDefault();
+                    
+                    var classes = 'table-active';
+        
+                    $('.item').removeClass(classes);
+                    $(this).addClass(classes);
+        
+                    stockSelect($(this).data('id_item'));
+        
+                    var id = $(this).find('td').eq(0).text();
+                    var name = $(this).find('td').eq(1).text();
+                    var category = $(this).find('td').eq(2).text();
+                    var price = $(this).find('td').eq(3).text();
+                    var description = $(this).find('td').eq(5).text();
+        
+                    $('#item-edit_id').val(id);
+                    $('#item-edit_name').val(name);
+                    $('#item-edit_category').val(category);
+                    $('#item-edit_price').val(price);
+                    $('#item-edit_desc').val(description);
+                });
+            }
+        
+            // Initial binding of events
+            bindStockPreviewEvents();
+        
+            function itemAdd() {
+                var data = {
+                    item_name: $('#item-add_name').val(),
+                    item_category: $('#item-add_category').val(),
+                    item_uom: $('#item-add_uom').val(),
+                    item_price: $('#item-add_price').val(),
+                    item_desc: $('#item-add_desc').val(),
+                    action: 'item add'
+                };
+        
+                $.ajax({
+                    url: '../configs/config-function.php',
+                    type: 'POST',
+                    data: data,
+                    success: function(response) {
+                        if (response === 'success') {
+                            reloadStockPreview();
+                            $('#item-add-form')[0].reset();
+                            alert(data['item_name'] + ' successfully added.');
+                        } else {
+                            alert('Failed to add item.');
+                        }
                     }
-                }
+                });
+            }
+        
+            // Form submission for adding an item
+            $('#item-add-form').submit(function(event){
+                event.preventDefault();
+                itemAdd();
             });
-        }
-    
-        // Form submission for adding an item
-        $('#item-add-form').submit(function(event){
-            event.preventDefault();
-            itemAdd();
+        
+            // Other event bindings...
         });
-    
-        // Other event bindings...
-    });
-    ```
-    
-    ### Explanation:
-    1. **reloadStockPreview() Function**: This reloads the `#master-stock-preview` container and rebinds the event listeners after the content has been reloaded.
-    
-    2. **bindStockPreviewEvents() Function**: This function is responsible for attaching click events to each item row. This ensures that newly added items are selectable.
-    
-    3. **Call `bindStockPreviewEvents()`** after the DOM is ready and after the content is reloaded.
-    
-    This should resolve the issue and make sure that you can select new items after they have been added to the list.
+        ```
+        
+        ### Explanation:
+        1. **reloadStockPreview() Function**: This reloads the `#master-stock-preview` container and rebinds the event listeners after the content has been reloaded.
+        
+        2. **bindStockPreviewEvents() Function**: This function is responsible for attaching click events to each item row. This ensures that newly added items are selectable.
+        
+        3. **Call `bindStockPreviewEvents()`** after the DOM is ready and after the content is reloaded.
+        
+        This should resolve the issue and make sure that you can select new items after they have been added to the list.
+
+To Add:
+    Database:
+        Tables:
+            [x] dispatch officer
+            [x] trucks 
+            [x] items
+            [x] orders
+                [x] client
+                [x] addresses
+                [x] order_items
+            [] dispatch
+            [] logs
+
+    Main:
+        [] Dispatch:
+        [] Dashboard:
+            Notes:
+                1. Summary Metrics
+                Total Active Dispatches: Number of ongoing dispatches.
+                Available Trucks: Number of trucks ready for dispatch.
+                Drivers on Duty: Number of drivers currently active.
+                Pending Deliveries: Number of deliveries that are pending or delayed.
+                2. Recent Activity
+                Latest Dispatches: List of recent dispatches with details like destination, truck ID, driver name, and status.
+                Driver Activity: Recent logs of driver activities such as start/end of trips, breaks, etc.
+                3. Dispatch Map
+                Real-time Tracking Map: An interactive map showing the real-time location of all active trucks.
+                Route Information: Highlight routes for active dispatches and provide traffic updates.
+                4. Alerts and Notifications
+                Upcoming Deliveries: Alerts for deliveries that are due soon.
+                Maintenance Alerts: Notifications for trucks that require maintenance or have scheduled check-ups.
+                Incident Reports: Notifications for any incidents reported by drivers.
+                5. Performance Metrics
+                Delivery Time: Average delivery time over the last week/month.
+                Fuel Consumption: Average fuel consumption for the fleet.
+                Distance Covered: Total distance covered by all trucks in a given period.
+                6. Driver Information
+                Driver Availability: Status of drivers (available, on duty, on break, etc.).
+                Performance Metrics: Driver performance metrics such as on-time delivery rate, driving hours, and customer feedback.
+                7. Fleet Status
+                Truck Status: Overview of the fleet with status indicators (on route, in maintenance, idle, etc.).
+                Maintenance Schedule: Upcoming maintenance schedules and history for each truck.
+                8. Customer Information
+                Active Contracts: List of active contracts and their status.
+                Recent Feedback: Customer feedback and ratings for recent deliveries.
+                9. Revenue Metrics
+                Earnings Overview: Total earnings from dispatches over a period.
+                Profit Margins: Overview of profit margins for recent dispatches.
+                10. Task Management
+                To-Do List: List of tasks to be completed by the dispatcher or drivers.
+                Upcoming Tasks: Scheduled tasks and deadlines.
+                Additional Features:
+                Search and Filter: Ability to search and filter dispatches, drivers, and trucks based on different criteria.
+                Customizable Widgets: Allow users to customize the dashboard by adding/removing widgets according to their needs.
+                Reports and Analytics: Generate and download reports for detailed analytics.
+                Example Layout
+                Header: Quick summary metrics.
+                Left Sidebar: Navigation links (e.g., Dashboard, Dispatches, Trucks, Drivers, Reports, Settings).
+                Main Section:
+                Top: Summary Metrics, Alerts.
+                Middle Left: Real-time Tracking Map.
+                Middle Right: Recent Activity.
+                Bottom: Detailed Performance Metrics, Task Management.
+                Implementation Tips:
+                Responsive Design: Ensure the dashboard is responsive and works well on different devices.
+                Real-time Updates: Use technologies like WebSockets or AJAX for real-time data updates.
+                User-Friendly Interface: Focus on a clean, intuitive design that makes it easy to find information and take action.
+
+    Features:
+        [] Show suggestions for clients and address.
+        [] Remove item suggestion when the item is in the order items table.
