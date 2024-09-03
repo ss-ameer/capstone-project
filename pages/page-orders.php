@@ -50,6 +50,7 @@
                                     <div class="form-floating mb-1">
                                         <input type="text" class="form-control" id="order-form-name" placeholder="Client Name">
                                         <label for="order-form-name">Client Name</label>
+                                        <ul id="order-form-client-suggestions" class="list-group position-absolute w-100" style="display:none"><li>hi tangina mo</li></ul>
                                     </div>
                                     <!-- address -->
                                     <div class="input-group mb-1">
