@@ -348,28 +348,51 @@
         mysqli_begin_transaction($conn);
 
         try {
+            // client information
             $client_name = $_POST['client_name'];
             $client_number = $_POST['client_number'];
             $client_email = $_POST['client_email'];
 
-            // client information
-            $insertClientQuery = "INSERT INTO clients (name, contact_number, email) VALUES (?, ?, ?)";
-            $stmt = $conn -> prepare($insertClientQuery);
+            $checkClientQuery = "SELECT client_id FROM clients WHERE name = ? AND contact_number = ? AND email = ?";
+
+            $stmt = $conn -> prepare($checkClientQuery);
             $stmt -> bind_param("sss", $client_name, $client_number, $client_email);
             $stmt -> execute();
-            $client_id = $conn -> insert_id;
+            $stmt -> store_result();
+
+            if ($stmt -> num_rows > 0) {
+                $stmt -> bind_result($client_id);
+                $stmt -> fetch();
+            } else {
+                $insertClientQuery = "INSERT INTO clients (name, contact_number, email) VALUES (?, ?, ?)";
+                $stmt = $conn -> prepare($insertClientQuery);
+                $stmt -> bind_param("sss", $client_name, $client_number, $client_email);
+                $stmt -> execute();
+                $client_id = $conn -> insert_id;
+            }
 
             // address information
             $city = $_POST['address']['city'];
             $barangay = $_POST['address']['barangay'];
             $street = $_POST['address']['street'];
             $number = $_POST['address']['number'];
-            
-            $insertAddressQuery = 'INSERT INTO addresses (client_id, city, barangay, street, house_number) VALUES (?, ?, ?, ?, ?)';
-            $stmt = $conn -> prepare($insertAddressQuery);
+
+            $checkAddressQuery = "SELECT address_id FROM addresses WHERE client_id = ? AND city = ? AND barangay = ? AND street = ? AND house_number = ?";
+            $stmt = $conn -> prepare($checkAddressQuery);
             $stmt -> bind_param("issss", $client_id, $city, $barangay, $street, $number);
             $stmt -> execute();
-            $address_id = $conn -> insert_id;
+            $stmt -> store_result();
+
+            if ($stmt -> num_rows() > 0) {
+                $stmt -> bind_result($address_id);
+                $stmt -> fetch();
+            } else {
+                $insertAddressQuery = 'INSERT INTO addresses (client_id, city, barangay, street, house_number) VALUES (?, ?, ?, ?, ?)';
+                $stmt = $conn -> prepare($insertAddressQuery);
+                $stmt -> bind_param("issss", $client_id, $city, $barangay, $street, $number);
+                $stmt -> execute();
+                $address_id = $conn -> insert_id;
+            }
 
             // order information
             $total_amount = $_POST['total_amount'];
