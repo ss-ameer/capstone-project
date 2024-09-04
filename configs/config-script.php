@@ -471,7 +471,7 @@ $(document).ready(function(){
 
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
-                            suggestionsList.append('<li class="list-group-item suggestion-item">' + suggestion.name + '</li>');
+                            suggestionsList.append('<li class="list-group-item client-suggestion-item">' + suggestion.name + '</li>');
                         });
                         suggestionsList.show();
                     } else {
@@ -484,7 +484,7 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('click', '.suggestion-item', function() {
+    $(document).on('click', '.client-suggestion-item', function() {
         var selectedName = $(this).text();
         $('#order-form-name').val(selectedName);
         $('#order-form-client-suggestions').hide();

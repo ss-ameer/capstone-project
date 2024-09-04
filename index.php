@@ -18,6 +18,7 @@
                     break;
                 case 'stock':
                     header('Location: pages/page-stock.php');
+                    break;
                 case 'orders':
                         header('Location: pages/page-orders.php');
                 default:

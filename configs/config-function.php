@@ -333,8 +333,9 @@
         if ($_SESSION['sidenav_active'] != $selected) {
             $_SESSION['sidenav_active'] = $selected;
             echo'success';
-        } else echo 'failed';
-
+        } else {
+            echo 'failed ';
+        }
     }
 
     function selectStock($selected) {
@@ -344,6 +345,7 @@
 
     }
 
+    // orders
     function saveOrder() {
         
         global $conn;
@@ -476,6 +478,7 @@
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+    
 
     function searchClients() {
         global $conn;

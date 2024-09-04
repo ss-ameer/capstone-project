@@ -17,7 +17,7 @@
     <!-- javascript -->
     <script src="<?php echo ROOT . 'imports/bootstrap/js/bootstrap.bundle.js'?>"></script>
     <script src="<?php echo ROOT . 'imports/jquery/jquery-3.7.1.min.js' ?>"></script>
-    <?php include_once(PATH . 'configs/config-script.php'); ?>
+    <?php include_once PATH . 'configs/config-script.php'; ?>
 
 </head>
 <body>

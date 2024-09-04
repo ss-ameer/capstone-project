@@ -74,7 +74,7 @@
                                     </div>
                                     <!-- contact -->
                                     <div class="form-floating mb-1">
-                                        <input type="text" class="form-control" id="order-form-number" placeholder="Contact Number">
+                                        <input type="number" class="form-control" id="order-form-number" placeholder="Contact Number">
                                         <label for="order-form-numer">Contact Number</label>
                                     </div>
                                     <div class="form-floating">
@@ -136,3 +136,4 @@
     </footer>
 </body>
 </html>
+
