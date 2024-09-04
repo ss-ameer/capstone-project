@@ -356,22 +356,67 @@
             $client_number = $_POST['client_number'];
             $client_email = $_POST['client_email'];
 
-            $checkClientQuery = "SELECT client_id FROM clients WHERE name = ? AND contact_number = ? AND email = ?";
-
+            $checkClientQuery = "SELECT client_id FROM clients WHERE name = ?";
             $stmt = $conn -> prepare($checkClientQuery);
-            $stmt -> bind_param("sss", $client_name, $client_number, $client_email);
+            $stmt -> bind_param("s", $client_name);
             $stmt -> execute();
             $stmt -> store_result();
 
             if ($stmt -> num_rows > 0) {
                 $stmt -> bind_result($client_id);
                 $stmt -> fetch();
+                
+                // contact information
+                // checking mobile number
+                $checkContactQuery = "SELECT id FROM contacts WHERE client_id = ? AND contact_type = ? AND contact_value = ?";
+                $stmt = $conn -> prepare($checkContactQuery);
+
+                $contactType = 'phone';
+                $stmt -> bind_param("isi", $client_id, $contactType, $client_number);
+                $stmt -> execute();
+                $stmt -> store_result();
+
+                // inserting if number does not exist
+                if ($stmt -> num_rows == 0) {
+                    $insertContactQuery = "INSERT INTO contacts (client_id, contact_type, contact_value) VALUES (?,?, ?)";
+                    $stmt = $conn -> prepare($insertContactQuery);
+                    $stmt -> bind_param("isi", $client_id, $contactType, $client_number);
+                    $stmt -> execute();
+                }
+
+                // checking email address
+                $contactType = 'email';
+                $stmt -> bind_param("iss", $client_id, $contactType, $client_email);
+                $stmt -> execute();
+                $stmt -> store_result();
+
+                if ($stmt -> num_rows == 0) {
+                    $insertContactQuery = $stmt = $conn -> prepare($insertContactQuery);
+                    $stmt -> bind_param("iss", $client_id, $contactType, $client_email);
+                    $stmt -> execute();
+                }
+
             } else {
-                $insertClientQuery = "INSERT INTO clients (name, contact_number, email) VALUES (?, ?, ?)";
+                // insert a new client
+                $insertClientQuery = "INSERT INTO clients (name) VALUES (?)";
                 $stmt = $conn -> prepare($insertClientQuery);
-                $stmt -> bind_param("sss", $client_name, $client_number, $client_email);
+                $stmt -> bind_param("s", $client_name);
                 $stmt -> execute();
                 $client_id = $conn -> insert_id;
+
+                $insertContactQuery = "INSERT INTO contacts (client_id, contact_type, contact_value) VALUES (?, ?, ?)";
+                
+                // phone number
+                $contactType = 'phone';
+                $stmt = $conn->prepare($insertContactQuery);
+                $stmt->bind_param("iss", $client_id, $contactType, $client_number);
+                $stmt->execute();
+
+                // email
+                $contactType = 'email';
+                $stmt = $conn->prepare($insertContactQuery);
+                $stmt->bind_param("iss", $client_id, $contactType, $client_email);
+                $stmt->execute();
             }
 
             // address information
@@ -420,6 +465,8 @@
                 $stmt -> bind_param("iiidd", $order_id, $item_id, $quantity, $price, $total);
                 $stmt -> execute();
             }
+
+            $stmt -> close();
 
             mysqli_commit($conn);
             echo json_encode(['status' => 'success', 'message' => 'Order saved successfully.']);
