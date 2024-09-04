@@ -118,6 +118,91 @@ To Add:
             [] logs
     Main:
         [x] Orders:
+            [] Autofill the orders form
+            Notes:
+                    Modify the Backend: Update your searchClients function or create a new function that retrieves not just the client details but also the most recent address, phone number, and email.
+                    
+                    Update the AJAX Request: Adjust your frontend code to handle and display the autofill data.
+                    
+                    Step 1: Update the Backend
+                    Let's modify the backend function to return the client's latest contact and address information.
+                    
+                    php
+                    Copy code
+                    function getClientDetails($client_id) {
+                        global $conn;
+                    
+                        // Query for client details
+                        $clientQuery = "SELECT c.client_id, c.name, 
+                                              (SELECT contact_value FROM contacts WHERE client_id = c.client_id AND contact_type = 'phone' ORDER BY id DESC LIMIT 1) AS latest_phone,
+                                              (SELECT contact_value FROM contacts WHERE client_id = c.client_id AND contact_type = 'email' ORDER BY id DESC LIMIT 1) AS latest_email,
+                                              (SELECT CONCAT(a.city, ', ', a.barangay, ', ', a.street, ', ', a.house_number) 
+                                                FROM addresses a 
+                                                WHERE a.client_id = c.client_id 
+                                                ORDER BY address_id DESC 
+                                                LIMIT 1) AS latest_address
+                                       FROM clients c 
+                                       WHERE c.client_id = ?";
+                        
+                        $stmt = $conn->prepare($clientQuery);
+                        $stmt->bind_param("i", $client_id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                    
+                        if ($result->num_rows > 0) {
+                            return $result->fetch_assoc();
+                        } else {
+                            return null;
+                        }
+                    }
+                    Step 2: Modify the AJAX Request
+                    Now, modify your AJAX request to fetch and autofill the latest client details when a client is selected from the suggestions.
+                    
+                    javascript
+                    Copy code
+                    $('#client-suggestions').on('click', '.suggestion-item', function() {
+                        var client_id = $(this).data('client-id');
+                    
+                        $.ajax({
+                            url: '../configs/config-function.php',
+                            type: 'POST',
+                            data: {
+                                action: 'getClientDetails',
+                                client_id: client_id
+                            },
+                            success: function(response) {
+                                var data = JSON.parse(response);
+                    
+                                if (data.status === 'success') {
+                                    // Autofill client details
+                                    $('#order-form-number').val(data.latest_phone);
+                                    $('#order-form-email').val(data.latest_email);
+                                    $('#order-form-address').val(data.latest_address); // Update this with your specific form fields
+                                } else {
+                                    alert('Error fetching client details.');
+                                }
+                            },
+                            error: function() {
+                                alert('An error occurred. Please try again.');
+                            }
+                        });
+                    });
+                    Step 3: Handle the Response in PHP
+                    In your config-function.php, add a case to handle this new action:
+                    
+                    php
+                    Copy code
+                    if ($_POST['action'] == 'getClientDetails') {
+                        $client_id = $_POST['client_id'];
+                        $clientDetails = getClientDetails($client_id);
+                    
+                        if ($clientDetails) {
+                            echo json_encode(['status' => 'success', 'data' => $clientDetails]);
+                        } else {
+                            echo json_encode(['status' => 'error', 'message' => 'Client details not found.']);
+                        }
+                    }
+                    This setup will allow your form to be automatically populated with the most recent address, phone number, and email of the selected client, improving the efficiency of your dispatch system.
         [] Dispatch:
         [] Dashboard:
             Notes:
@@ -174,7 +259,11 @@ To Add:
 
     Features:
         [] Clear order forms and table when an order is successfully added.
-        [] Show suggestions for clients and address.
+        [-] Show suggestions for clients and address.
+        [] Autofill the most recet client address and contact info.
         [] Remove item suggestion when the item is in the order items table.
 Additional Research:
+
+Zen:
+    // what i want to do now is to also autofill the most recet address, number, and email of the selected client in the client suggestion.
     
