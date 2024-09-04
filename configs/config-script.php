@@ -471,7 +471,7 @@ $(document).ready(function(){
 
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
-                            suggestionsList.append('<li class="list-group-item client-suggestion-item">' + suggestion.name + '</li>');
+                            suggestionsList.append('<li class="list-group-item client-suggestion-item" data-id="' + suggestion.client_id + '">' + suggestion.name + '</li>');
                         });
                         suggestionsList.show();
                     } else {
