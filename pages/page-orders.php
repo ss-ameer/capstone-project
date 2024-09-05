@@ -25,6 +25,61 @@
         
     </header>
     <main>
+        <!-- modal -->
+        <div class="modal fade" id="orderPreviewModal" tabindex="-1" aria-labelledby="orderPreviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderPreviewLabel">Order Preview</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <!-- client info -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <h6>Client Information</h6>
+                                    <p id="preview-client-name">Name: </p>
+                                    <p id="preview-client-address">Address: </p>
+                                    <p id="preview-client-phone">Phone: </p>
+                                    <p id="preview-client-email">Email: </p>
+                                </div>
+                            </div>
+                            <!-- order items section -->
+                            <div class="row">
+                                <div class="col">
+                                    <h6>Order Items</h6>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Quantity(cbm)</th>
+                                                <th>Price</th>
+                                                <th>Total Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="preview-order-items">
+                                            <!-- orders will be dynamically added -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- totals section -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <p id="preview-total-qty">Total Quantity: </p>
+                                    <p id="preview-total-price">Total Price: </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="container-fluid vh-100">
             <div class="row h-100">
@@ -122,6 +177,7 @@
                                         <button class="btn btn-outline fw-light" id="order-items-total_price">Total Price: 00.00</button>
                                     </div>
                                     <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
+                                    <button type="button" class="btn btn-primary" id="preview-order-btn" data-bs-toggle="modal" data-bs-target="#orderPreviewModal">Order Preview</button>
                                 </div>
                             </div>
                         </div>
