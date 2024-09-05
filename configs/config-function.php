@@ -72,6 +72,9 @@
                 case 'client search':
                     searchClients();
                     break;
+                case 'get client info':
+                    getClientInfo();
+                    break;
                 default:
                     break;
             };
@@ -478,13 +481,51 @@
             echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
-    
+
+    function getClientInfo() {
+        global $conn;
+        $client_id = $_POST['client_id'];
+
+        $clientQuery = 
+        "SELECT c.client_id, c.name,
+            (SELECT contact_value FROM contacts WHERE client_id = c.client_id AND contact_type = 'phone' ORDER BY id DESC LIMIT 1) AS latest_phone,
+            (SELECT contact_value FROM contacts WHERE client_id = c.client_id AND contact_type = 'email' ORDER BY id DESC LIMIT 1) AS latest_email,
+            (SELECT a.city FROM addresses a WHERE a.client_id = c.client_id ORDER BY address_id DESC LIMIT 1) AS latest_city,
+            (SELECT a.barangay FROM addresses a WHERE a.client_id = c.client_id ORDER BY address_id DESC LIMIT 1) AS latest_barangay,
+            (SELECT a.street FROM addresses a WHERE a.client_id = c.client_id ORDER BY address_id DESC LIMIT 1) AS latest_street,
+            (SELECT a.house_number FROM addresses a WHERE a.client_id = c.client_id ORDER BY address_id DESC LIMIT 1) AS latest_house_number
+        FROM clients c
+        WHERE c.client_id = ?";
+
+        $stmt = $conn -> prepare($clientQuery);
+        $stmt -> bind_param("i", $client_id);
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        if ($result -> num_rows > 0) {
+            $client_info = $result -> fetch_assoc();
+            echo json_encode([
+                'success' => true,
+                'client_name' => $client_info['name'],
+                'address' => [
+                    'city' => $client_info['latest_city'],
+                    'barangay' => $client_info['latest_barangay'],
+                    'street' => $client_info['latest_street'],
+                    'house_number' => $client_info['latest_house_number']
+                ],
+                'phone' => $client_info['latest_phone'],
+                'email' => $client_info['latest_email']
+            ]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
+    }
 
     function searchClients() {
         global $conn;
 
         $query = $_POST['query'];
-        $searchQuery = "SELECT name FROM clients WHERE name LIKE ? LIMIT 3";
+        $searchQuery = "SELECT * FROM clients WHERE name LIKE ? LIMIT 3";
         $stmt = $conn -> prepare($searchQuery);
         $searchTerm = '%' . $query . '%';
         $stmt -> bind_param("s", $searchTerm);

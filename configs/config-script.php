@@ -471,7 +471,7 @@ $(document).ready(function(){
 
                     if (suggestions.length > 0) {
                         suggestions.forEach(function(suggestion) {
-                            suggestionsList.append('<li class="list-group-item client-suggestion-item" data-id="' + suggestion.client_id + '">' + suggestion.name + '</li>');
+                            suggestionsList.append('<li class="list-group-item client-suggestion-item" data-client-id="' + suggestion.client_id + '">' + suggestion.name + '</li>');
                         });
                         suggestionsList.show();
                     } else {
@@ -485,9 +485,47 @@ $(document).ready(function(){
     });
 
     $(document).on('click', '.client-suggestion-item', function() {
-        var selectedName = $(this).text();
-        $('#order-form-name').val(selectedName);
-        $('#order-form-client-suggestions').hide();
+        var client_id = $(this).data('client-id');
+        var data = {
+            client_id: client_id,
+            action: 'get client info'
+        };
+
+        // $('#order-form-name').val(selectedName);
+        if (client_id) {
+            $.ajax({
+                type: 'POST',
+                url: '../configs/config-function.php',
+                data: data,
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response.success);
+                    if (response.success) {
+                        $('#order-form-name').val(response.client_name);
+                        $('#order-form-number').val(response.phone);
+                        $('#order-form-email').val(response.email);
+                        $('#order-form-address_city').val(response.address.city);
+                        $('#order-form-address_brgy').val(response.address.barangay);
+                        $('#order-form-address_street').val(response.address.street);
+                        $('#order-form-address_number').val(response.address.house_number);
+                        $('#order-form-client-suggestions').hide();
+                        // console.log('success')
+                        console.log(response.client_name);
+                        console.log(response.phone);
+                        console.log(response.email);
+                        console.log(response.address.street);
+
+                    } else {
+                        console.error('No client info found.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ', status, error);  // Log the error
+                    console.log(xhr.responseText);  // Log the server response for debugging
+                    console.log('failed')
+                }
+            })
+        } else { console.log('error') };
     });
 
     $(document).on('click', '#item-suggestions li', function(){
