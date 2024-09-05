@@ -603,8 +603,8 @@ $(document).ready(function(){
         });
 
         
-        $('#order-items-total_qty').text(`Total QTY: ${totalQty}`);
-        $('#order-items-total_price').text(`Total Price: ${totalPrice}`);
+        $('#order-items-total_qty span').text(`${totalQty}`);
+        $('#order-items-total_price span').text(`${totalPrice}`);
 
         $('#order-items-total_qty-input').val(totalQty);
         $('#order-items-total_price-input').val(totalPrice.toFixed(2));
@@ -634,6 +634,40 @@ $(document).ready(function(){
         $('#order-items-table tbody').append(newRow);
         updateOrderTable();
     }
+
+    $('#preview-order-btn').on('click', function() {
+        $('#preview-client-name').text('Name: ' + $('#order-form-name').val());
+        $('#preview-client-address').text('Address: ' + 
+            $('#order-form-address_number').val() + ', ' +
+            $('#order-form-address_street').val() + ' Street' + ', ' +
+            $('#order-form-address_brgy').val() + ', ' +
+            $('#order-form-address_city').val() 
+        );
+        $('#preview-client-phone').text('Phone: ' + $('#order-form-number').val());
+        $('#preview-client-email').text('Email: ' + $('#order-form-email').val());
+
+        let itemsHtml = '';
+        $('#order-items-table tbody tr').each(function() {
+            let itemId = $(this).find('td').eq(0).text();
+            let itemName = $(this).find('td').eq(1).text();
+            let itemQty = $(this).find('.item-qty').val();
+            let itemPrice = $(this).find('td').eq(3).text();
+            let itemTotalPrice = $(this).find('td').eq(4).text();
+
+            itemsHtml += 
+            `<tr>
+                <td>${itemId}</td>
+                <td>${itemName}</td>
+                <td>${itemQty}</td>
+                <td>${itemPrice}</td>
+                <td>${itemTotalPrice}</td>
+            </tr>`;
+        });
+        $('#preview-order-items').html(itemsHtml);
+
+        $('#preview-total-qty').text('Total Quantity: ' + $('#order-items-total_qty span').text());
+        $('#preview-total-price').text('Total Price: ' + $('#order-items-total_price span').text());
+    });
 });
 
 </script>

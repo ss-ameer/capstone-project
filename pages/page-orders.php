@@ -173,8 +173,8 @@
                             <div class="col-12">
                                 <div class="p-3 border rounded d-flex justify-content-between">
                                     <div class="">
-                                        <button class="btn btn-outline fw-light" id="order-items-total_qty">Total QTY: 00</button>
-                                        <button class="btn btn-outline fw-light" id="order-items-total_price">Total Price: 00.00</button>
+                                        <button class="btn btn-outline fw-light" id="order-items-total_qty">Total QTY: <span>00</span></button>
+                                        <button class="btn btn-outline fw-light" id="order-items-total_price">Total Price: <span>00.00</span></button>
                                     </div>
                                     <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
                                     <button type="button" class="btn btn-primary" id="preview-order-btn" data-bs-toggle="modal" data-bs-target="#orderPreviewModal">Order Preview</button>
