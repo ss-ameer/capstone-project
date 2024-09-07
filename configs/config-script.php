@@ -637,6 +637,31 @@ $(document).ready(function(){
                     '</tr>';
         
         $('#order-items-table tbody').append(newRow);
+
+        data = {
+            action: 'get units info'
+        };
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function(response) {
+                var unitSelect = $('#order-items-table tbody tr:last .item-unit select');
+                
+                console.log(unitSelect.val());
+                console.log(response);
+
+                response.forEach(function(unit){
+                    unitSelect.append('<option value="' + unit.id + '" data-unit-capacity="' + data.capacity +'">' + unit.type_name + '</option>');
+                });
+            },
+            error: function() {
+                console.error('Failed to fetch units');
+            }
+        });
+
         updateOrderTable();
     };  
 

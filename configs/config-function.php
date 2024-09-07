@@ -75,6 +75,10 @@
                 case 'get client info':
                     getClientInfo();
                     break;
+                case 'get units info':
+                    $units = getTableData('truck_types');
+                    echo json_encode($units);
+                    break;
                 default:
                     break;
             };
@@ -545,7 +549,7 @@
 
         $tableName = mysqli_real_escape_string($conn, $tableName);
 
-        if(is_array($columns)) {
+        if (is_array($columns)) {
             $columns = implode(', ', array_map(function($col) use ($conn) {
                 return mysqli_real_escape_string($conn, $col);
             }, $columns));
@@ -559,4 +563,6 @@
         while ($row = $result -> fetch_assoc()) {
             $data[] = $row;
         }
+
+        return $data;
     }
