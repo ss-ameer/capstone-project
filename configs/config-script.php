@@ -617,17 +617,22 @@ $(document).ready(function(){
     function addItemToTable(id, name, unit, price) {
         var newRow = 
                     '<tr class="">' +
-                        '<td class="item-id">' + id + '</td>' +
-                        '<td>' + name + '</td>' +
-                        '<td>' + 
+                        '<td class="item-id text-center">' + id + '</td>' +
+                        '<td class="text-center">' + name + '</td>' +
+                        '<td class="item-unit">' +
+                            '<select class="form-select" aria-label="Truck Type">' +
+                                '<option selected disabled>Select Unit</option>' +
+                            '</select>' +
+                        '</td>' +
+                        '<td class="mx-auto">' + 
                             '<div class="input-group input-group-sm mh-100">' + 
                                 '<button class="btn btn-outline-danger input-group-text dec-qty">-</button>' + 
                                 '<input type="text" class="form-control item-qty text-center" value="1" inputmode="numeric">' + 
                                 '<button class="btn btn-outline-success input-group-text inc-qty">+</button>' + 
                             '</div>' + 
                         '</td>' +
-                        '<td class="item-price">' + price + '</td>' +
-                        '<td class="item-total">' + price + '</td>' +
+                        '<td class="item-price text-center">' + price + '</td>' +
+                        '<td class="item-total text-center">' + price + '</td>' +
                         '<td class="text-center"><i class="bi bi-x-circle fs-6" id="order-item-remove"></i></td>'
                     '</tr>';
         

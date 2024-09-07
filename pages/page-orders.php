@@ -100,14 +100,15 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="border rounded p-3">
-                                    <table class="table" id="order-items-table">
+                                <div class="border rounded p-3 table-responsive">
+                                    <table class="table align-middle" id="order-items-table">
                                         <thead class="table-primary">
-                                            <tr>
+                                            <tr class="text-center">
                                                 <th class="text-center" scope="col" style="width: 5%;">ID</th>
-                                                <th scope="col" style="width: 30%;">Name</th>
+                                                <th scope="col" style="width: 20%;">Name</th>
+                                                <th scope="col" style="width: 15%;">Unit</th></th>
                                                 <th scope="col" style="width: 20%;">QTY(cbm)</th>
-                                                <th scope="col" style="width: 20%;">Price</th>
+                                                <th scope="col" style="width: 15%;">Price</th>
                                                 <th scope="col" style="width: 20%;">TPrice</th>
                                                 <th class="" scope="col" style="width: 5%;"></th>
                                             </tr>

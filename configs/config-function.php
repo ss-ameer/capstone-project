@@ -286,7 +286,7 @@
                 session_start();
                 $userInfo = getUserInfo($db_id);
                 $_SESSION['user_info'] = $userInfo;
-                echo ($_SESSION['user_info']['name']);
+                echo $_SESSION['user_info']['name'];
                 echo '<div class="alert alert-success">Login successful.</div>';
 
             } else { echo '<div class="alert alert-danger">Invalid credentials.</div>';}
@@ -538,4 +538,25 @@
         }
 
         echo json_encode($clients);
+    }
+
+    function getTableData($tableName, $columns = '*') {
+        global $conn;
+
+        $tableName = mysqli_real_escape_string($conn, $tableName);
+
+        if(is_array($columns)) {
+            $columns = implode(', ', array_map(function($col) use ($conn) {
+                return mysqli_real_escape_string($conn, $col);
+            }, $columns));
+        }
+
+        $sql = "SELECT $columns FROM $tableName";
+        $result = $conn -> query($sql);
+
+        $data = [];
+        
+        while ($row = $result -> fetch_assoc()) {
+            $data[] = $row;
+        }
     }
