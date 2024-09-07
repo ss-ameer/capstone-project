@@ -578,13 +578,26 @@ $(document).ready(function(){
                 var $thisRow = $(this);
                 var qty = parseInt($thisRow.find('.item-qty').val());
                 var price = parseFloat($thisRow.find('.item-price').text());
-                var total = qty * price;
+
+                var selectedOption = $thisRow.find('.item-unit option:selected');
+                var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
+                
+                console.log('Selected Unit Capacity:', unitCapacity);
+
+                var total = qty * price * unitCapacity;
                 $thisRow.find('.item-total').text(total.toFixed(2));
             });
         } else {
             var qty = parseInt($row.find('.item-qty').val());
             var price = parseFloat($row.find('.item-price').text());
-            var total = qty * price;
+
+            var selectedOption = $row.find('.item-unit option:selected');
+            var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
+            
+            console.log('Selected Unit Capacity:', unitCapacity);
+
+            var total = qty * price * unitCapacity;
+            
             $row.find('.item-total').text(total.toFixed(2));
         }
         calculateOrderSummary();
@@ -654,12 +667,16 @@ $(document).ready(function(){
                 console.log(response);
 
                 response.forEach(function(unit){
-                    unitSelect.append('<option value="' + unit.id + '" data-unit-capacity="' + data.capacity +'">' + unit.type_name + '</option>');
+                    unitSelect.append('<option value="' + unit.id + '" data-unit-capacity="' + unit.capacity +'">' + unit.type_name + '</option>');
                 });
             },
             error: function() {
                 console.error('Failed to fetch units');
             }
+        });
+
+        $('#order-items-table tbody').on('change', '.item-unit', function() {
+            updateOrderTable($(this).closest('tr'));
         });
 
         updateOrderTable();

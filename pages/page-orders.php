@@ -106,9 +106,9 @@
                                             <tr class="text-center">
                                                 <th class="text-center" scope="col" style="width: 5%;">ID</th>
                                                 <th scope="col" style="width: 20%;">Name</th>
-                                                <th scope="col" style="width: 15%;">Unit</th></th>
-                                                <th scope="col" style="width: 20%;">QTY(cbm)</th>
-                                                <th scope="col" style="width: 15%;">Price</th>
+                                                <th scope="col" style="width: 20%;">Unit</th></th>
+                                                <th scope="col" style="width: 15%;">Quantity</th>
+                                                <th scope="col" style="width: 15%;">Price(m³)</th>
                                                 <th scope="col" style="width: 20%;">TPrice</th>
                                                 <th class="" scope="col" style="width: 5%;"></th>
                                             </tr>
