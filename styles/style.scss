@@ -1,19 +1,54 @@
-// #order-items-table {
-//     tbody {
-//         display: block;
-//         max-height: 240px; // Set the max height
-//         overflow-y: auto; // Enable vertical scrolling
-//     }
+@media print {
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
 
-//     thead, tbody tr {
-//         display: table;
-//         width: 100%;
-//         table-layout: fixed;
-//     }
-// }
+    #orderPreviewModal {
+        // Set the modal width to 100% of the page for printing
+        width: 100% !important;
+        height: 100% !important; // Allow the height to auto-adjust based on content
+        max-width: none; // Remove the default max-width
+        background-color: white;
+    }
 
-// input::-webkit-outer-spin-button,
-// input::-webkit-inner-spin-button {
-//   -webkit-appearance: none !important;
-//   margin: 0;
-// }
+    #orderPreviewMain {
+        width: 100%;
+        height: auto; // Allow for dynamic height
+        overflow: visible; 
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h6 {
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            margin: 0.5em 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            th, td {
+                border: 1px solid #000;
+                padding: 0.5em;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+
+    .modal-footer, .modal-header {
+        display: none;
+    }
+}

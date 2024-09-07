@@ -633,7 +633,7 @@ $(document).ready(function(){
         
         $('#order-items-table tbody').append(newRow);
         updateOrderTable();
-    }
+    };  
 
     $('#preview-order-btn').on('click', function() {
         $('#preview-client-name').text('Name: ' + $('#order-form-name').val());
@@ -668,6 +668,11 @@ $(document).ready(function(){
         $('#preview-total-qty').text('Total Quantity: ' + $('#order-items-total_qty span').text());
         $('#preview-total-price').text('Total Price: ' + $('#order-items-total_price span').text());
     });
+
+    $('#orderPreviewPrint').click(function () {
+        window.print();
+    });
+
 });
 
 </script>

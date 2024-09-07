@@ -1,1 +1,45 @@
-/*# sourceMappingURL=style.css.map */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #orderPreviewModal {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    background-color: white;
+  }
+  #orderPreviewMain {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #orderPreviewMain h6 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  #orderPreviewMain p {
+    margin: 0.5em 0;
+  }
+  #orderPreviewMain table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  #orderPreviewMain table th, #orderPreviewMain table td {
+    border: 1px solid #000;
+    padding: 0.5em;
+  }
+  #orderPreviewMain table th {
+    background-color: #f2f2f2;
+  }
+  .modal-footer, .modal-header {
+    display: none;
+  }
+}/*# sourceMappingURL=style.css.map */
