@@ -79,6 +79,9 @@
                     $units = getTableData('truck_types');
                     echo json_encode($units);
                     break;
+                case 'add unit':
+                    addUnit();
+                    break;
                 default:
                     break;
             };
@@ -93,6 +96,8 @@
             exit();
         }
     }
+
+    $unit_types = getTableData('truck_types');
 
     function itemSearch() {
         global $conn;
@@ -565,4 +570,59 @@
         }
 
         return $data;
+    }
+
+    function addRecord($table, $data) {
+        global $conn;
+
+        $columns = implode(", ", array_keys($data));
+        $placeholders = implode(", ", array_fill(0, count($data), "?"));
+        $values = array_values($data);
+
+        $types = "";
+        foreach ($values as $value) {
+            if (is_int($value)) {
+                $types .= "i";
+            } elseif (is_float($value)) {
+                $types.= "d";
+            } else {
+                $types .= "s";
+            };
+        }
+
+        $sql = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+        $stmt = $conn -> prepare($sql);
+
+        if ($stmt === false) {
+            die ("Prepare failed: " . $conn -> error);
+        }
+
+        $stmt -> bind_param($types, ...$values);
+        
+        if ($stmt -> execute()) {
+            $stmt -> close();
+            return true;
+        } else {
+            $stmt -> close();
+            return false;
+        }
+        
+    }
+
+    function addUnit() {
+        parse_str($_POST['formData'], $unitData);
+        
+        $unitData = [
+            'truck_number' => $unitData['truck_number'],
+            'truck_type_id' => $unitData['truck_type_id'],
+            'status' => $unitData['status'],
+        ];
+
+        $result = addRecord('trucks', $unitData);
+
+        if($result === true) {
+            echo "success";
+        } else {
+            echo "error";
+        };
     }

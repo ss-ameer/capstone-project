@@ -8,6 +8,8 @@ $(document).ready(function(){
     const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
     // const popover = new bootstrap.Popover('.popover-dismiss', { trigger: 'focus' });
 
+    var config_function_url = '../configs/config-function.php';
+
     // stocks
     function itemAdd() {
         var data = {
@@ -20,7 +22,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -44,7 +46,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -64,7 +66,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -84,7 +86,7 @@ $(document).ready(function(){
                 action: 'stock delete'
             }
             $.ajax({
-                url: '../configs/config-function.php',
+                url: config_function_url,
                 type: 'POST',
                 data: data,
                 success: function(response) {
@@ -108,7 +110,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -130,7 +132,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -151,7 +153,7 @@ $(document).ready(function(){
             action: 'select account'
         }
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -167,7 +169,7 @@ $(document).ready(function(){
                 action: 'delete account'
             }
             $.ajax({
-                url: '../configs/config-function.php',
+                url: config_function_url,
                 type: 'POST',
                 data: data,
                 success: function(response) {
@@ -194,7 +196,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -212,7 +214,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -227,7 +229,7 @@ $(document).ready(function(){
 
     function logout() {
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: { action: 'logout' },
             success: function(response) {
@@ -357,7 +359,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function(response) {
@@ -438,7 +440,7 @@ $(document).ready(function(){
         }
 
         $.ajax ({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: orderData,
             success: function(response) {
@@ -459,7 +461,7 @@ $(document).ready(function(){
 
         if (query.length > 2) {
             $.ajax({
-                url: '../configs/config-function.php',
+                url: config_function_url,
                 type: 'POST',
                 data: data,
                 success: function(response) {
@@ -495,7 +497,7 @@ $(document).ready(function(){
         if (client_id) {
             $.ajax({
                 type: 'POST',
-                url: '../configs/config-function.php',
+                url: config_function_url,
                 data: data,
                 dataType: 'json',
                 success: function(response) {
@@ -597,7 +599,7 @@ $(document).ready(function(){
             console.log('Selected Unit Capacity:', unitCapacity);
 
             var total = qty * price * unitCapacity;
-            
+
             $row.find('.item-total').text(total.toFixed(2));
         }
         calculateOrderSummary();
@@ -656,7 +658,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -718,6 +720,31 @@ $(document).ready(function(){
 
     $('#orderPreviewPrint').click(function () {
         window.print();
+    });
+
+    $('#add-unit-form').submit(function (event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();
+        var data = {
+            formData: formData,
+            action: 'add unit'
+        }
+
+        $.ajax ({
+            url: config_function_url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                console.log(response);
+                alert('Unit added successfully');
+            },
+            error: function() {
+                console.error('Failed to add unit');
+            }
+        });
+
+        console.log(formData);
     });
 
 });

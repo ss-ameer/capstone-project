@@ -34,43 +34,44 @@
 <div class="col mh-100 overflow-auto p-3 border">
     <p class="lead">Master</p>
     <ul class="list-group">
-    <li class="list-group-item">
-        <div data-bs-toggle="collapse" data-bs-target="#master-register">
-            <a class="" href="#">Create an Account</a>
-        </div>
+        <li class="list-group-item">
+            <div data-bs-toggle="collapse" data-bs-target="#master-create">
+                <a class="" href="#">Create</a>
+            </div>
 
-        <div class="collapse container" id="master-register">
-            <hr>
-            <!-- register form -->
-            <?php include_once('../components/comp-form-register.php') ?>
-        </div>        
-    </li>
+            <div class="collapse" id="master-create">
+                <hr>
+                <!-- user form -->
+                <?php include_once('../components/comp-form-register.php') ?>
+                <!-- truck form -->
+                <?php include_once('../components/comp-truck-form.php'); ?>
+            </div>
+        </li>
 
-    <li class="list-group-item">
-        <div data-bs-toggle="collapse" data-bs-target="#master-view">
-            <!-- account view -->
-            <a class="" href="#">View Accounts</a>
-        </div>
+        <li class="list-group-item">
+            <div data-bs-toggle="collapse" data-bs-target="#master-view">
+                <!-- account view -->
+                <a class="" href="#">View Accounts</a>
+            </div>
 
-        <div class="collapse container" id="master-view">
-            <hr>
-            <!-- officers table -->
-            <?php include_once('../components/comp-table-officers.php') ?>
-        </div>
-    </li>
+            <div class="collapse container" id="master-view">
+                <hr>
+                <!-- officers table -->
+                <?php include_once('../components/comp-table-officers.php') ?>
+            </div>
+        </li>
 
-    <li class="list-group-item">
-        <div data-bs-toggle="collapse" data-bs-target="#master-stocks">
-            <!-- manage stocks -->
-            <a href="#" class="">Manage Stocks</a>
-        </div>
-        
-        <div class="collapse container" id="master-stocks">
-            <hr>
-            <?php include_once('../components/comp-master-stock.php'); ?>
-        </div>
-    </li>
-
+        <li class="list-group-item">
+            <div data-bs-toggle="collapse" data-bs-target="#master-stocks">
+                <!-- manage stocks -->
+                <a href="#" class="">Manage Stocks</a>
+            </div>
+            
+            <div class="collapse container" id="master-stocks">
+                <hr>
+                <?php include_once('../components/comp-master-stock.php'); ?>
+            </div>
+        </li>
     </ul>
 </div>
 </div>
