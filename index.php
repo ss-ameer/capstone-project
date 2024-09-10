@@ -20,7 +20,11 @@
                     header('Location: pages/page-stock.php');
                     break;
                 case 'orders':
-                        header('Location: pages/page-orders.php');
+                    header('Location: pages/page-orders.php');
+                    break;
+                case 'dispatch':
+                    header('Location: pages/page-dispatch.php');
+                    break;
                 default:
                     break;
             }
@@ -38,8 +42,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    
+<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>

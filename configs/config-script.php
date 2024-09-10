@@ -257,25 +257,22 @@ $(document).ready(function(){
 
     // sidenav
 
-    $('#side-master').click(function(event){
-        event.preventDefault();
-        sidenavSelect('master');
-    })
+    function bindSidenavClick(ids) {
+        ids.forEach(function(id){
+            $('#' + id).click(function() {
+                event.preventDefault();
+                sidenavSelect(id.split('-')[1]);
+            });
+        });
+    }
 
-    $('#side-dashboard').click(function(event){
-        event.preventDefault();
-        sidenavSelect('dashboard');
-    })
-
-    $('#side-stock').click(function(event){
-        event.preventDefault();
-        sidenavSelect('stock');
-    })
-
-    $('#side-orders').click(function(event){
-        event.preventDefault();
-        sidenavSelect('orders');
-    })
+    bindSidenavClick([
+        'side-master',
+        'side-dashboard',
+        'side-stock',
+        'side-orders',
+        'side-dispatch'
+    ]);
 
     // officers table
     $('#table-officers').on('click', '.officer-account', function(event){

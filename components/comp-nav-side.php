@@ -13,6 +13,12 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link text-reset" href="#" id="side-dispatch">
+                <i class="bi bi-send"></i> <span class="ms-3">Dispatch</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-stock">
                 <i class="bi bi-box2"></i> <span class="ms-3">Stock</span>
             </a>

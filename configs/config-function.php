@@ -21,7 +21,7 @@
     }
 
     define('ROOT', 'http://localhost/_capstone-project/');
-    define('PATH', $_SERVER['DOCUMENT_ROOT'] . '\/_capstone-project/');
+    define('PATH', $_SERVER['DOCUMENT_ROOT'] . '/_capstone-project/');
 
     if (isset($_POST['action'])) {
 
