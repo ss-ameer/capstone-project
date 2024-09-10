@@ -1,7 +1,8 @@
-<!-- comp-form-truck.php -->
+<!-- comp-unit-truck.php -->
 <div class="container mt-4">
     <h5 class="mb-3">Add New Truck</h5>
-    <form id="add-unit-form" class="border p-3 shadow-sm">
+
+    <form id="add-unit-form" class="border p-3 shadow-sm rounded">
         <div class="form-floating mb-2">
             <input type="text" id="unit-add_number" name="truck_number" class="form-control" placeholder="Truck Number" required>
             <label for="unit-add_number">Truck Number</label>
@@ -27,6 +28,6 @@
             <label for="unit-add_status">Unit Status</label>
         </div>
 
-        <button type="submit" class="btn btn-primary">Add Unit</button>
+        <button type="submit" class="btn btn-primary mb-2">Add Unit</button>
     </form>
 </div>

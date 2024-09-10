@@ -43,8 +43,10 @@
                 <hr>
                 <!-- user form -->
                 <?php include_once('../components/comp-form-register.php') ?>
-                <!-- truck form -->
-                <?php include_once('../components/comp-truck-form.php'); ?>
+                <!-- unit form -->
+                <?php include_once('../components/comp-form-unit.php'); ?>
+                <!-- unit type form -->
+                <?php include_once('../components/comp-form-unit_type.php'); ?>
             </div>
         </li>
 
