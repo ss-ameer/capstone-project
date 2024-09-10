@@ -747,6 +747,29 @@ $(document).ready(function(){
         console.log(formData);
     });
 
+    $('#add-unit_type-form').submit(function (event) {
+        event.preventDefault();  // Prevent the default form submission
+
+        var formData = $(this).serialize();  // Serialize form data
+        var data = {
+            formData: formData,
+            action: 'add unit_type'
+        };
+
+        $.ajax({
+            url: '../configs/config-function.php',
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                console.log(response);  // Log the response for debugging
+                alert('Unit Type added successfully!');
+            },
+            error: function () {
+                console.error('Failed to add Unit Type');
+            }
+        });
+    });
+
 });
 
 </script>

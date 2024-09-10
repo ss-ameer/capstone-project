@@ -30,58 +30,80 @@
                 case 'register':
                     register();
                     break;
+
                 case 'login':
                     login();
                     break;
+
                 case 'logout':
                     logout();
                     break;
+
                 case 'select account':
                     selectAccount($_POST['account_id']);
                     break;
+
                 case 'delete account':
                     deleteAccount($_POST['account_id']);
                     break;
+
                 case 'sidenav select':
                     sidenavSelect($_POST['selected']);
                     break;
+
                 case 'get stocks':
                     getStocks();
                     break;
+
                 case 'item add':
                     addItem();
                     break;
+
                 case 'stock add':
                     addStock();
                     break;
+
                 case 'stock select':
                     selectStock($_POST['stock_id']);
                     break;
+
                 case 'stock delete':
                     deleteStock($_POST['stock_id']);
                     break;
+
                 case 'stock edit':
                     editStock();
                     break;
+
                 case 'item search':
                     itemSearch();
                     break;
+
                 case 'create order':
                     saveOrder();
                     break;
+
                 case 'client search':
                     searchClients();
                     break;
+
                 case 'get client info':
                     getClientInfo();
                     break;
+
                 case 'get units info':
                     $units = getTableData('truck_types');
                     echo json_encode($units);
                     break;
+
                 case 'add unit':
                     addUnit();
                     break;
+
+                case 'add unit_type':
+                    addUnitType();
+                    break;
+
                 default:
                     break;
             };
@@ -625,4 +647,21 @@
         } else {
             echo "error";
         };
+    }
+
+    function addUnitType() {
+        parse_str($_POST['formData'], $unitTypeData);
+
+        $unitTypeData = [
+            'type_name' => $unitTypeData['type_name'],
+            'capacity' => $unitTypeData['capacity']
+        ];
+    
+        $result = addRecord('truck_types', $unitTypeData);
+    
+        if ($result === true) {
+            echo "success";
+        } else {
+            echo "error";
+        }
     }
