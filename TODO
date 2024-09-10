@@ -109,6 +109,7 @@ To Add:
         Tables:
             [x] dispatch officer
             [x] trucks 
+                [x] truck_types
             [x] items
             [x] orders
                 [x] client
@@ -118,7 +119,7 @@ To Add:
             [] logs
     Main:
         [x] Orders:
-            [] Autofill the orders form
+            [x] Autofill the orders form
             Notes:
                     Modify the Backend: Update your searchClients function or create a new function that retrieves not just the client details but also the most recent address, phone number, and email.
                     
@@ -260,10 +261,16 @@ To Add:
     Features:
         [] Clear order forms and table when an order is successfully added.
         [-] Show suggestions for clients and address.
-        [] Autofill the most recet client address and contact info.
+        [x] Autofill the most recet client address and contact info.
         [] Remove item suggestion when the item is in the order items table.
+    Forms:
+        [x] order items
+        [x] truck
+        [] truck type
+        [x] user
+        []
 Additional Research:
 
 Zen:
-    // what i want to do now is to also autofill the most recet address, number, and email of the selected client in the client suggestion.
+    
     
