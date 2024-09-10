@@ -757,7 +757,7 @@ $(document).ready(function(){
         };
 
         $.ajax({
-            url: '../configs/config-function.php',
+            url: config_function_url,
             type: 'POST',
             data: data,
             success: function (response) {
