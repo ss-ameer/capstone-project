@@ -576,28 +576,72 @@
         echo json_encode($clients);
     }
 
-    function getTableData($tableName, $columns = '*') {
+    // function getTableData($tableName, $columns = '*') {
+    //     global $conn;
+
+    //     $tableName = mysqli_real_escape_string($conn, $tableName);
+
+    //     if (is_array($columns)) {
+    //         $columns = implode(', ', array_map(function($col) use ($conn) {
+    //             return mysqli_real_escape_string($conn, $col);
+    //         }, $columns));
+    //     }
+
+    //     $sql = "SELECT $columns FROM $tableName";
+    //     $result = $conn -> query($sql);
+
+    //     $data = [];
+        
+    //     while ($row = $result -> fetch_assoc()) {
+    //         $data[] = $row;
+    //     }
+
+    //     return $data;
+    // }
+
+    function getTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
         global $conn;
-
+    
+        // Sanitize the table name
         $tableName = mysqli_real_escape_string($conn, $tableName);
-
+    
+        // Handle columns
         if (is_array($columns)) {
             $columns = implode(', ', array_map(function($col) use ($conn) {
                 return mysqli_real_escape_string($conn, $col);
             }, $columns));
         }
-
+    
+        // Build the base query
         $sql = "SELECT $columns FROM $tableName";
-        $result = $conn -> query($sql);
-
+    
+        // Add joins if provided
+        if (!empty($joins)) {
+            $sql .= " " . $joins;
+        }
+    
+        // Add where clause if provided
+        if (!empty($where)) {
+            $sql .= " WHERE " . $where;
+        }
+    
+        // Add order by clause if provided
+        if (!empty($orderBy)) {
+            $sql .= " ORDER BY " . $orderBy;
+        }
+    
+        // Execute the query
+        $result = $conn->query($sql);
+    
+        // Fetch data
         $data = [];
-        
-        while ($row = $result -> fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $data[] = $row;
         }
-
+    
         return $data;
     }
+    
 
     function addRecord($table, $data) {
         global $conn;
