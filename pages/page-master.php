@@ -47,6 +47,9 @@
                 <?php include_once('../components/comp-form-unit.php'); ?>
                 <!-- unit type form -->
                 <?php include_once('../components/comp-form-unit_type.php'); ?>
+                <!-- driver form -->
+                <?php include_once('../components/comp-form-driver.php'); ?>
+
             </div>
         </li>
 

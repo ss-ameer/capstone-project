@@ -770,6 +770,29 @@ $(document).ready(function(){
         });
     });
 
+    $('#add-driver-form').submit(function (event) {
+        event.preventDefault();
+
+        var formData = $(this).serialize();  // Serialize the form data
+        var data = {
+            formData: formData,
+            action: 'add driver'
+        };
+
+        $.ajax({
+            url: config_function_url,  // Your existing PHP config file for handling the backend
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                console.log(response);  // Log the response for debugging
+                alert('Driver added successfully!');
+            },
+            error: function () {
+                console.error('Failed to add driver');
+            }
+        });
+    });
+
 });
 
 </script>

@@ -104,8 +104,13 @@
                     addUnitType();
                     break;
 
+                case 'add driver';
+                    addDriver();
+                    break;
+
                 default:
                     break;
+
             };
         } 
         else { 
@@ -665,3 +670,28 @@
             echo "error";
         }
     }
+
+    function addDriver() {
+        // Parse the serialized form data
+        parse_str($_POST['formData'], $driverData);
+    
+        // Prepare data for insertion
+        $driverData = [
+            'first_name' => $driverData['first_name'],
+            'last_name' => $driverData['last_name'],
+            'license_number' => $driverData['license_number'],
+            'phone_number' => $driverData['phone_number'],
+            'status' => $driverData['status'],
+        ];
+    
+        // Add the record to the 'drivers' table
+        $result = addRecord('drivers', $driverData);
+    
+        // Return success or error response
+        if ($result === true) {
+            echo "success";
+        } else {
+            echo "error";
+        }
+    }
+    
