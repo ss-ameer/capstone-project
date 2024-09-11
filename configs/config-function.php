@@ -500,10 +500,11 @@
                 $quantity = $item['quantity'];
                 $price = $item['price'];
                 $total = $item['total'];
+                $unit_type = $item['unit_type_id'];
 
-                $insertItemQuery = "INSERT INTO order_items (order_id, item_id, quantity, price, item_total) VALUES (?, ?, ?, ?, ?)";
+                $insertItemQuery = "INSERT INTO order_items (order_id, item_id, quantity, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt = $conn -> prepare($insertItemQuery);
-                $stmt -> bind_param("iiidd", $order_id, $item_id, $quantity, $price, $total);
+                $stmt -> bind_param("iiiddi", $order_id, $item_id, $quantity, $price, $total, $unit_type);
                 $stmt -> execute();
             }
 
@@ -514,7 +515,10 @@
 
         } catch(Exception $e) {
             mysqli_rollback($conn);
-            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+            echo json_encode([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
         }
     }
 
@@ -631,7 +635,7 @@
         }
     
         // Execute the query
-        $result = $conn->query($sql);
+        $result = $conn -> query($sql);
     
         // Fetch data
         $data = [];

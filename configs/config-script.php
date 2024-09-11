@@ -413,9 +413,10 @@ $(document).ready(function(){
                 item_id: row.find('.item-id').text(),
                 quantity: row.find('.item-qty').val(),
                 price: row.find('.item-price').text(),
-                total: row.find('.item-total').text()
+                total: row.find('.item-total').text(),
+                unit_type_id: parseInt(row.find('.item-unit option:selected').val())
             };
-
+            
             orderItems.push(item);
 
         });
@@ -441,6 +442,7 @@ $(document).ready(function(){
             type: 'POST',
             data: orderData,
             success: function(response) {
+                console.log(`Unit type for the first item: ${orderItems[0]['unit_type_id']}`);
                 console.log(response);
             },
             error: function() {
