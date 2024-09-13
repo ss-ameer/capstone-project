@@ -118,7 +118,7 @@ To Fix:
                 [x] client
                 [x] addresses
                 [x] order_items
-            [] dispatch
+            [x] dispatch
             [] logs
     Main:
         [x] Orders:
@@ -207,7 +207,7 @@ To Fix:
                         }
                     }
                     This setup will allow your form to be automatically populated with the most recent address, phone number, and email of the selected client, improving the efficiency of your dispatch system.
-        [] Dispatch:
+        [X] Dispatch:
         [] Dashboard:
             Notes:
                 1. Summary Metrics
