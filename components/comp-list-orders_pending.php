@@ -28,15 +28,15 @@
             $stmt->close();
         ?>
 
-        <li class="list-group-item text-center .order">
+        <li class="list-group-item list-group-item-action text-center .order">
             <div class="d-flex justify-content-between">
-                <small class="text-body-secondary"><?= $order['id'] ?></small>
+                <small class="text-body-secondary"><?= sprintf('%04d', $order['id']) ?></small>
                 <h6 class="mb-1"><?= $order['name'] ?></h6>
                 <small><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
                 <div>
                     <!-- Display badges dynamically based on the count of order item statuses -->
                     <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
-                    <span class="badge text-bg-warning"><?= $inProgressCount ?></span> <!-- In Progress -->
+                    <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->
                     <span class="badge text-bg-success"><?= $completedCount ?></span> <!-- Completed -->
                     <span class="badge text-bg-dark"><?= $canceledCount ?></span> <!-- Canceled -->
                 </div>
