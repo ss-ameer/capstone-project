@@ -28,7 +28,7 @@
             $stmt->close();
         ?>
 
-        <li class="list-group-item list-group-item-action text-center .order">
+        <li class="list-group-item list-group-item-action text-center order" data-order-id="<?= $order['id'] ?>">
             <div class="d-flex justify-content-between">
                 <small class="text-body-secondary"><?= sprintf('%04d', $order['id']) ?></small>
                 <h6 class="mb-1"><?= $order['name'] ?></h6>

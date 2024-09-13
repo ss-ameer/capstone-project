@@ -788,6 +788,27 @@ $(document).ready(function(){
             },
             error: function () {
                 console.error('Failed to add driver');
+            } 
+        });
+    });
+
+    $(document).on('click', '#order-list-pending .order', function() {
+        var orderId = $(this).data('order-id');
+
+        console.log('Order status updated successfully!');
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            data: {
+                orderId: orderId,
+                action: 'update order view'
+            },
+            success: function (response) {
+                console.log(response);
+            },
+            error: function () {
+                console.error('Failed to update order status');
             }
         });
     });
