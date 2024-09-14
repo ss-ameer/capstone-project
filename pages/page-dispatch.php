@@ -42,14 +42,14 @@
 
                                 <div id="order-list-container" class="container border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <!-- pending orders list -->
-                                    <?php include(PATH . 'components/comp-list-orders_pending.php'); ?>
+                                    <?php include PATH . 'components/comp-list-orders_pending.php'; ?>
                                 </div>
 
                             </div>
 
                             <div class="col-md-6 col-sm-12">
                                 <!-- show view -->
-                                <?php include PATH . 'components/comp-content-order-view.php'; ?>
+                                <?php include PATH . 'components/comp-dispatch-order-view.php'; ?>
                                 <!-- nothing is selected -->
                                 <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>

@@ -1,8 +1,11 @@
 <!-- comp-content-order-view.php -->
-<div id="order-items-section" class="container border shadow-sm p-3 rounded position-relative" style="max-height: 400px; height: 400px; overflow-y: auto;">
+<?php 
+
+?>
+<div id="dispatch-order-view" class="container border shadow-sm p-3 rounded position-relative" style="max-height: 400px; height: 400px; overflow-y: auto;">
     
     <div class="d-flex justify-content-between">
-        <span class="lead">Order ID: 0001</span>
+        <span class="lead">Order ID: <span class="order-id"></span></span>
         <button type="button" class="btn-close" aria-label="Close"></button>
     </div>
 
@@ -31,7 +34,7 @@
         </div>
         <div class="card-body">                                    
             <div class="d-flex justify-content-between">
-                <span class="location">420, Sibuma Street, Plaridel, Llanera</span>
+                <span class="location"></span>
             </div>
         </div>
     </div>
@@ -47,28 +50,6 @@
                     <span>Pending</span>
                 </li>
                 <!-- order items will be dynamically generated. -->
-                <li class="list-group-item d-flex justify-content-between">
-                    <input class="form-check-input" type="radio" name="listGroupRadio" value="" id="firstRadio">
-                    <div class="w-50 d-flex justify-content-between">
-                        <span>Buhangin</span>
-                        <span>Elf</span>
-                    </div>
-                    <div class="d-flex justify-content-between w-25">
-                        <span>2000</span>
-                        <span class="">1200</span>
-                    </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <input class="form-check-input" type="radio" name="listGroupRadio" value="" id="secondRadio">
-                    <div class="w-50 text-center d-flex justify-content-between">
-                        <span>Gravel</span>
-                        <span>Howler</span>
-                    </div>
-                    <div class="d-flex justify-content-between w-25">
-                        <span>100</span>
-                        <span class="">3500</span>
-                    </div>
-                </li>
             </ul>
 
             <ul class="list-group mb-2 in-progress">

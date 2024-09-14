@@ -838,10 +838,7 @@ $(document).ready(function(){
                                 <span>${item.item_name}</span>
                                 <span>${item.type_name}</span>
                             </div>
-                            <div class="d-flex justify-content-between w-25 part-in-question">
-                                <span>${item.price}</span>
-                                <span>${item.item_total}</span>
-                            </div>
+                            <span>${item.item_total}</span>
                         </li>`;
 
                     // Append the item to the appropriate list based on its status
