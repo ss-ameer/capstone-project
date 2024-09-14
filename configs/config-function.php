@@ -107,6 +107,10 @@
                 case 'add driver';
                     addDriver();
                     break;
+                
+                case 'dispatch update order view';
+                    echo json_encode(getOrderData($_POST['order_id']));
+                    break;
 
                 default:
                     break;
@@ -741,5 +745,93 @@
         } else {
             echo "error";
         }
+    }
+    
+    function getOrderData($orderId) {
+        global $conn;
+    
+        // Fetch order details including client_id
+        $columns = [
+            'o.id', 
+            'o.client_id', // Added client_id
+            'o.created_at', 
+            'c.name AS client_name', 
+            'a.city, a.barangay, a.street, a.house_number'
+        ];
+        $joins = "
+            JOIN clients c ON o.client_id = c.client_id
+            JOIN addresses a ON o.address_id = a.address_id
+        ";
+        $where = "o.id = " . intval($orderId); // Ensure $orderId is properly sanitized
+        $orderDetails = getTableData('orders o', $columns, $joins, $where);
+    
+        if (empty($orderDetails)) {
+            // Handle case where order is not found
+            return null; // or throw an exception
+        }
+    
+        // Get the client_id for fetching contacts
+        $clientId = $orderDetails[0]['client_id'];
+    
+        // Fetch phone number
+        $phoneQuery = "
+            SELECT contact_value 
+            FROM contacts 
+            WHERE client_id = ? AND contact_type = 'phone' LIMIT 1
+        ";
+        $stmt = $conn->prepare($phoneQuery);
+        $stmt->bind_param('i', $clientId);
+        $stmt->execute();
+        $stmt->bind_result($phone);
+        $stmt->fetch();
+        $stmt->close();
+        
+        // Fetch email
+        $emailQuery = "
+            SELECT contact_value 
+            FROM contacts 
+            WHERE client_id = ? AND contact_type = 'email' LIMIT 1
+        ";
+        $stmt = $conn->prepare($emailQuery);
+        $stmt->bind_param('i', $clientId);
+        $stmt->execute();
+        $stmt->bind_result($email);
+        $stmt->fetch();
+        $stmt->close();
+    
+        // Add phone and email to order details
+        $orderDetails[0]['phone'] = $phone;
+        $orderDetails[0]['email'] = $email;
+    
+        // Create a full address
+        $orderDetails[0]['full_address'] = 
+            $orderDetails[0]['house_number'] . ' ' . 
+            $orderDetails[0]['street'] . ', ' . 
+            $orderDetails[0]['barangay'] . ', ' . 
+            $orderDetails[0]['city'];
+    
+        // Unset address components after combining into full address if needed
+        unset($orderDetails[0]['house_number'], $orderDetails[0]['street'], $orderDetails[0]['barangay'], $orderDetails[0]['city']);
+    
+        // Fetch order items with item name
+        $columns = [
+            'oi.quantity', 
+            'oi.price', 
+            'oi.item_total', 
+            'oi.status', // Assuming this is the correct field from items table
+            'tt.type_name', 
+            'i.item_name'
+        ];
+        $joins = "
+            JOIN truck_types tt ON oi.truck_type_id = tt.id
+            JOIN items i ON oi.item_id = i.item_id"; // Join with items table
+        $where = "oi.order_id = " . intval($orderId); // Ensure $orderId is properly sanitized
+        $orderItems = getTableData('order_items oi', $columns, $joins, $where);
+    
+        // Return the combined result
+        return [
+            'order' => $orderDetails[0], // Since it's fetching one order
+            'items' => $orderItems
+        ];
     }
     
