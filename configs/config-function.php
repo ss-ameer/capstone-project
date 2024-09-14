@@ -104,12 +104,13 @@
                     addUnitType();
                     break;
 
-                case 'add driver';
+                case 'add driver':
                     addDriver();
                     break;
                 
-                case 'dispatch update order view';
-                    echo json_encode(getOrderData($_POST['order_id']));
+                case 'dispatch update order view':
+                    $orderData = getOrderData($_POST['order_id']);
+                    echo json_encode($orderData);
                     break;
 
                 default:
@@ -501,15 +502,19 @@
 
             foreach($order_items as $item) {
                 $item_id = $item['item_id'];
-                $quantity = $item['quantity'];
+                $quantity = $item['quantity']; // Drop this as a separate column in `order_items`
                 $price = $item['price'];
-                $total = $item['total'];
+                $unit_capacity = $item['unit_capacity'];
+                $total = $price * $unit_capacity;
                 $unit_type = $item['unit_type_id'];
 
-                $insertItemQuery = "INSERT INTO order_items (order_id, item_id, quantity, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?, ?)";
-                $stmt = $conn -> prepare($insertItemQuery);
-                $stmt -> bind_param("iiiddi", $order_id, $item_id, $quantity, $price, $total, $unit_type);
-                $stmt -> execute();
+                // Loop through each quantity and insert as individual items
+                for ($i = 0; $i < $quantity; $i++) {
+                    $insertItemQuery = "INSERT INTO order_items (order_id, item_id, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?)";
+                    $stmt = $conn -> prepare($insertItemQuery);
+                    $stmt -> bind_param("iiddi", $order_id, $item_id, $price, $total, $unit_type);
+                    $stmt -> execute();
+                }
             }
 
             $stmt -> close();
@@ -805,20 +810,18 @@
     
         // Create a full address
         $orderDetails[0]['full_address'] = 
-            $orderDetails[0]['house_number'] . ' ' . 
-            $orderDetails[0]['street'] . ', ' . 
+            $orderDetails[0]['house_number'] . ', ' . 
+            $orderDetails[0]['street'] . ' Street, ' . 
             $orderDetails[0]['barangay'] . ', ' . 
             $orderDetails[0]['city'];
     
-        // Unset address components after combining into full address if needed
         unset($orderDetails[0]['house_number'], $orderDetails[0]['street'], $orderDetails[0]['barangay'], $orderDetails[0]['city']);
     
         // Fetch order items with item name
-        $columns = [
-            'oi.quantity', 
+        $columns = [ 
             'oi.price', 
             'oi.item_total', 
-            'oi.status', // Assuming this is the correct field from items table
+            'oi.status',
             'tt.type_name', 
             'i.item_name'
         ];

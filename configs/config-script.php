@@ -414,7 +414,8 @@ $(document).ready(function(){
                 quantity: row.find('.item-qty').val(),
                 price: row.find('.item-price').text(),
                 total: row.find('.item-total').text(),
-                unit_type_id: parseInt(row.find('.item-unit option:selected').val())
+                unit_type_id: parseInt(row.find('.item-unit option:selected').val()),
+                unit_capacity: parseInt(row.find('.item-unit option:selected').data('unit-capacity'))
             };
             
             orderItems.push(item);
@@ -760,7 +761,7 @@ $(document).ready(function(){
             type: 'POST',
             data: data,
             success: function (response) {
-                console.log(response);  // Log the response for debugging
+                console.log(response); 
                 alert('Unit Type added successfully!');
             },
             error: function () {
@@ -772,18 +773,18 @@ $(document).ready(function(){
     $('#add-driver-form').submit(function (event) {
         event.preventDefault();
 
-        var formData = $(this).serialize();  // Serialize the form data
+        var formData = $(this).serialize(); 
         var data = {
             formData: formData,
             action: 'add driver'
         };
 
         $.ajax({
-            url: config_function_url,  // Your existing PHP config file for handling the backend
+            url: config_function_url,  
             type: 'POST',
             data: data,
             success: function (response) {
-                console.log(response);  // Log the response for debugging
+                console.log(response); 
                 alert('Driver added successfully!');
             },
             error: function () {
@@ -800,12 +801,60 @@ $(document).ready(function(){
         $.ajax({
             url: config_function_url,
             type: 'POST',
+            dataType: 'json',
             data: {
-                orderId: orderId,
-                action: 'update order view'
+                order_id: orderId,
+                action: 'dispatch update order view'
             },
             success: function (response) {
-                console.log(response);
+
+                // full details
+                console.log(response.order);
+                console.log(response.items);
+
+                // order id
+                $('#dispatch-order-view .order-id').text(response.order.id.toString().padStart(4, '0'));
+                
+                // client details
+                $('#order-display-client .name').text(response.order.client_name);
+                $('#order-display-client .number').text(response.order.phone);
+                $('#order-display-client .email').text(response.order.email);
+
+                // location
+                $('#order-display-location .location').text(response.order.full_address);
+
+                // Clear existing items while keeping the type titles intact
+                $('#order-display-items ul.pending li:not(:first)').remove();
+                $('#order-display-items ul.in-progress li:not(:first)').remove();
+                $('#order-display-items ul.successful li:not(:first)').remove();
+                $('#order-display-items ul.canceled li:not(:first)').remove();
+
+                // Loop through the order items and distribute them by status
+                response.items.forEach(function(item) {
+                    var itemHtml = `
+                        <li class="list-group-item d-flex justify-content-between">
+                            ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="listGroupRadio" value="">' : ''}
+                            <div class="w-50 d-flex justify-content-between">
+                                <span>${item.item_name}</span>
+                                <span>${item.type_name}</span>
+                            </div>
+                            <div class="d-flex justify-content-between w-25 part-in-question">
+                                <span>${item.price}</span>
+                                <span>${item.item_total}</span>
+                            </div>
+                        </li>`;
+
+                    // Append the item to the appropriate list based on its status
+                    if (item.status === 'pending') {
+                        $('#order-display-items ul.pending').append(itemHtml);
+                    } else if (item.status === 'in-progress') {
+                        $('#order-display-items ul.in-progress').append(itemHtml);
+                    } else if (item.status === 'successful') {
+                        $('#order-display-items ul.successful').append(itemHtml);
+                    } else if (item.status === 'canceled') {
+                        $('#order-display-items ul.canceled').append(itemHtml);
+                    }
+                });
             },
             error: function () {
                 console.error('Failed to update order status');
