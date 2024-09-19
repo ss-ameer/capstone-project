@@ -51,6 +51,12 @@
                 </li>
                 <!-- order items will be dynamically generated. -->
             </ul>
+            
+            <ul class="list-group mb-2 in-queue">
+                <li class="list-group-item list-group-item-primary text-center">
+                    <span>In-queue</span>
+                </li>
+            </ul>
 
             <ul class="list-group mb-2 in-progress">
                 <li class="list-group-item list-group-item-info text-center">

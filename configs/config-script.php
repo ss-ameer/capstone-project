@@ -825,6 +825,7 @@ $(document).ready(function(){
 
                 // Clear existing items while keeping the type titles intact
                 $('#order-display-items ul.pending li:not(:first)').remove();
+                $('#order-display-items ul.in-queue li:not(:first)').remove();
                 $('#order-display-items ul.in-progress li:not(:first)').remove();
                 $('#order-display-items ul.successful li:not(:first)').remove();
                 $('#order-display-items ul.canceled li:not(:first)').remove();
@@ -844,6 +845,8 @@ $(document).ready(function(){
                     // Append the item to the appropriate list based on its status
                     if (item.status === 'pending') {
                         $('#order-display-items ul.pending').append(itemHtml);
+                    } else if (item.status === 'in-queue') {
+                        $('#order-display-items ul.in-queue').append(itemHtml);
                     } else if (item.status === 'in-progress') {
                         $('#order-display-items ul.in-progress').append(itemHtml);
                     } else if (item.status === 'successful') {

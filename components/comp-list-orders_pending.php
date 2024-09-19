@@ -14,7 +14,8 @@
             $orderId = $order['id'];
             $query = "
                 SELECT 
-                    SUM(status = 'pending') AS pending_count, 
+                    SUM(status = 'pending') AS pending_count,
+                    SUM(status = 'in-queue') AS in_queue_count, 
                     SUM(status = 'in-progress') AS in_progress_count, 
                     SUM(status = 'completed') AS completed_count, 
                     SUM(status = 'canceled') AS canceled_count
@@ -23,7 +24,7 @@
             $stmt = $conn->prepare($query);
             $stmt->bind_param('i', $orderId);
             $stmt->execute();
-            $stmt->bind_result($pendingCount, $inProgressCount, $completedCount, $canceledCount);
+            $stmt->bind_result($pendingCount, $inQueueCount, $inProgressCount, $completedCount, $canceledCount);
             $stmt->fetch();
             $stmt->close();
         ?>
@@ -36,6 +37,7 @@
                 <div>
                     <!-- Display badges dynamically based on the count of order item statuses -->
                     <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
+                    <span class="badge text-bg-primary"><?= $inQueueCount ?></span> <!-- Pending -->
                     <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->
                     <span class="badge text-bg-success"><?= $completedCount ?></span> <!-- Completed -->
                     <span class="badge text-bg-dark"><?= $canceledCount ?></span> <!-- Canceled -->
