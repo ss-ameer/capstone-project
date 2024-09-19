@@ -1,3 +1,7 @@
+.scrollbar-hidden ::-webkit-scrollbar {
+  display: none;
+}
+
 @media print {
   body {
     margin: 0;
@@ -42,4 +46,5 @@
   .modal-footer, .modal-header {
     display: none;
   }
+  /* Hide scrollbar for Chrome, Safari and Opera */
 }/*# sourceMappingURL=style.css.map */

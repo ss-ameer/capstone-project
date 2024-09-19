@@ -1,3 +1,9 @@
+.scrollbar-hidden {
+    ::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 @media print {
     body {
         margin: 0;
@@ -51,4 +57,17 @@
     .modal-footer, .modal-header {
         display: none;
     }
+
+    // .scrollbar-disabled {
+    //     scrollbar-width: none; /* Firefox */
+    //     -ms-overflow-style: none;  /* IE 10+ */
+
+    //     &::-webkit-scrollbar {
+    //         background: transparent; /* Chrome/Safari/Webkit */
+    //         width: 0px;
+    //     }
+    // }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+
 }

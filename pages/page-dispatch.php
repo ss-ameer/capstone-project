@@ -47,7 +47,7 @@
 
                             </div>
 
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-6 col-sm-12 scrollbar-hidden">
                                 <!-- show view -->
                                 <?php include PATH . 'components/comp-dispatch-order-view.php'; ?>
                                 <!-- nothing is selected -->
@@ -58,9 +58,15 @@
 
                         </div>
 
+                        <!-- <div class="row">
+                            <div class="col">
+                                <?php // include PATH . 'components/comp-form-dispatch.php'; ?>
+                            </div>
+                        </div> -->
+
                         <div class="row">
                             <div class="col">
-                                <?php include PATH . 'components/comp-form-dispatch.php'; ?>
+                                
                             </div>
                         </div>
 
