@@ -38,19 +38,47 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            <!-- pending orders list -->
+                            <div class="col-md-6 col-sm-12 scrollbar-hidden">
 
-                                <div id="order-list-container" class="container border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
-                                    <!-- pending orders list -->
-                                    <?php include PATH . 'components/comp-list-orders_pending.php'; ?>
+                                <div id="order-list-container" class="container p-0 border shadow-sm rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                    
+                                    <!-- header -->
+                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead">Pending Orders</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="p-3">
+                                        <?php include PATH . 'components/comp-list-orders_pending.php'; ?>
+                                    </div>
+
                                 </div>
 
                             </div>
 
                             <div class="col-md-6 col-sm-12 scrollbar-hidden">
+                                
                                 <!-- show view -->
-                                <?php include PATH . 'components/comp-dispatch-order-view.php'; ?>
-                                <!-- nothing is selected -->
+                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded position-relative" style="max-height: 400px; height: 400px; overflow-y: auto;">
+    
+                                    <!-- header -->
+                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead">Order ID: <span class="order-id"></span></span>
+                                            <button type="button" class="btn-close" aria-label="Close"></button>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="p-3">
+                                        <?php include PATH . 'components/comp-dispatch-order-view.php'; ?>
+                                    </div>
+
+                                </div>
+                                <!-- no view -->
                                 <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>
                                 </div>
