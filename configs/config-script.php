@@ -834,7 +834,7 @@ $(document).ready(function(){
                 response.items.forEach(function(item) {
                     var itemHtml = `
                         <li class="list-group-item d-flex justify-content-between">
-                            ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="listGroupRadio" value="">' : ''}
+                            ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderItemGroupRadio" value="' + item.order_item_id + '">' : ''}
                             <div class="w-50 d-flex justify-content-between">
                                 <span>${item.item_name}</span>
                                 <span>${item.type_name}</span>
@@ -861,6 +861,26 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('input[name="listGroupRadio"]').on('change', function() {
+        var selectedOrderItemId = $(this).val(); // Get the selected order_item_id
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            data: { action: 'fetch_order_item', order_item_id: selectedOrderItemId },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log(response.data);
+                    
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
+    });
+
 
 });
 
