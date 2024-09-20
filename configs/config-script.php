@@ -808,11 +808,12 @@ $(document).ready(function(){
 
     $(document).on('click', '#order-list-pending .order', function() {
         var orderId = $(this).data('order-id');
-
+        var loadingMessage = 'Loading';
+        
         console.log('Order status updated successfully!');
         // Show loading state
         $('#dispatch-order-view').addClass('d-none');
-        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Loading...');
+        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text(loadingMessage);
 
         $.ajax({
             url: config_function_url,
@@ -858,27 +859,38 @@ $(document).ready(function(){
                         $('#order-display-items ul.' + item.status).append(itemHtml);
                     });
 
-                    // Show the dispatch order view and hide the no view
-                    $('#dispatch-order-view').removeClass('d-none');
-                    $('#dispatch-order-view-no_view').addClass('d-none');
+                    setTimeout(function () {
+                        // Show the dispatch order view and hide the no view
+                        $('#dispatch-order-view').removeClass('d-none');
+                        $('#dispatch-order-view-no_view').addClass('d-none');
+                    }, 500);
                 } else {
                     // Handle the case where there is no order
-                    $('#dispatch-order-view').addClass('d-none');
-                    $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('No details available.');
+                    setTimeout(function() {
+                        $('#dispatch-order-view').addClass('d-none');
+                        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('No details available.');
+                    }, 500);
                 }
             },
             error: function () {
-                console.error('Failed to update order status');
-                $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Error loading order details.');
+                console.error('Failed to update order status.');
+                setTimeout(function() {
+                    $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Error loading order details.');
+                }, 500);
             }
         });
     });
 
     // Event listener for the close button
     $(document).on('click', '#dispatch-order-view .btn-close', function() {
+        
         // Hide the order view and show the no_view element
         $('#dispatch-order-view').addClass('d-none');
-        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Select an order to view details.');
+        setTimeout(function() {
+            $('#dispatch-order-view-no_view').find('.lead').text('Select an order to view details.');
+        }, 500);
+        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Loading');
+
     });
 
     $('input[name="orderListViewRadio"]').on('change', function() {
