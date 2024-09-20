@@ -62,7 +62,7 @@
                             <div class="col-md-6 col-sm-12 scrollbar-hidden">
                                 
                                 <!-- show view -->
-                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded position-relative" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded position-relative d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
     
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
@@ -79,7 +79,7 @@
 
                                 </div>
                                 <!-- no view -->
-                                <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>
                                 </div>
                             </div>

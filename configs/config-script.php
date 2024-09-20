@@ -10,6 +10,19 @@ $(document).ready(function(){
 
     var config_function_url = '../configs/config-function.php';
 
+    // PROTOTYPES:
+    $.fn.toggleVisibility = function(id) {
+        var element = $('#' + id); 
+
+        if (element.hasClass('d-none')) {
+            element.removeClass('d-none'); 
+        } else {
+            element.addClass('d-none'); 
+        }
+        
+        return this; 
+    };
+
     // stocks
     function itemAdd() {
         var data = {
@@ -797,6 +810,9 @@ $(document).ready(function(){
         var orderId = $(this).data('order-id');
 
         console.log('Order status updated successfully!');
+        // Show loading state
+        $('#dispatch-order-view').addClass('d-none');
+        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Loading...');
 
         $.ajax({
             url: config_function_url,
@@ -812,54 +828,57 @@ $(document).ready(function(){
                 console.log(response.order);
                 console.log(response.items);
 
-                // order id
-                $('#dispatch-order-view .order-id').text(response.order.id.toString().padStart(4, '0'));
-                
-                // client details
-                $('#order-display-client .name').text(response.order.client_name);
-                $('#order-display-client .number').text(response.order.phone);
-                $('#order-display-client .email').text(response.order.email);
+                if (response.order) {
+                    $('#dispatch-order-view .order-id').text(response.order.id.toString().padStart(4, '0'));
+                    $('#order-display-client .name').text(response.order.client_name);
+                    $('#order-display-client .number').text(response.order.phone);
+                    $('#order-display-client .email').text(response.order.email);
+                    $('#order-display-location .location').text(response.order.full_address);
 
-                // location
-                $('#order-display-location .location').text(response.order.full_address);
+                    // Clear existing items while keeping the type titles intact
+                    $('#order-display-items ul.pending li:not(:first)').remove();
+                    $('#order-display-items ul.in-queue li:not(:first)').remove();
+                    $('#order-display-items ul.in-progress li:not(:first)').remove();
+                    $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.canceled li:not(:first)').remove();
 
-                // Clear existing items while keeping the type titles intact
-                $('#order-display-items ul.pending li:not(:first)').remove();
-                $('#order-display-items ul.in-queue li:not(:first)').remove();
-                $('#order-display-items ul.in-progress li:not(:first)').remove();
-                $('#order-display-items ul.successful li:not(:first)').remove();
-                $('#order-display-items ul.canceled li:not(:first)').remove();
+                    // Loop through the order items and distribute them by status
+                    response.items.forEach(function(item) {
+                        var itemHtml = `
+                            <li class="list-group-item d-flex justify-content-between">
+                                ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderItemGroupRadio" value="' + item.order_item_id + '">' : ''}
+                                <div class="w-50 d-flex justify-content-between">
+                                    <span>${item.item_name}</span>
+                                    <span>${item.type_name}</span>
+                                </div>
+                                <span>${item.item_total}</span>
+                            </li>`;
+                        
+                        // Append the item to the appropriate list based on its status
+                        $('#order-display-items ul.' + item.status).append(itemHtml);
+                    });
 
-                // Loop through the order items and distribute them by status
-                response.items.forEach(function(item) {
-                    var itemHtml = `
-                        <li class="list-group-item d-flex justify-content-between">
-                            ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderItemGroupRadio" value="' + item.order_item_id + '">' : ''}
-                            <div class="w-50 d-flex justify-content-between">
-                                <span>${item.item_name}</span>
-                                <span>${item.type_name}</span>
-                            </div>
-                            <span>${item.item_total}</span>
-                        </li>`;
-
-                    // Append the item to the appropriate list based on its status
-                    if (item.status === 'pending') {
-                        $('#order-display-items ul.pending').append(itemHtml);
-                    } else if (item.status === 'in-queue') {
-                        $('#order-display-items ul.in-queue').append(itemHtml);
-                    } else if (item.status === 'in-progress') {
-                        $('#order-display-items ul.in-progress').append(itemHtml);
-                    } else if (item.status === 'successful') {
-                        $('#order-display-items ul.successful').append(itemHtml);
-                    } else if (item.status === 'canceled') {
-                        $('#order-display-items ul.canceled').append(itemHtml);
-                    }
-                });
+                    // Show the dispatch order view and hide the no view
+                    $('#dispatch-order-view').removeClass('d-none');
+                    $('#dispatch-order-view-no_view').addClass('d-none');
+                } else {
+                    // Handle the case where there is no order
+                    $('#dispatch-order-view').addClass('d-none');
+                    $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('No details available.');
+                }
             },
             error: function () {
                 console.error('Failed to update order status');
+                $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Error loading order details.');
             }
         });
+    });
+
+    // Event listener for the close button
+    $(document).on('click', '#dispatch-order-view .btn-close', function() {
+        // Hide the order view and show the no_view element
+        $('#dispatch-order-view').addClass('d-none');
+        $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Select an order to view details.');
     });
 
     $('input[name="listGroupRadio"]').on('change', function() {
@@ -881,6 +900,7 @@ $(document).ready(function(){
         });
     });
 
+    
 
 });
 
