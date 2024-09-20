@@ -4,14 +4,14 @@
         <h6 class="card-title">Client</h6>
     </div>
     <div class="card-body">
-        <div class="d-flex justify-content-between mb-1">
-            <span>name : </span><span class="name"></span>
+        <div class="d-flex mb-1">
+            <span class="w-25">name: </span><span class="w-75 text-nowrap overflow-y-auto name"></span>
         </div>
         <div class="d-flex justify-content-between mb-1">
-            <span>number : </span><span class="number"></span>
+            <span class="w-25">number: </span><span class="w-75 text-nowrap overflow-y-auto number"></span>
         </div>
         <div class="d-flex justify-content-between">
-            <span>email : </span><span class="email"></span>
+            <span class="w-25">email: </span><span class="w-75 text-nowrap overflow-y-auto email"></span>
         </div>
     </div>
 </div>
