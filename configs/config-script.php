@@ -846,7 +846,7 @@ $(document).ready(function(){
                     response.items.forEach(function(item) {
                         var itemHtml = `
                             <li class="list-group-item d-flex justify-content-between">
-                                ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderItemGroupRadio" value="' + item.order_item_id + '">' : ''}
+                                ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderListViewRadio" value="' + item.order_item_id + '">' : ''}
                                 <div class="w-50 d-flex justify-content-between">
                                     <span>${item.item_name}</span>
                                     <span>${item.type_name}</span>
@@ -881,8 +881,8 @@ $(document).ready(function(){
         $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('Select an order to view details.');
     });
 
-    $('input[name="listGroupRadio"]').on('change', function() {
-        var selectedOrderItemId = $(this).val(); // Get the selected order_item_id
+    $('input[name="orderListViewRadio"]').on('change', function() {
+        var selectedOrderItemId = $(this).val();
 
         $.ajax({
             url: config_function_url,
