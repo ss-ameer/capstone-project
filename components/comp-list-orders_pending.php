@@ -30,17 +30,24 @@
         ?>
 
         <li class="list-group-item list-group-item-action text-center order" data-order-id="<?= $order['id'] ?>">
-            <div class="d-flex justify-content-between">
-                <small class="text-body-secondary"><?= sprintf('%04d', $order['id']) ?></small>
-                <h6 class="mb-1"><?= $order['name'] ?></h6>
-                <small><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
-                <div>
-                    <!-- Display badges dynamically based on the count of order item statuses -->
-                    <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
-                    <span class="badge text-bg-primary"><?= $inQueueCount ?></span> <!-- Pending -->
-                    <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->
-                    <span class="badge text-bg-success"><?= $completedCount ?></span> <!-- Completed -->
-                    <span class="badge text-bg-dark"><?= $canceledCount ?></span> <!-- Canceled -->
+            <div class="d-flex">
+                <div class="d-flex w-50">
+                    <small class="text-body-secondary"><?= sprintf('%04d', $order['id']) ?></small>
+                    <div class="mx-2 text-nowrap overflow-x-auto">
+                        <h6 class=""><?= $order['name'] ?></h6>
+                    </div>
+                </div>
+
+                <div class="w-50 d-flex justify-content-between">
+                    <small><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
+                    <div>
+                        <!-- Display badges dynamically based on the count of order item statuses -->
+                        <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
+                        <span class="badge text-bg-primary"><?= $inQueueCount ?></span> <!-- Pending -->
+                        <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->
+                        <span class="badge text-bg-success"><?= $completedCount ?></span> <!-- Completed -->
+                        <span class="badge text-bg-dark"><?= $canceledCount ?></span> <!-- Canceled -->
+                    </div>
                 </div>
             </div>
         </li>
