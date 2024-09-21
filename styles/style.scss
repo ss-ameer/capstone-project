@@ -1,10 +1,33 @@
+@import '../imports/bootstrap/css/bootstrap';
+
 .scrollbar-hidden {
+    
     ::-webkit-scrollbar {
         display: none;
     }
 }
 
+#dispatch-form-details {
+
+    span:not(.fw-bold) {
+
+        @extend .text-nowrap !optional;
+        @extend .overflow-x-auto !optional;;
+        @extend .w-75 !optional;
+        @extend .text-end !optional;
+
+    }
+
+    .first-column {
+
+        @extend .text-end !optional;
+
+    }
+
+}
+
 @media print {
+    
     body {
         margin: 0;
         padding: 0;
