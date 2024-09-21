@@ -835,6 +835,7 @@ $(document).ready(function(){
                     $('#order-display-client .number').text(response.order.phone);
                     $('#order-display-client .email').text(response.order.email);
                     $('#order-display-location .location').text(response.order.full_address);
+                    $('#order-display-created .created').text(response.order.created_at);
 
                     // Clear existing items while keeping the type titles intact
                     $('#order-display-items ul.pending li:not(:first)').remove();
@@ -847,7 +848,18 @@ $(document).ready(function(){
                     response.items.forEach(function(item) {
                         var itemHtml = `
                             <li class="list-group-item d-flex justify-content-between">
-                                ${item.status === 'pending' ? '<input class="form-check-input" type="radio" name="orderListViewRadio" value="' + item.order_item_id + '">' : ''}
+                                ${item.status === 'pending' ? 
+                                    '<input class="form-check-input" type="radio" name="orderListViewRadio" value="' + item.order_item_id + 
+                                    '" data-order-id="' + response.order.id + 
+                                    '" data-client-name="' + response.order.client_name + 
+                                    '" data-phone="' + response.order.phone + 
+                                    '" data-email="' + response.order.email + 
+                                    '" data-full-address="' + response.order.full_address + 
+                                    '" data-created="' + response.order.created_at + 
+                                    '" data-item-name="' + item.item_name + 
+                                    '" data-type-name="' + item.type_name + 
+                                    '" data-item-total="' + item.item_total + '">' 
+                                    : ''}
                                 <div class="w-50 d-flex justify-content-between">
                                     <span>${item.item_name}</span>
                                     <span>${item.type_name}</span>
@@ -893,26 +905,33 @@ $(document).ready(function(){
 
     });
 
-    $('input[name="orderListViewRadio"]').on('change', function() {
+    $(document).on('change', 'input[name="orderListViewRadio"]', function() {
         var selectedOrderItemId = $(this).val();
 
-        $.ajax({
-            url: config_function_url,
-            type: 'POST',
-            data: { action: 'fetch_order_item', order_item_id: selectedOrderItemId },
-            dataType: 'json',
-            success: function(response) {
-                if (response.status === 'success') {
-                    console.log(response.data);
-                    
-                } else {
-                    alert(response.message);
-                }
-            }
-        });
-    });
+        // Retrieve data from the selected radio button
+        var orderId = $(this).data('order-id');
+        var clientName = $(this).data('client-name');
+        var phone = $(this).data('phone');
+        var email = $(this).data('email');
+        var fullAddress = $(this).data('full-address');
+        var created = $(this).data('created');
+        var itemName = $(this).data('item-name');
+        var typeName = $(this).data('type-name');
+        var itemTotal = $(this).data('item-total');
 
-    
+        // Fill the form with the order details
+        $('#dispatch-form .order-id').text(orderId.toString().padStart(4, '0'));
+        $('#dispatch-form .client-name').text(clientName);
+        $('#dispatch-form .client-phone').text(phone);
+        $('#dispatch-form .client-email').text(email);
+        $('#dispatch-form .order-location').text(fullAddress);
+        $('#dispatch-form .order-created').text(created);
+        $('#dispatch-form .item-name').text(itemName);
+        $('#dispatch-form .unit-type').text(typeName);
+        $('#dispatch-form .item-total').text(itemTotal);
+
+        console.log('Radio button selected with Order ID:', orderId);
+    });
 
 });
 

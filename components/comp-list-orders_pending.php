@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="w-50 d-flex justify-content-between">
-                    <small><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
+                    <small id="order-list-pending-date"><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
                     <div>
                         <!-- Display badges dynamically based on the count of order item statuses -->
                         <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->

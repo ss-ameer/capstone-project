@@ -23,7 +23,7 @@
 <body>
     <header></header>
     <main>
-        <div class="container-fluid vh-100">
+        <div class="container-fluid vh-100 scrollbar-hidden">
             <div class="row h-100">
                 <!-- sidebar -->
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
@@ -37,9 +37,9 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mb-3">
                             <!-- pending orders list -->
-                            <div class="col-md-6 col-sm-12 scrollbar-hidden">
+                            <div class="col-md-6 col-sm-12">
 
                                 <div id="order-list-container" class="container p-0 border shadow-sm rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     
@@ -59,11 +59,10 @@
 
                             </div>
 
-                            <div class="col-md-6 col-sm-12 scrollbar-hidden">
+                            <div class="col-md-6 col-sm-12">
                                 
                                 <!-- show view -->
-                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded position-relative d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
-    
+                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
                                         <div class="d-flex justify-content-between">
@@ -76,25 +75,33 @@
                                     <div class="p-3">
                                         <?php include PATH . 'components/comp-dispatch-order-view.php'; ?>
                                     </div>
-
                                 </div>
+
                                 <!-- no view -->
                                 <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>
                                 </div>
+
                             </div>
 
                         </div>
 
-                        <!-- <div class="row">
+                        <div class="row mb-3">
                             <div class="col">
-                                <?php // include PATH . 'components/comp-form-dispatch.php'; ?>
-                            </div>
-                        </div> -->
+                                <div class="container border shadow-sm rounded p-0">
+                                    
+                                    <!-- header -->
+                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead">Order Item</span>
+                                        </div>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col">
-                                
+                                    <!-- content -->
+                                    <div class="p-3">
+                                        <?php include PATH . 'components/comp-form-dispatch.php'; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

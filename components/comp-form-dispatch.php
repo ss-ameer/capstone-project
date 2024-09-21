@@ -1,39 +1,78 @@
 <!-- comp-form-dispatch.php -->
-<div class="container mt-4">
-    <!-- <h5 class="mb-3">Create New Dispatch</h5> -->
-    <form id="dispatch-form" class="border rounded p-3 shadow-sm row">
-        <div class="col-md-6 mb-3">
-            <label for="dispatch-driver" class="form-label">Driver</label>
-            <select id="dispatch-driver" name="driver_id" class="form-select" required>
-                <option selected disabled>Choose a Driver</option>
-                <?php foreach ($drivers as $driver) : ?>
-                    <option value="<?= $driver['id'] ?>"><?= $driver['driver_name'] ?></option>
-                <?php endforeach; ?>
-            </select>
+<form action="" id="dispatch-form">
+    <div class="container">
+        <div class="row g-5" id="dispatch-form-details">
+
+            <!-- Order Details -->
+            <div class="col-6 first-column">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Order ID: </span>
+                    <span class="order-id"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Item: </span>
+                    <span class="item-name"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Unit: </span>
+                    <span class="unit-type"></span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Price: </span>
+                    <span class="item-total"></span>
+                </div>
+            </div>
+
+            <!-- Client and Location Details -->
+            <div class="col-6">
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Date: </span>
+                    <span class="order-created"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Client: </span>
+                    <span class="client-name"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Phone: </span>
+                    <span class="client-phone"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Email: </span>
+                    <span class="client-email"></span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="fw-bold">Location: </span>
+                    <span class="order-location"></span>
+                </div>
+            </div>
+
         </div>
 
-        <div class="col-md-6 mb-3">
-            <label for="dispatch-truck" class="form-label">Truck</label>
-            <select id="dispatch-truck" name="truck_id" class="form-select" required>
-                <option selected disabled>Choose a Truck</option>
-                <?php foreach ($trucks as $truck) : ?>
-                    <option value="<?= $truck['id'] ?>"><?= $truck['truck_number'] ?></option>
-                <?php endforeach; ?>
-            </select>
+        <!-- Truck and Driver Selection -->
+        <div class="row mt-3">
+            <div class="col">
+                <label for="dispatch-truck" class="form-label">Truck</label>
+                <select id="dispatch-truck" name="truck_id" class="form-select" required>
+                    <option selected disabled>Choose a Truck</option>
+                </select>
+            </div>
+
+            <div class="col">
+                <label for="dispatch-driver" class="form-label">Driver</label>
+                <select id="dispatch-driver" name="driver_id" class="form-select" required>
+                    <option selected disabled>Choose a Driver</option>
+                </select>
+            </div>
         </div>
 
-        <div class="col-12 mb-3">
-            <label for="dispatch-order-item" class="form-label">Order Item</label>
-            <select id="dispatch-order-item" name="order_item_id" class="form-select" required>
-                <option selected disabled>Select an Order Item</option>
-                <?php foreach ($orderItems as $item) : ?>
-                    <option value="<?= $item['id'] ?>">
-                        Order #<?= $item['order_id'] ?> - <?= $item['item_name'] ?> (<?= $item['quantity'] ?> trucks)
-                    </option>
-                <?php endforeach; ?>
-            </select>
+        <!-- Submit Button -->
+        <div class="row mt-3">
+            <div class="col">
+                <button type="submit" class="btn btn-primary h-100 w-100">Add to Queue</button>
+            </div>
         </div>
 
-        <button type="submit" class="col-12 btn btn-primary">Dispatch</button>
-    </form>
-</div>
+    </div>
+</form>

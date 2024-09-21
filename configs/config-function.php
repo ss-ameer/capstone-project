@@ -758,7 +758,7 @@
         // Fetch order details including client_id
         $columns = [
             'o.id', 
-            'o.client_id', // Added client_id
+            'o.client_id', 
             'o.created_at', 
             'c.name AS client_name', 
             'a.city, a.barangay, a.street, a.house_number'

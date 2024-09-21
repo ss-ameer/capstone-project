@@ -1,4 +1,4 @@
-<!-- comp-content-order-view.php -->
+<!-- comp-dispatch-order-view.php -->
 <div class="card mb-2" id="order-display-client">
     <div class="card-header">
         <h6 class="card-title">Client</h6>
@@ -23,6 +23,17 @@
     <div class="card-body">                                    
         <div class="d-flex justify-content-between">
             <span class="location"></span>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-2" id="order-display-created">
+    <div class="card-header">
+        <h6 class="card-title">Order Date</h6>
+    </div>
+    <div class="card-body">                                    
+        <div class="d-flex justify-content-between">
+            <span class="created"></span>
         </div>
     </div>
 </div>
