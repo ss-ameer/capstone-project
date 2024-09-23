@@ -53,9 +53,9 @@
         <!-- Truck and Driver Selection -->
         <div class="row mt-3">
             <div class="col">
-                <label for="dispatch-truck" class="form-label">Truck</label>
-                <select id="dispatch-truck" name="truck_id" class="form-select" required>
-                    <option selected disabled>Choose a Truck</option>
+                <label for="dispatch-select-truck" class="form-label">Operator</label>
+                <select id="dispatch-select-truck" name="truck_id" class="form-select" required>
+                    <option selected disabled>Choose a Operator</option>
                 </select>
             </div>
 

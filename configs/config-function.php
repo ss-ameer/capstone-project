@@ -109,8 +109,22 @@
                     break;
                 
                 case 'dispatch update order view':
-                    $orderData = getOrderData($_POST['order_id']);
-                    echo json_encode($orderData);
+                    $order_id = $_POST['order_id'];
+                    $order_data = getOrderData($order_id);
+                    echo json_encode($order_data);
+                    break;
+                
+                case 'get dispatch form options':
+                    $unit_type_id = $_POST['unit_type_id'];
+                    $units = getUnitsFiltered($unit_type_id);
+                    $drivers = getDrivers();
+
+                    $options = [
+                        'units' => $units,
+                        'drivers' => $drivers
+                    ];
+
+                    echo json_encode($options);
                     break;
 
                 default:
@@ -502,7 +516,7 @@
 
             foreach($order_items as $item) {
                 $item_id = $item['item_id'];
-                $quantity = $item['quantity']; // Drop this as a separate column in `order_items`
+                $quantity = $item['quantity']; 
                 $price = $item['price'];
                 $unit_capacity = $item['unit_capacity'];
                 $total = $price * $unit_capacity;
@@ -588,29 +602,6 @@
 
         echo json_encode($clients);
     }
-
-    // function getTableData($tableName, $columns = '*') {
-    //     global $conn;
-
-    //     $tableName = mysqli_real_escape_string($conn, $tableName);
-
-    //     if (is_array($columns)) {
-    //         $columns = implode(', ', array_map(function($col) use ($conn) {
-    //             return mysqli_real_escape_string($conn, $col);
-    //         }, $columns));
-    //     }
-
-    //     $sql = "SELECT $columns FROM $tableName";
-    //     $result = $conn -> query($sql);
-
-    //     $data = [];
-        
-    //     while ($row = $result -> fetch_assoc()) {
-    //         $data[] = $row;
-    //     }
-
-    //     return $data;
-    // }
 
     function getTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
         global $conn;
@@ -767,12 +758,11 @@
             JOIN clients c ON o.client_id = c.client_id
             JOIN addresses a ON o.address_id = a.address_id
         ";
-        $where = "o.id = " . intval($orderId); // Ensure $orderId is properly sanitized
+        $where = "o.id = " . intval($orderId);
         $orderDetails = getTableData('orders o', $columns, $joins, $where);
     
         if (empty($orderDetails)) {
-            // Handle case where order is not found
-            return null; // or throw an exception
+            return null; 
         }
     
         // Get the client_id for fetching contacts
@@ -804,11 +794,9 @@
         $stmt->fetch();
         $stmt->close();
     
-        // Add phone and email to order details
         $orderDetails[0]['phone'] = $phone;
         $orderDetails[0]['email'] = $email;
     
-        // Create a full address
         $orderDetails[0]['full_address'] = 
             $orderDetails[0]['house_number'] . ', ' . 
             $orderDetails[0]['street'] . ' Street, ' . 
@@ -822,19 +810,81 @@
             'oi.price', 
             'oi.item_total', 
             'oi.status',
+            'oi.truck_type_id', 
             'tt.type_name', 
             'i.item_name'
         ];
         $joins = "
             JOIN truck_types tt ON oi.truck_type_id = tt.id
             JOIN items i ON oi.item_id = i.item_id"; // Join with items table
-        $where = "oi.order_id = " . intval($orderId); // Ensure $orderId is properly sanitized
+        $where = "oi.order_id = " . intval($orderId); 
         $orderItems = getTableData('order_items oi', $columns, $joins, $where);
     
         // Return the combined result
         return [
-            'order' => $orderDetails[0], // Since it's fetching one order
+            'order' => $orderDetails[0], 
             'items' => $orderItems
         ];
+    }
+
+    function getDrivers() {
+
+        global $conn;
+
+        $query = "
+            SELECT id, name, status 
+            FROM drivers 
+            ORDER BY 
+            CASE status
+                WHEN 'available' THEN 1
+                WHEN 'on_trip' THEN 2
+                WHEN 'unavailable' THEN 3
+            END ASC";
+        
+        $result = $conn->query($query);
+        
+        if ($result->num_rows > 0) {
+            $drivers = [];
+            while ($row = $result->fetch_assoc()) {
+                $drivers[] = $row;
+            }
+            return $drivers; 
+        }
+
+        return []; 
+    }
+
+    function getUnits() {
+        global $conn;
+
+        $query = "SELECT id, truck_number, truck_type_id, status FROM trucks";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0) {
+            $trucks = [];
+            while ($row = $result->fetch_assoc()) {
+                $trucks[] = $row; 
+            }
+            return $trucks; 
+        }
+
+        return [];
+
+    }
+
+    function getUnitsFiltered($unit_type_id) {
+        
+        $trucks = getUnits();
+    
+        $filteredTrucks = array_filter($trucks, function($truck) use ($unit_type_id) {
+            return $truck['truck_type_id'] == $unit_type_id; 
+        });
+    
+        usort($filteredTrucks, function($a, $b) {
+            $statusOrder = ['available' => 1, 'in_use' => 2, 'maintenance' => 3, 'out_of_service' => 4];
+            return $statusOrder[$a['status']] - $statusOrder[$b['status']];
+        });
+    
+        return $filteredTrucks; 
     }
     

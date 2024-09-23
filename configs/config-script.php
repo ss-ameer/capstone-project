@@ -856,7 +856,8 @@ $(document).ready(function(){
                                     '" data-email="' + response.order.email + 
                                     '" data-full-address="' + response.order.full_address + 
                                     '" data-created="' + response.order.created_at + 
-                                    '" data-item-name="' + item.item_name + 
+                                    '" data-type-name="' + item.type_name + 
+                                    '" data-type-id="' + item.truck_type_id + 
                                     '" data-type-name="' + item.type_name + 
                                     '" data-item-total="' + item.item_total + '">' 
                                     : ''}
@@ -916,8 +917,43 @@ $(document).ready(function(){
         var fullAddress = $(this).data('full-address');
         var created = $(this).data('created');
         var itemName = $(this).data('item-name');
+        var typeId = $(this).data('type-id');
         var typeName = $(this).data('type-name');
         var itemTotal = $(this).data('item-total');
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                unit_type_id: typeId,
+                action: 'get dispatch form options'
+            },
+            success: function(response) {
+                
+                console.log(response);
+                
+                var units = response.units;
+                var drivers = response.drivers;
+
+                // Example: Log units and drivers
+                console.log("Units: ", units);
+                console.log("Drivers: ", drivers);
+
+                units.forEach(function(unit) {
+                    $('#dispatch-select-truck').append(`<option value="${unit.id}">#${unit.id.padStart(4,'0')} / ${unit.truck_number} / ${unit.status}</option>`);
+                });
+
+                drivers.forEach(function(driver) {
+                    $('#dispatch-select-driver').append(`<option value="${driver.id}">#${driver.id.padStart(4,'0')} / ${driver.name} / ${driver.status}</option>`);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log("Status: " + status);       // Log status
+                console.log("Error: " + error);         // Log error message
+                console.log("Response: " + xhr.responseText);  // Log full response for debugging
+            }
+        });
 
         // Fill the form with the order details
         $('#dispatch-form .order-id').text(orderId.toString().padStart(4, '0'));
