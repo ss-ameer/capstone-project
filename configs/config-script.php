@@ -858,7 +858,7 @@ $(document).ready(function(){
                                     '" data-created="' + response.order.created_at + 
                                     '" data-type-name="' + item.type_name + 
                                     '" data-type-id="' + item.truck_type_id + 
-                                    '" data-type-name="' + item.type_name + 
+                                    '" data-item-name="' + item.item_name + 
                                     '" data-item-total="' + item.item_total + '">' 
                                     : ''}
                                 <div class="w-50 d-flex justify-content-between">
@@ -947,26 +947,29 @@ $(document).ready(function(){
                 drivers.forEach(function(driver) {
                     $('#dispatch-select-driver').append(`<option value="${driver.id}">#${driver.id.padStart(4,'0')} / ${driver.name} / ${driver.status}</option>`);
                 });
+
+                // Fill the form with the order details
+                $('#dispatch-form .order-id').text(orderId.toString().padStart(4, '0'));
+                $('#dispatch-form .client-name').text(clientName);
+                $('#dispatch-form .client-phone').text(phone);
+                $('#dispatch-form .client-email').text(email);
+                $('#dispatch-form .order-location').text(fullAddress);
+                $('#dispatch-form .order-created').text(created);
+                $('#dispatch-form .item-name').text(itemName);
+                $('#dispatch-form .unit-type').text(typeName);
+                $('#dispatch-form .item-total').text(itemTotal);
+
+                console.log('Radio button selected with Order ID:', orderId);
+                console.log(itemName);
+                console.log(typeName);
             },
             error: function(xhr, status, error) {
-                console.log("Status: " + status);       // Log status
-                console.log("Error: " + error);         // Log error message
-                console.log("Response: " + xhr.responseText);  // Log full response for debugging
+                console.log("Status: " + status); // Log status
+                console.log("Error: " + error); // Log error message
+                console.log("Response: " + xhr.responseText); // Log full response for debugging
             }
         });
 
-        // Fill the form with the order details
-        $('#dispatch-form .order-id').text(orderId.toString().padStart(4, '0'));
-        $('#dispatch-form .client-name').text(clientName);
-        $('#dispatch-form .client-phone').text(phone);
-        $('#dispatch-form .client-email').text(email);
-        $('#dispatch-form .order-location').text(fullAddress);
-        $('#dispatch-form .order-created').text(created);
-        $('#dispatch-form .item-name').text(itemName);
-        $('#dispatch-form .unit-type').text(typeName);
-        $('#dispatch-form .item-total').text(itemTotal);
-
-        console.log('Radio button selected with Order ID:', orderId);
     });
 
 });
