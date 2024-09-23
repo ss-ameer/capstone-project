@@ -3,6 +3,11 @@
 
     session_start();
 
+    if (isset($_SESSION['user_info'])) {
+        $officer_logged_in_id = $_SESSION['user_info']['id'];
+        $officer_logged_in_name = $_SESSION['user_info']['name'];
+    };
+
 // database initialization
 
     $servername = 'localhost';
@@ -92,7 +97,7 @@
                     break;
 
                 case 'get units info':
-                    $units = getTableData('truck_types');
+                    $units = dbGetTableData('truck_types');
                     echo json_encode($units);
                     break;
 
@@ -127,6 +132,23 @@
                     echo json_encode($options);
                     break;
 
+                case 'submit dispatch form':
+
+                    $unit_id = $_POST['unit_id'];
+                    $operator_id = $_POST['operator_id'];
+                    $order_item_id = $_POST['order_item_id'];
+                    $officer_id = $officer_logged_in_id;
+
+                    $success = addDispatchRecord($order_item_id, $unit_id, $operator_id, $officer_id);
+
+                    if ($success) {
+                        echo json_encode(['success' => true]);
+                    } else {
+                        echo json_encode(['success' => false, 'error' => 'Failed to add dispatch record']);
+                    }
+
+                    break;
+
                 default:
                     break;
 
@@ -143,7 +165,7 @@
         }
     }
 
-    $unit_types = getTableData('truck_types');
+    $unit_types = dbGetTableData('truck_types');
 
     function itemSearch() {
         global $conn;
@@ -603,7 +625,7 @@
         echo json_encode($clients);
     }
 
-    function getTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
+    function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
         global $conn;
     
         // Sanitize the table name
@@ -647,7 +669,7 @@
     }
     
 
-    function addRecord($table, $data) {
+    function dbAddRecord($table, $data) {
         global $conn;
 
         $columns = implode(", ", array_keys($data));
@@ -673,15 +695,16 @@
         }
 
         $stmt -> bind_param($types, ...$values);
+
+        $result = false;
         
         if ($stmt -> execute()) {
-            $stmt -> close();
-            return true;
-        } else {
-            $stmt -> close();
-            return false;
+            
+            $result = true;
         }
         
+        $stmt -> close();
+        return $result;
     }
 
     function addUnit() {
@@ -693,7 +716,7 @@
             'status' => $unitData['status'],
         ];
 
-        $result = addRecord('trucks', $unitData);
+        $result = dbAddRecord('trucks', $unitData);
 
         if($result === true) {
             echo "success";
@@ -710,7 +733,7 @@
             'capacity' => $unitTypeData['capacity']
         ];
     
-        $result = addRecord('truck_types', $unitTypeData);
+        $result = dbAddRecord('truck_types', $unitTypeData);
     
         if ($result === true) {
             echo "success";
@@ -733,7 +756,7 @@
         ];
     
         // Add the record to the 'drivers' table
-        $result = addRecord('drivers', $driverData);
+        $result = dbAddRecord('drivers', $driverData);
     
         // Return success or error response
         if ($result === true) {
@@ -759,7 +782,7 @@
             JOIN addresses a ON o.address_id = a.address_id
         ";
         $where = "o.id = " . intval($orderId);
-        $orderDetails = getTableData('orders o', $columns, $joins, $where);
+        $orderDetails = dbGetTableData('orders o', $columns, $joins, $where);
     
         if (empty($orderDetails)) {
             return null; 
@@ -810,15 +833,16 @@
             'oi.price', 
             'oi.item_total', 
             'oi.status',
+            'oi.id',
             'oi.truck_type_id', 
             'tt.type_name', 
             'i.item_name'
         ];
         $joins = "
             JOIN truck_types tt ON oi.truck_type_id = tt.id
-            JOIN items i ON oi.item_id = i.item_id"; // Join with items table
+            JOIN items i ON oi.item_id = i.item_id"; 
         $where = "oi.order_id = " . intval($orderId); 
-        $orderItems = getTableData('order_items oi', $columns, $joins, $where);
+        $orderItems = dbGetTableData('order_items oi', $columns, $joins, $where);
     
         // Return the combined result
         return [
@@ -886,5 +910,55 @@
         });
     
         return $filteredTrucks; 
+    }
+
+    function addDispatchRecord ($order_item_id, $unit_id, $operator_id, $officer_id) {
+
+        $table = 'dispatch';
+
+        $success = false;
+
+        $data = [
+            'order_item_id' => $order_item_id,
+            'truck_id' => $unit_id,
+            'driver_id' => $operator_id,
+            'dispatch_officer_id' => $officer_id,
+        ];
+
+        if (dbAddRecord($table, $data)) {
+
+            $table = 'order_items';
+            $row_name = $data['order_item_id'];
+            $row_value = 'id';
+            $column_name = 'status';
+            $column_value = 'in-queue';
+
+            if (dbUpdateData($table, $row_name, $row_value, $column_name, $column_value)) {
+                $success = true;
+            }
+
+        }
+
+        return $success;
+    }
+
+    function dbUpdateData($table, $row_name, $row_value, $column_name, $column_value) {
+        global $conn;
+    
+        $sql = "UPDATE $table SET $column_name = ? WHERE $row_name = ?";
+    
+        $stmt = $conn->prepare($sql);
+    
+        if ($stmt === false) {
+            die("Prepare failed: " . $conn->error);
+        }
+    
+        $stmt->bind_param("si", $column_value, $row_value);
+    
+        $result = $stmt->execute();
+    
+        $stmt->close();
+    
+        return $result;
     }
     

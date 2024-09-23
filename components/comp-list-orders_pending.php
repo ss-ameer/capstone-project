@@ -5,7 +5,7 @@
     $where = "o.status = 'pending'";
     $orderBy = "o.created_at ASC";
 
-    $pendingOrders = getTableData('orders o', $columns, $joins, $where, $orderBy);
+    $pendingOrders = dbGetTableData('orders o', $columns, $joins, $where, $orderBy);
 ?>
 <ul class="list-group" id="order-list-pending">
     <?php foreach ($pendingOrders as $order): ?>

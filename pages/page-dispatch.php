@@ -2,6 +2,7 @@
 <?php
 
     include_once '../configs/config-function.php';
+    // echo $_SESSION['user_info']['id'];
 
 ?>
 <!DOCTYPE html>

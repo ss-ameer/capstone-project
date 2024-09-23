@@ -858,6 +858,7 @@ $(document).ready(function(){
                                     '" data-created="' + response.order.created_at + 
                                     '" data-type-name="' + item.type_name + 
                                     '" data-type-id="' + item.truck_type_id + 
+                                    '" data-order-item-id="' + item.id + 
                                     '" data-item-name="' + item.item_name + 
                                     '" data-item-total="' + item.item_total + '">' 
                                     : ''}
@@ -867,9 +868,11 @@ $(document).ready(function(){
                                 </div>
                                 <span>${item.item_total}</span>
                             </li>`;
-                        
-                        // Append the item to the appropriate list based on its status
-                        $('#order-display-items ul.' + item.status).append(itemHtml);
+
+                            // console.log('item id: ' + item.item_id);
+                            
+                            // Append the item to the appropriate list based on its status
+                            $('#order-display-items ul.' + item.status).append(itemHtml);
                     });
 
                     setTimeout(function () {
@@ -916,6 +919,7 @@ $(document).ready(function(){
         var email = $(this).data('email');
         var fullAddress = $(this).data('full-address');
         var created = $(this).data('created');
+        var orderItemId = $(this).data('order-item-id');
         var itemName = $(this).data('item-name');
         var typeId = $(this).data('type-id');
         var typeName = $(this).data('type-name');
@@ -955,6 +959,7 @@ $(document).ready(function(){
                 $('#dispatch-form .client-email').text(email);
                 $('#dispatch-form .order-location').text(fullAddress);
                 $('#dispatch-form .order-created').text(created);
+                $('#dispatch-form .order-item-id').text(orderItemId);
                 $('#dispatch-form .item-name').text(itemName);
                 $('#dispatch-form .unit-type').text(typeName);
                 $('#dispatch-form .item-total').text(itemTotal);
@@ -972,6 +977,56 @@ $(document).ready(function(){
 
     });
 
+    $('#dispatch-form').on('submit', function (event) {
+        event.preventDefault();
+
+        var unit_id = $('#dispatch-select-truck').val();
+        var operator_id = $('#dispatch-select-driver').val();
+        var order_item_id = $('#dispatch-form .order-item-id').text();
+
+        console.log('order item id:' + order_item_id);
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                unit_id: unit_id,
+                operator_id: operator_id,
+                order_item_id: order_item_id,
+                action: 'submit dispatch form'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Order successfully added to the queue!');
+                } else {
+                    alert('Error: ' + response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error Status: ' + status); 
+                console.error('AJAX Error Message: ' + error);
+                console.error('AJAX Full Response: ', xhr.responseText);
+                
+                try {
+                    var responseJSON = JSON.parse(xhr.responseText);
+                    if (responseJSON.error_code) {
+                        console.error('Error Code: ' + responseJSON.error_code);
+                    }
+                    if (responseJSON.error) {
+                        console.error('Error Message: ' + responseJSON.error);
+                    }
+                } catch (e) {
+                    console.error('Failed to parse JSON response.');
+                }
+
+                alert('An unexpected error occurred. Please check the console for details.');
+            }
+        });
+
+    });
+
+    
 });
 
 </script>

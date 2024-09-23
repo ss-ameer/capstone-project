@@ -11,6 +11,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="fw-bold">Item: </span>
+                    <span class="order-item-id d-none"></span>
                     <span class="item-name"></span>
                 </div>
                 <div class="d-flex justify-content-between">
