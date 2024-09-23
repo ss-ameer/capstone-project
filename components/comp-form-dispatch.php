@@ -52,19 +52,21 @@
 
         <!-- Truck and Driver Selection -->
         <div class="row mt-3">
+
             <div class="col">
-                <label for="dispatch-select-truck" class="form-label">Operator</label>
+                <label for="dispatch-select-truck" class="form-label">Unit</label>
                 <select id="dispatch-select-truck" name="truck_id" class="form-select" required>
-                    <option selected disabled>Choose a Operator</option>
+                    <option selected disabled>Select Unit</option>
                 </select>
             </div>
 
             <div class="col">
-                <label for="dispatch-driver" class="form-label">Driver</label>
-                <select id="dispatch-driver" name="driver_id" class="form-select" required>
-                    <option selected disabled>Choose a Driver</option>
+                <label for="dispatch-select-driver" class="form-label">Operator</label>
+                <select id="dispatch-select-driver" name="driver_id" class="form-select" required>
+                    <option selected disabled>Select Operator</option>
                 </select>
             </div>
+
         </div>
 
         <!-- Submit Button -->
