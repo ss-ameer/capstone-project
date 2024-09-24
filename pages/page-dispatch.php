@@ -52,7 +52,7 @@
                                     </div>
 
                                     <!-- content -->
-                                    <div class="p-3">
+                                    <div id="pending-orders-container" class="p-3">
                                         <?php include PATH . 'components/comp-list-orders_pending.php'; ?>
                                     </div>
 

@@ -42,6 +42,7 @@
                     <small id="order-list-pending-date"><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
                     <div>
                         <!-- Display badges dynamically based on the count of order item statuses -->
+                        <!-- here -->
                         <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
                         <span class="badge text-bg-primary"><?= $inQueueCount ?></span> <!-- Pending -->
                         <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->

@@ -149,6 +149,12 @@
 
                     break;
 
+                case 'get dispatch pending orders':
+                    
+                    error_log("Action received: get dispatch pending orders");
+                    echo getDispatchPendingOrdersHtml();
+                    break;
+
                 default:
                     break;
 
@@ -941,6 +947,66 @@
 
         return $success;
     }
+
+    // Function to get pending orders HTML
+    function getDispatchPendingOrdersHtml() {
+    
+        global $conn;
+            $columns = ['o.id', 'o.client_id', 'o.created_at', 'c.name', 'o.status'];
+            $joins = "JOIN clients c ON o.client_id = c.client_id";
+            $where = "o.status = 'pending'";
+            $orderBy = "o.created_at ASC";
+
+            $pendingOrders = dbGetTableData('orders o', $columns, $joins, $where, $orderBy);
+
+            $output = '<ul class="list-group" id="order-list-pending">';
+            foreach ($pendingOrders as $order) {
+                // Fetch counts for each status of order items
+                $orderId = $order['id'];
+                $query = "
+                    SELECT 
+                        SUM(status = 'pending') AS pending_count,
+                        SUM(status = 'in-queue') AS in_queue_count, 
+                        SUM(status = 'in-progress') AS in_progress_count, 
+                        SUM(status = 'completed') AS completed_count, 
+                        SUM(status = 'canceled') AS canceled_count
+                    FROM order_items
+                    WHERE order_id = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param('i', $orderId);
+                $stmt->execute();
+                $stmt->bind_result($pendingCount, $inQueueCount, $inProgressCount, $completedCount, $canceledCount);
+                $stmt->fetch();
+                $stmt->close();
+
+                // Build the list item
+                $output .= '<li class="list-group-item list-group-item-action text-center order" data-order-id="' . $order['id'] . '">
+                    <div class="d-flex">
+                        <div class="d-flex w-50">
+                            <small class="text-body-secondary">' . sprintf('%04d', $order['id']) . '</small>
+                            <div class="mx-2 text-nowrap overflow-x-auto">
+                                <h6 class="">' . $order['name'] . '</h6>
+                            </div>
+                        </div>
+                        <div class="w-50 d-flex justify-content-between">
+                            <small id="order-list-pending-date">' . date("m/d/y", strtotime($order['created_at'])) . '</small>
+                            <div>
+                                <span class="badge text-bg-secondary">' . $pendingCount . '</span> 
+                                <span class="badge text-bg-primary">' . $inQueueCount . '</span> 
+                                <span class="badge text-bg-info">' . $inProgressCount . '</span> 
+                                <span class="badge text-bg-success">' . $completedCount . '</span> 
+                                <span class="badge text-bg-dark">' . $canceledCount . '</span> 
+                            </div>
+                        </div>
+                    </div>
+                </li>';
+            }
+
+        $output .= '</ul>';
+
+        return $output; // Return the generated HTML
+    }
+
 
     function dbUpdateData($table, $row_name, $row_value, $column_name, $column_value) {
         global $conn;

@@ -845,6 +845,7 @@ $(document).ready(function(){
                     $('#order-display-items ul.canceled li:not(:first)').remove();
 
                     // Loop through the order items and distribute them by status
+                    // This is the part I'm talking about.
                     response.items.forEach(function(item) {
                         var itemHtml = `
                             <li class="list-group-item d-flex justify-content-between">
@@ -969,9 +970,9 @@ $(document).ready(function(){
                 console.log(typeName);
             },
             error: function(xhr, status, error) {
-                console.log("Status: " + status); // Log status
-                console.log("Error: " + error); // Log error message
-                console.log("Response: " + xhr.responseText); // Log full response for debugging
+                console.log("Status: " + status); 
+                console.log("Error: " + error); 
+                console.log("Response: " + xhr.responseText); 
             }
         });
 
@@ -983,6 +984,7 @@ $(document).ready(function(){
         var unit_id = $('#dispatch-select-truck').val();
         var operator_id = $('#dispatch-select-driver').val();
         var order_item_id = $('#dispatch-form .order-item-id').text();
+        var order_id = $('#dispatch-form .order-id').text().trim();
 
         console.log('order item id:' + order_item_id);
 
@@ -999,6 +1001,8 @@ $(document).ready(function(){
             success: function(response) {
                 if (response.success) {
                     alert('Order successfully added to the queue!');
+                    updateDispatchOrderItems(order_id);
+                    updateDispatchPendingOrders();
                 } else {
                     alert('Error: ' + response.error);
                 }
@@ -1026,6 +1030,82 @@ $(document).ready(function(){
 
     });
 
+    function updateDispatchOrderItems(orderId) {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                order_id: orderId,
+                action: 'dispatch update order view'
+            },
+            success: function (response) {
+                if (response.items) {
+                    // Clear existing items while keeping the type titles intact
+                    $('#order-display-items ul.pending li:not(:first)').remove();
+                    $('#order-display-items ul.in-queue li:not(:first)').remove();
+                    $('#order-display-items ul.in-progress li:not(:first)').remove();
+                    $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.canceled li:not(:first)').remove();
+
+                    // Loop through the order items and distribute them by status
+                    response.items.forEach(function (item) {
+                        var itemHtml = `
+                            <li class="list-group-item d-flex justify-content-between">
+                                ${item.status === 'pending' ? 
+                                    '<input class="form-check-input" type="radio" name="orderListViewRadio" value="' + item.order_item_id + 
+                                    '" data-order-id="' + response.order.id + 
+                                    '" data-client-name="' + response.order.client_name + 
+                                    '" data-phone="' + response.order.phone + 
+                                    '" data-email="' + response.order.email + 
+                                    '" data-full-address="' + response.order.full_address + 
+                                    '" data-created="' + response.order.created_at + 
+                                    '" data-type-name="' + item.type_name + 
+                                    '" data-type-id="' + item.truck_type_id + 
+                                    '" data-order-item-id="' + item.id + 
+                                    '" data-item-name="' + item.item_name + 
+                                    '" data-item-total="' + item.item_total + '">' 
+                                    : ''}
+                                <div class="w-50 d-flex justify-content-between">
+                                    <span>${item.item_name}</span>
+                                    <span>${item.type_name}</span>
+                                </div>
+                                <span>${item.item_total}</span>
+                            </li>`;
+
+                        // Append the item to the appropriate list based on its status
+                        $('#order-display-items ul.' + item.status).append(itemHtml);
+                    });
+
+                    console.log('Order items updated successfully for orderId: ' + orderId);
+                } else {
+                    console.log('No items found for the order.');
+                }
+            },
+            error: function () {
+                console.error('Failed to update order items.');
+            }
+        });
+    }
+
+    function updateDispatchPendingOrders () {
+        $.ajax({
+            url: config_function_url, 
+            type: 'POST',
+            dataType: 'html',
+            data: {
+                action: 'get dispatch pending orders'
+            },
+            success: function(response) {
+                $('#pending-orders-container').html(response);
+                console.log('success!!!')
+            },
+            error: function(xhr, status, error) {
+                console.error('Failed to refresh pending orders list:', error);
+                console.log('Full response:', xhr.responseText); // Log the full response for debugging
+            }
+        });
+    }
     
 });
 
