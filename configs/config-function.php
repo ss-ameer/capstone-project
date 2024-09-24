@@ -927,13 +927,13 @@
 
         if (dbAddRecord($table, $data)) {
 
-            $table = 'order_items';
-            $row_name = $data['order_item_id'];
-            $row_value = 'id';
+            $update_table = 'order_items';
+            $row_name = 'id';
+            $row_value = $data['order_item_id'];
             $column_name = 'status';
             $column_value = 'in-queue';
 
-            if (dbUpdateData($table, $row_name, $row_value, $column_name, $column_value)) {
+            if (dbUpdateData($update_table, $row_name, $row_value, $column_name, $column_value)) {
                 $success = true;
             }
 
