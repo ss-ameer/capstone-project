@@ -97,6 +97,7 @@
                                     <div class="sticky-top bg-light p-2 border-bottom">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead">Order Item</span>
+                                            <button type="button" class="btn-close" aria-label="Close"></button>
                                         </div>
                                     </div>
 

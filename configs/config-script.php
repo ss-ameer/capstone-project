@@ -909,6 +909,20 @@ $(document).ready(function(){
 
     });
 
+    $(document).on('click', '.dispatch-form-active .btn-close', function() {
+
+        $('input[name="orderListViewRadio"]:checked').prop('checked', false);
+
+        $('.dispatch-form-active').addClass('d-none');
+        
+        setTimeout(function() {
+            $('.dispatch-form-inactive').find('.lead').text('Select an order item to view details.');
+        }, 500);
+        
+        $('.dispatch-form-inactive').removeClass('d-none').find('.lead').text('Loading');
+
+    });
+
     $(document).on('change', 'input[name="orderListViewRadio"]', function() {
         var selectedOrderItemId = $(this).val();
         var $dispatch_form_container = "dispatch-form";
