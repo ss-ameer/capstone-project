@@ -89,7 +89,9 @@
 
                         <div class="row mb-3">
                             <div class="col">
-                                <div class="container border shadow-sm rounded p-0">
+
+                                <!-- show view -->
+                                <div class="container border shadow-sm rounded p-0 dispatch-form-active d-none">
                                     
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
@@ -102,6 +104,16 @@
                                     <div class="p-3">
                                         <?php include PATH . 'components/comp-form-dispatch.php'; ?>
                                     </div>
+
+                                </div>
+
+                                <!-- no view -->
+                                <div class="container border shadow-sm rounded p-0 dispatch-form-inactive">
+                                
+                                    <div class="d-flex justify-content-center">
+                                        <span class="text-muted text-center m-auto lead p-5">Select an order item to view details.</span>
+                                    </div>
+                                
                                 </div>
                             </div>
                         </div>

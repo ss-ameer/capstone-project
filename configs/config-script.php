@@ -877,7 +877,6 @@ $(document).ready(function(){
                     });
 
                     setTimeout(function () {
-                        // Show the dispatch order view and hide the no view
                         $('#dispatch-order-view').removeClass('d-none');
                         $('#dispatch-order-view-no_view').addClass('d-none');
                     }, 500);
@@ -912,6 +911,11 @@ $(document).ready(function(){
 
     $(document).on('change', 'input[name="orderListViewRadio"]', function() {
         var selectedOrderItemId = $(this).val();
+        var $dispatch_form_container = "dispatch-form";
+        var $loading_message = 'Loading';
+
+        // $(`.${$dispatch_form_container}-active`).addClass('d-none');
+        $(`.${$dispatch_form_container}-inactive`).removeClass('d-none').find('.lead').text($loading_message);
 
         // Retrieve data from the selected radio button
         var orderId = $(this).data('order-id');
@@ -941,7 +945,6 @@ $(document).ready(function(){
                 var units = response.units;
                 var drivers = response.drivers;
 
-                // Example: Log units and drivers
                 console.log("Units: ", units);
                 console.log("Drivers: ", drivers);
 
@@ -964,6 +967,11 @@ $(document).ready(function(){
                 $('#dispatch-form .item-name').text(itemName);
                 $('#dispatch-form .unit-type').text(typeName);
                 $('#dispatch-form .item-total').text(itemTotal);
+
+                setTimeout(function() {
+                    $(`.${$dispatch_form_container}-active`).removeClass('d-none');
+                    $(`.${$dispatch_form_container}-inactive`).addClass('d-none');
+                }, 500);
 
                 console.log('Radio button selected with Order ID:', orderId);
                 console.log(itemName);
@@ -1073,7 +1081,6 @@ $(document).ready(function(){
                                 <span>${item.item_total}</span>
                             </li>`;
 
-                        // Append the item to the appropriate list based on its status
                         $('#order-display-items ul.' + item.status).append(itemHtml);
                     });
 
@@ -1102,7 +1109,7 @@ $(document).ready(function(){
             },
             error: function(xhr, status, error) {
                 console.error('Failed to refresh pending orders list:', error);
-                console.log('Full response:', xhr.responseText); // Log the full response for debugging
+                console.log('Full response:', xhr.responseText);
             }
         });
     }
