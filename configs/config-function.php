@@ -1027,4 +1027,37 @@
     
         return $result;
     }
+
+    function getDispatchRecords() {
+        global $conn;
+    
+        $query = "SELECT d.*, t.plate_number, dr.first_name AS driver_name, do.first_name AS officer_name 
+                FROM dispatch d
+                JOIN trucks t ON d.truck_id = t.id
+                JOIN drivers dr ON d.driver_id = dr.id
+                JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
+                ORDER BY d.created_at DESC";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $dispatches = [
+            'in-queue' => [],
+            'in_transit' => [],
+            'delivered' => [],
+            'failed' => []
+        ];
+        
+        while ($row = $result->fetch_assoc()) {
+            $status = $row['status']; 
+            if (array_key_exists($status, $dispatches)) {
+                $dispatches[$status][] = $row; 
+            }
+        }
+        
+        $stmt->close();
+        
+        return $dispatches;
+    }
     
