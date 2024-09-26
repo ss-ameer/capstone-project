@@ -155,6 +155,11 @@
                     echo getDispatchPendingOrdersHtml();
                     break;
 
+                case 'update dispatch table':
+                    
+                    echo json_encode(getDispatchRecords());
+                    break;
+
                 default:
                     break;
 
@@ -1028,36 +1033,85 @@
         return $result;
     }
 
+    // function getDispatchRecords() {
+    //     global $conn;
+    
+    //     $query = "SELECT d.*, t.plate_number, dr.first_name AS driver_name, do.first_name AS officer_name 
+    //             FROM dispatch d
+    //             JOIN trucks t ON d.truck_id = t.id
+    //             JOIN drivers dr ON d.driver_id = dr.id
+    //             JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
+    //             ORDER BY d.created_at DESC";
+        
+    //     $stmt = $conn->prepare($query);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+        
+    //     $dispatches = [
+    //         'in-queue' => [],
+    //         'in_transit' => [],
+    //         'delivered' => [],
+    //         'failed' => []
+    //     ];
+        
+    //     while ($row = $result->fetch_assoc()) {
+    //         $status = $row['status']; 
+    //         if (array_key_exists($status, $dispatches)) {
+    //             $dispatches[$status][] = $row; 
+    //         }
+    //     }
+        
+    //     $stmt->close();
+        
+    //     return $dispatches;
+    // }
+    
     function getDispatchRecords() {
         global $conn;
     
-        $query = "SELECT d.*, t.plate_number, dr.first_name AS driver_name, do.first_name AS officer_name 
+        $query = "SELECT d.*, 
+                t.truck_number, 
+                dr.id AS driver_id, 
+                dr.name AS driver_name, 
+                do.id AS officer_id, 
+                do.name AS officer_name, 
+                oi.item_id, 
+                oi.item_total,
+                i.item_name,
+                o.id AS order_id
                 FROM dispatch d
                 JOIN trucks t ON d.truck_id = t.id
                 JOIN drivers dr ON d.driver_id = dr.id
                 JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
+                JOIN order_items oi ON d.order_item_id = oi.id
+                JOIN items i ON oi.item_id = i.item_id
+                JOIN orders o ON oi.order_id = o.id 
                 ORDER BY d.created_at DESC";
+
+
         
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
-        
+    
+        // Initialize arrays for status groups
         $dispatches = [
             'in-queue' => [],
             'in_transit' => [],
             'delivered' => [],
             'failed' => []
         ];
-        
+    
+        // Group the results by their status
         while ($row = $result->fetch_assoc()) {
             $status = $row['status']; 
             if (array_key_exists($status, $dispatches)) {
                 $dispatches[$status][] = $row; 
             }
         }
-        
+    
         $stmt->close();
-        
+    
         return $dispatches;
     }
     

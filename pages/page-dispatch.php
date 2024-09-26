@@ -32,13 +32,13 @@
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
 
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col">
                                 <p class="lead">Dispatch</p>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mt-3">
                             <!-- pending orders list -->
                             <div class="col-md-6 col-sm-12">
 
@@ -87,7 +87,7 @@
 
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mt-3">
                             <div class="col">
 
                                 <!-- show view -->
@@ -115,6 +115,41 @@
                                         <span class="text-muted text-center m-auto lead p-5">Select an order item to view details.</span>
                                     </div>
                                 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col">
+                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                    <!-- header -->
+                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead">In-Queue</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="">
+                                        <?php include PATH . 'components/comp-tables-dispatch-in-queue.php';?>
+                                    </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="col">
+                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                    <!-- header -->
+                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead">In-Transit</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="">
+                                        <?php include PATH . 'components/comp-tables-dispatch-in-transit.php';?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

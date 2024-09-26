@@ -1119,7 +1119,6 @@ $(document).ready(function(){
             },
             success: function(response) {
                 $('#pending-orders-container').html(response);
-                console.log('success!!!')
             },
             error: function(xhr, status, error) {
                 console.error('Failed to refresh pending orders list:', error);
@@ -1127,6 +1126,59 @@ $(document).ready(function(){
             }
         });
     }
+
+    function updateDispatchTables() {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'update dispatch table'
+            },
+            success: function(response) {
+                
+                $('.dispatch-table-container tbody').empty();
+
+                $.each(response['in-queue'], function(index, dispatch){
+                    $('.dispatch-table.in-queue tbody').append(`
+                        <tr>
+                            <td>${dispatch.id}</td>
+                            <td>${dispatch.order_id}</td>
+                            <td>${dispatch.order_item_id} ${dispatch.item_name}</td>
+                            <td>${dispatch.item_total}</td>
+                            <td>${dispatch.driver_name}</td>
+                            <td>${dispatch.truck_number}</td>
+                            <td>${dispatch.officer_name}</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <div class="w-50">
+                                        <button class="w-100 btn btn-sm btn-outline-secondary">-</button>
+                                    </div>
+                                    <div class="w-50">
+                                        <button class="w-100 btn btn-sm btn-outline-info">+</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `)
+                });
+
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching dispatch records:");
+
+                // Log detailed error information
+                console.error("Status: ", status); // Example: "parsererror"
+                console.error("Error Thrown: ", error); // Example: "SyntaxError: Unexpected token '<'"
+                console.error("Response Text: ", xhr.responseText); // This will show the actual response body
+                console.error("Status Code: ", xhr.status); // Example: 200, 404, 500
+            }
+
+        });
+    }
+
+    updateDispatchTables();
     
 });
 
