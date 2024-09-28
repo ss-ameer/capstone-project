@@ -160,6 +160,17 @@
                     echo json_encode(getDispatchRecords());
                     break;
 
+                case 'update dispatch status':
+                    $dispatch_id = $_POST['dispatch_id'];
+                    $new_status = $_POST['new_status'];
+                
+                    if (updateDispatchStatus($dispatch_id, $new_status)) {
+                        echo json_encode(['success' => true]);
+                    } else {
+                        echo json_encode(['success' => false]);
+                    }
+                    break;
+                    
                 default:
                     break;
 
@@ -923,35 +934,55 @@
         return $filteredTrucks; 
     }
 
-    function addDispatchRecord ($order_item_id, $unit_id, $operator_id, $officer_id) {
-
-        $table = 'dispatch';
+    function addDispatchRecord($order_item_id, $unit_id, $operator_id, $officer_id) {
 
         $success = false;
-
-        $data = [
-            'order_item_id' => $order_item_id,
-            'truck_id' => $unit_id,
-            'driver_id' => $operator_id,
-            'dispatch_officer_id' => $officer_id,
-        ];
-
-        if (dbAddRecord($table, $data)) {
-
-            $update_table = 'order_items';
-            $row_name = 'id';
-            $row_value = $data['order_item_id'];
-            $column_name = 'status';
-            $column_value = 'in-queue';
-
-            if (dbUpdateData($update_table, $row_name, $row_value, $column_name, $column_value)) {
+        
+        $insert_query = "INSERT INTO dispatch (order_item_id, truck_id, driver_id, dispatch_officer_id, status, created_at, updated_at) 
+                        VALUES (?, ?, ?, ?, 'in-queue', NOW(), NOW())";
+        
+        if (dbExecuteQuery($insert_query, $order_item_id, $unit_id, $operator_id, $officer_id)) {
+    
+            $update_query = "UPDATE order_items SET status = ? WHERE id = ?";
+            
+            if (dbExecuteQuery($update_query, 'in-queue', $order_item_id)) {
                 $success = true;
             }
-
         }
-
+    
         return $success;
     }
+    
+
+    // function addDispatchRecord ($order_item_id, $unit_id, $operator_id, $officer_id) {
+
+    //     $table = 'dispatch';
+
+    //     $success = false;
+
+    //     $data = [
+    //         'order_item_id' => $order_item_id,
+    //         'truck_id' => $unit_id,
+    //         'driver_id' => $operator_id,
+    //         'dispatch_officer_id' => $officer_id,
+    //     ];
+
+    //     if (dbAddRecord($table, $data)) {
+
+    //         $update_table = 'order_items';
+    //         $row_name = 'id';
+    //         $row_value = $data['order_item_id'];
+    //         $column_name = 'status';
+    //         $column_value = 'in-queue';
+
+    //         if (dbUpdateData($update_table, $row_name, $row_value, $column_name, $column_value)) {
+    //             $success = true;
+    //         }
+
+    //     }
+
+    //     return $success;
+    // }
 
     // Function to get pending orders HTML
     function getDispatchPendingOrdersHtml() {
@@ -1012,19 +1043,31 @@
         return $output; // Return the generated HTML
     }
 
-
-    function dbUpdateData($table, $row_name, $row_value, $column_name, $column_value) {
+    function dbExecuteQuery($query, ...$params) {
         global $conn;
     
-        $sql = "UPDATE $table SET $column_name = ? WHERE $row_name = ?";
-    
-        $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare($query);
     
         if ($stmt === false) {
             die("Prepare failed: " . $conn->error);
         }
     
-        $stmt->bind_param("si", $column_value, $row_value);
+        if (!empty($params)) {
+            $types = '';
+            foreach ($params as $param) {
+                if (is_int($param)) {
+                    $types .= 'i'; // Integer
+                } elseif (is_double($param)) {
+                    $types .= 'd'; // Double
+                } elseif (is_string($param)) {
+                    $types .= 's'; // String
+                } else {
+                    $types .= 'b'; // Blob and other types
+                }
+            }
+    
+            $stmt->bind_param($types, ...$params);
+        }
     
         $result = $stmt->execute();
     
@@ -1032,6 +1075,27 @@
     
         return $result;
     }
+    
+
+    // function dbUpdateData($table, $row_name, $row_value, $column_name, $column_value) {
+    //     global $conn;
+    
+    //     $sql = "UPDATE $table SET $column_name = ? WHERE $row_name = ?";
+    
+    //     $stmt = $conn->prepare($sql);
+    
+    //     if ($stmt === false) {
+    //         die("Prepare failed: " . $conn->error);
+    //     }
+    
+    //     $stmt->bind_param("si", $column_value, $row_value);
+    
+    //     $result = $stmt->execute();
+    
+    //     $stmt->close();
+    
+    //     return $result;
+    // }
 
     // function getDispatchRecords() {
     //     global $conn;
@@ -1113,3 +1177,37 @@
         return $dispatches;
     }
     
+    // function updateDispatchStatus($dispatch_id, $new_status) {
+    //     $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW()";
+        
+    //     if ($new_status === 'in_transit') {
+    //         $update_query .= ", dispatch_date = CURDATE(), dispatch_time = NOW()";
+    //     }
+    
+    //     $update_query .= " WHERE id = ?";
+        
+    //     if (dbExecuteQuery($update_query, $new_status, $dispatch_id)) {
+            
+    //         if ($new_status === 'delivered') {
+    //             $fetch_order_item_query = "SELECT order_item_id FROM dispatch WHERE id = ?";
+    //             $result = dbExecuteQuery($fetch_order_item_query, $dispatch_id);
+                
+    //             if ($result && isset($result[0]['order_item_id'])) {
+    //                 $order_item_id = $result[0]['order_item_id'];
+                    
+    //                 $update_order_query = "UPDATE order_items SET status = ? WHERE id = ?";
+    //                 dbExecuteQuery($update_order_query, 'delivered', $order_item_id);
+    //             }
+    //         }
+            
+    //         return true; 
+    //     }
+    
+    //     return false; 
+    // }
+    
+    function updateDispatchStatus($dispatch_id, $new_status) {
+        $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW() WHERE id = ?";
+        
+        return dbExecuteQuery($update_query, $new_status, $dispatch_id);
+    };   
