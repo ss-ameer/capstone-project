@@ -1134,7 +1134,7 @@ $(document).ready(function(){
                 data-created-at = "${data.created_at}" 
                 data-dispatch-date = "${data.dispatch_date}" 
                 data-dispatch-time = "${data.dispatch_time}" 
-                data-driver-name = "${data.dispatch_time}" 
+                data-driver-id = "${data.driver_id}" 
                 data-driver-name = "${data.driver_name}" 
                 data-dispatch-id = "${data.id}" 
                 data-item-id = "${data.item_id}" 
@@ -1175,48 +1175,88 @@ $(document).ready(function(){
             },
             success: function(response) { 
                 $('.dispatch-table-container tbody').empty();
+                
+                let action_data = {
+                    in_queue: {
+                        descend: {
+                            color: 'secondary',
+                            icon: 'dash',
+                            action_status: 'pending'
+                        },
+                        ascend: {
+                            color: 'info',
+                            icon: 'plus',
+                            action_status: 'in_transit'
+                        }
+                    },
 
-                let actions = {
-                    in_queue:
-                        '<div class="d-flex gap-1">' +
-                            '<button class="btn btn-sm btn-secondary"><i class="bi bi-dash"></i></button>' + 
-                            '<button class="btn btn-sm btn-info"><i class="bi bi-plus"></i></button>' +
-                        '</div>',
+                    in_transit: {
+                        descend: {
+                            color: 'dark',
+                            icon: 'x',
+                            action_status: 'failed'
+                        },
+                        ascend: {
+                            color:'success',
+                            icon: 'check',
+                            action_status:'successful'
+                        }
+                    },
 
-                    in_transit:
-                        '<div class="d-flex gap-1">' +
-                            '<button class="btn btn-sm btn-primary"><i class="bi bi-dash"></i></button>' + 
-                            '<button class="btn btn-sm btn-success"><i class="bi bi-plus"></i></button>' +
-                        '</div>',
-                    successful:
-                        '<div class="d-flex justify-content-center">' +
-                            '<button class="btn btn-block btn-secondary"><i class="bi bi-dash"></i></button>' +
-                        '</div>',                    
-                    failed:
-                        '<div class="d-flex justify-content-center">' +
-                            '<button class="btn btn-block btn-secondary"><i class="bi bi-dash"></i></button>' +
-                        '</div>',                    
-                    };
+                    successful: {
+                        descend: {
+                            color: 'secondary',
+                            icon: 'dash',
+                            action_status: 'pending'
+                        }
+                    },
 
-                    
-                $.each(response['in-queue'], function(index, dispatch){
-                    let row = $(defaultTableData(dispatch, actions['in_queue']));
+                    failed: {
+                        descend: {
+                            color: 'secondary',
+                            icon: 'x',
+                            action_status: 'pending'
+                        }
+                    }
+                };
+                
+                let actions = {};
+                
+                $.each(action_data, function (status, actionsConfig) {
+                    let buttonCount = 0; // Counter to keep track of how many buttons we add
+                    let buttons = '';    // Initialize the buttons variable
 
-                    $('.dispatch-table.in-queue tbody').append(row);
+                    if (actionsConfig.descend) {
+                        buttons += `
+                            <button class="action-button btn btn-sm btn-${actionsConfig.descend.color}" data-action-status="${actionsConfig.descend.action_status}">
+                                <i class="bi bi-${actionsConfig.descend.icon}"></i>
+                            </button>`;
+                        buttonCount++;
+                    }
 
-                    // console.log("Dispatch ID: " + row.data('dispatch-id'));
-                });
+                    if (actionsConfig.ascend) {
+                        buttons += `
+                            <button class="action-button btn btn-sm btn-${actionsConfig.ascend.color}" data-action-status="${actionsConfig.ascend.action_status}">
+                                <i class="bi bi-${actionsConfig.ascend.icon}"></i>
+                            </button>`;
+                        buttonCount++;
+                    }
 
-                $.each(response['in-transit'], function(index, dispatch){
-                    $('.dispatch-table.in-transit tbody').append(defaultTableData(dispatch, actions['in_transit']))
-                });
+                    let divClass = buttonCount === 2 ? 'd-flex gap-1' : 'd-flex justify-content-center';
 
-                $.each(response['successful'], function(index, dispatch){
-                    $('.dispatch-table.successful tbody').append(defaultTableData(dispatch, actions['successful']))
+                    let buttonGroup = `<div class="${divClass}">${buttons}</div>`;
+
+                    actions[status] = buttonGroup;
                 });
                 
-                $.each(response['failed'], function(index, dispatch){
-                    $('.dispatch-table.failed tbody').append(defaultTableData(dispatch, actions['failed']))
+                const statuses = ['in-queue', 'in-transit', 'successful', 'failed'];
+
+                $.each(statuses, function(_, status) {
+                    $.each(response[status], function(index, dispatch) {
+                        let tableClass = `.dispatch-table.${status.replace('_', '-')}`;
+                        $(tableClass + ' tbody').append(defaultTableData(dispatch, actions[status.replace('-', '_')]));
+                        console.log(tableClass);
+                    });
                 });
 
                 console.log(response);
@@ -1224,15 +1264,45 @@ $(document).ready(function(){
             error: function(xhr, status, error) {
                 console.error("Error fetching dispatch records:");
 
-                // Log detailed error information
-                console.error("Status: ", status); // Example: "parsererror"
-                console.error("Error Thrown: ", error); // Example: "SyntaxError: Unexpected token '<'"
-                console.error("Response Text: ", xhr.responseText); // This will show the actual response body
-                console.error("Status Code: ", xhr.status); // Example: 200, 404, 500
+                console.error("Status: ", status); 
+                console.error("Error Thrown: ", error); 
+                console.error("Response Text: ", xhr.responseText); 
+                console.error("Status Code: ", xhr.status); 
             }
 
         });
     }
+
+    $(document).on('click', '.dispatch-table .action-button', function() {
+        var dispatch_id = $(this).closest('tr').data('dispatch-id');
+        var action_status = $(this).data('action-status');
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'update dispatch status',
+                dispatch_id: dispatch_id,
+                new_status: action_status
+            },
+            success: function(response) {
+                console.log(response);
+
+                if (response.success) {
+                    alert('Dispatch status updated successfully.');
+                    updateDispatchTables();
+                } else {
+                    alert('Failed to update dispatch status.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating dispatch status:", error);
+                alert('An error occurred while updating the dispatch status.');
+            }
+        });
+    });
+
 
     updateDispatchTables();
     
