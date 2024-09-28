@@ -650,45 +650,21 @@
     function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
         global $conn;
     
-        // Sanitize the table name
+        // Sanitize the table name and columns
         $tableName = mysqli_real_escape_string($conn, $tableName);
+        $columns = is_array($columns) ? implode(', ', array_map(fn($col) => mysqli_real_escape_string($conn, $col), $columns)) : $columns;
     
-        // Handle columns
-        if (is_array($columns)) {
-            $columns = implode(', ', array_map(function($col) use ($conn) {
-                return mysqli_real_escape_string($conn, $col);
-            }, $columns));
-        }
+        // Build the SQL query
+        $sql = "SELECT $columns FROM $tableName" . 
+            (!empty($joins) ? " $joins" : "") . 
+            (!empty($where) ? " WHERE $where" : "") . 
+            (!empty($orderBy) ? " ORDER BY $orderBy" : "");
     
-        // Build the base query
-        $sql = "SELECT $columns FROM $tableName";
-    
-        // Add joins if provided
-        if (!empty($joins)) {
-            $sql .= " " . $joins;
-        }
-    
-        // Add where clause if provided
-        if (!empty($where)) {
-            $sql .= " WHERE " . $where;
-        }
-    
-        // Add order by clause if provided
-        if (!empty($orderBy)) {
-            $sql .= " ORDER BY " . $orderBy;
-        }
-    
-        // Execute the query
-        $result = $conn -> query($sql);
-    
-        // Fetch data
-        $data = [];
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
-        }
-    
-        return $data;
+        // Execute the query and fetch data
+        $result = $conn->query($sql);
+        return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
+    
     
 
     function dbAddRecord($table, $data) {
@@ -953,38 +929,6 @@
         return $success;
     }
     
-
-    // function addDispatchRecord ($order_item_id, $unit_id, $operator_id, $officer_id) {
-
-    //     $table = 'dispatch';
-
-    //     $success = false;
-
-    //     $data = [
-    //         'order_item_id' => $order_item_id,
-    //         'truck_id' => $unit_id,
-    //         'driver_id' => $operator_id,
-    //         'dispatch_officer_id' => $officer_id,
-    //     ];
-
-    //     if (dbAddRecord($table, $data)) {
-
-    //         $update_table = 'order_items';
-    //         $row_name = 'id';
-    //         $row_value = $data['order_item_id'];
-    //         $column_name = 'status';
-    //         $column_value = 'in-queue';
-
-    //         if (dbUpdateData($update_table, $row_name, $row_value, $column_name, $column_value)) {
-    //             $success = true;
-    //         }
-
-    //     }
-
-    //     return $success;
-    // }
-
-    // Function to get pending orders HTML
     function getDispatchPendingOrdersHtml() {
     
         global $conn;
