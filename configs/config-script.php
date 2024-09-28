@@ -1128,6 +1128,44 @@ $(document).ready(function(){
     }
 
     function updateDispatchTables() {
+
+        function defaultTableData(data, actions = 'error: please add actions.') {
+            var data_att = `
+                data-created-at = "${data.created_at}" 
+                data-dispatch-date = "${data.dispatch_date}" 
+                data-dispatch-time = "${data.dispatch_time}" 
+                data-driver-name = "${data.dispatch_time}" 
+                data-driver-name = "${data.driver_name}" 
+                data-dispatch-id = "${data.id}" 
+                data-item-id = "${data.item_id}" 
+                data-item-name = "${data.item_name}"
+                data-item-total = "${data.item_total}" 
+                data-officer-id = "${data.officer_id}" 
+                data-officer-name = "${data.officer_name}" 
+                data-order-id = "${data.order_id}" 
+                data-order-item-id = "${data.order_item_id}" 
+                data-status = "${data.status}"  
+                data-truck-id = "${data.truck_id}" 
+                data-updated-at = "${data.updated_at}"                 
+            `;
+            
+            var table_data = `
+                <tr ${data_att}>
+                    <td>${data.id}</td>
+                    <td>${data.order_id}</td>
+                    <td>${data.order_item_id} - ${data.item_name}</td>
+                    <td>${data.item_total}</td>
+                    <td>${data.driver_name}</td>
+                    <td>${data.truck_number}</td>
+                    <td>${data.officer_name}</td>
+                    <td>
+                        ${actions}
+                    </td>
+                </tr>`;
+
+            return table_data;
+        };
+
         $.ajax({
             url: config_function_url,
             type: 'POST',
@@ -1135,32 +1173,50 @@ $(document).ready(function(){
             data: {
                 action: 'update dispatch table'
             },
-            success: function(response) {
-                
+            success: function(response) { 
                 $('.dispatch-table-container tbody').empty();
 
+                let actions = {
+                    in_queue:
+                        '<div class="d-flex gap-1">' +
+                            '<button class="btn btn-sm btn-secondary"><i class="bi bi-dash"></i></button>' + 
+                            '<button class="btn btn-sm btn-info"><i class="bi bi-plus"></i></button>' +
+                        '</div>',
+
+                    in_transit:
+                        '<div class="d-flex gap-1">' +
+                            '<button class="btn btn-sm btn-primary"><i class="bi bi-dash"></i></button>' + 
+                            '<button class="btn btn-sm btn-success"><i class="bi bi-plus"></i></button>' +
+                        '</div>',
+                    successful:
+                        '<div class="d-flex justify-content-center">' +
+                            '<button class="btn btn-block btn-secondary"><i class="bi bi-dash"></i></button>' +
+                        '</div>',                    
+                    failed:
+                        '<div class="d-flex justify-content-center">' +
+                            '<button class="btn btn-block btn-secondary"><i class="bi bi-dash"></i></button>' +
+                        '</div>',                    
+                    };
+
+                    
                 $.each(response['in-queue'], function(index, dispatch){
-                    $('.dispatch-table.in-queue tbody').append(`
-                        <tr>
-                            <td>${dispatch.id}</td>
-                            <td>${dispatch.order_id}</td>
-                            <td>${dispatch.order_item_id} ${dispatch.item_name}</td>
-                            <td>${dispatch.item_total}</td>
-                            <td>${dispatch.driver_name}</td>
-                            <td>${dispatch.truck_number}</td>
-                            <td>${dispatch.officer_name}</td>
-                            <td>
-                                <div class="d-flex gap-1">
-                                    <div class="w-50">
-                                        <button class="w-100 btn btn-sm btn-outline-secondary">-</button>
-                                    </div>
-                                    <div class="w-50">
-                                        <button class="w-100 btn btn-sm btn-outline-info">+</button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    `)
+                    let row = $(defaultTableData(dispatch, actions['in_queue']));
+
+                    $('.dispatch-table.in-queue tbody').append(row);
+
+                    // console.log("Dispatch ID: " + row.data('dispatch-id'));
+                });
+
+                $.each(response['in-transit'], function(index, dispatch){
+                    $('.dispatch-table.in-transit tbody').append(defaultTableData(dispatch, actions['in_transit']))
+                });
+
+                $.each(response['successful'], function(index, dispatch){
+                    $('.dispatch-table.successful tbody').append(defaultTableData(dispatch, actions['successful']))
+                });
+                
+                $.each(response['failed'], function(index, dispatch){
+                    $('.dispatch-table.failed tbody').append(defaultTableData(dispatch, actions['failed']))
                 });
 
                 console.log(response);

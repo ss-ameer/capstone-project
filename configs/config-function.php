@@ -1087,8 +1087,6 @@
                 JOIN items i ON oi.item_id = i.item_id
                 JOIN orders o ON oi.order_id = o.id 
                 ORDER BY d.created_at DESC";
-
-
         
         $stmt = $conn->prepare($query);
         $stmt->execute();
@@ -1097,8 +1095,8 @@
         // Initialize arrays for status groups
         $dispatches = [
             'in-queue' => [],
-            'in_transit' => [],
-            'delivered' => [],
+            'in-transit' => [],
+            'successful' => [],
             'failed' => []
         ];
     

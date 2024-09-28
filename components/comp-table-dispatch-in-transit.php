@@ -1,7 +1,7 @@
-<!-- comp-tables-dispatch.php -->
-<table class="table table-striped align-middle dispatch-table in-queue">
-    <thead>
-        <tr class="table-primary">
+<!-- comp-tables-dispatch-in-transit.php -->
+<table class="table table-striped align-middle dispatch-table in-transit">
+    <thead class="table-info">
+        <tr>
             <th>ID</th>
             <th>Order</th>
             <th>Order Item</th>

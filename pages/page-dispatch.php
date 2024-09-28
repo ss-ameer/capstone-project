@@ -123,15 +123,15 @@
                             <div class="col">
                                 <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
                                     <!-- header -->
-                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                    <div class="sticky-top p-3 border-bottom rounded-top bg-primary">
                                         <div class="d-flex justify-content-between">
-                                            <span class="lead">In-Queue</span>
+                                            <span class="lead text-light">In-Queue</span>
                                         </div>
                                     </div>
 
                                     <!-- content -->
                                     <div class="">
-                                        <?php include PATH . 'components/comp-tables-dispatch-in-queue.php';?>
+                                        <?php include PATH . 'components/comp-table-dispatch-in-queue.php';?>
                                     </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <div class="col">
                                 <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
                                     <!-- header -->
-                                    <div class="sticky-top bg-light p-2 border-bottom">
+                                    <div class="sticky-top p-3 border-bottom rounded-top bg-info">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead">In-Transit</span>
                                         </div>
@@ -148,7 +148,43 @@
 
                                     <!-- content -->
                                     <div class="">
-                                        <?php include PATH . 'components/comp-tables-dispatch-in-transit.php';?>
+                                        <?php include PATH . 'components/comp-table-dispatch-in-transit.php';?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="col">
+                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                    <!-- header -->
+                                    <div class="sticky-top p-3 border-bottom rounded-top bg-success">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead text-light">Successful</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="">
+                                        <?php include PATH . 'components/comp-table-dispatch-successful.php';?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="col">
+                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                    <!-- header -->
+                                    <div class="sticky-top p-3 border-bottom rounded-top bg-dark">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="lead text-light">Failed</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- content -->
+                                    <div class="">
+                                        <?php include PATH . 'components/comp-table-dispatch-failed.php';?>
                                     </div>
                                 </div>
                             </div>
