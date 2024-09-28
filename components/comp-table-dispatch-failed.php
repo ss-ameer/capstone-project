@@ -9,7 +9,7 @@
             <th>Operator</th>
             <th>Unit</th>
             <th>Dispatch Officer</th>
-            <th>Actions</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
