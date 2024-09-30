@@ -417,7 +417,6 @@ $(document).ready(function(){
     $('#order-form').submit(function(event) {
         event.preventDefault();
 
-        // var formData = $(this).serialize();
         var orderItems = [];
 
         $('#order-items-table tbody tr').each(function() {
@@ -506,7 +505,6 @@ $(document).ready(function(){
             action: 'get client info'
         };
 
-        // $('#order-form-name').val(selectedName);
         if (client_id) {
             $.ajax({
                 type: 'POST',
@@ -524,7 +522,6 @@ $(document).ready(function(){
                         $('#order-form-address_street').val(response.address.street);
                         $('#order-form-address_number').val(response.address.house_number);
                         $('#order-form-client-suggestions').hide();
-                        // console.log('success')
                         console.log(response.client_name);
                         console.log(response.phone);
                         console.log(response.email);
@@ -535,8 +532,8 @@ $(document).ready(function(){
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('AJAX Error: ', status, error);  // Log the error
-                    console.log(xhr.responseText);  // Log the server response for debugging
+                    console.error('AJAX Error: ', status, error);  
+                    console.log(xhr.responseText); 
                     console.log('failed')
                 }
             })
@@ -761,9 +758,9 @@ $(document).ready(function(){
     });
 
     $('#add-unit_type-form').submit(function (event) {
-        event.preventDefault();  // Prevent the default form submission
+        event.preventDefault(); 
 
-        var formData = $(this).serialize();  // Serialize form data
+        var formData = $(this).serialize(); 
         var data = {
             formData: formData,
             action: 'add unit_type'
@@ -837,15 +834,13 @@ $(document).ready(function(){
                     $('#order-display-location .location').text(response.order.full_address);
                     $('#order-display-created .created').text(response.order.created_at);
 
-                    // Clear existing items while keeping the type titles intact
                     $('#order-display-items ul.pending li:not(:first)').remove();
                     $('#order-display-items ul.in-queue li:not(:first)').remove();
                     $('#order-display-items ul.in-progress li:not(:first)').remove();
                     $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.failed li:not(:first)').remove();
                     $('#order-display-items ul.canceled li:not(:first)').remove();
 
-                    // Loop through the order items and distribute them by status
-                    // This is the part I'm talking about.
                     response.items.forEach(function(item) {
                         var itemHtml = `
                             <li class="list-group-item d-flex justify-content-between">
@@ -870,9 +865,6 @@ $(document).ready(function(){
                                 <span>${item.item_total}</span>
                             </li>`;
 
-                            // console.log('item id: ' + item.item_id);
-                            
-                            // Append the item to the appropriate list based on its status
                             $('#order-display-items ul.' + item.status).append(itemHtml);
                     });
 
@@ -881,7 +873,6 @@ $(document).ready(function(){
                         $('#dispatch-order-view-no_view').addClass('d-none');
                     }, 500);
                 } else {
-                    // Handle the case where there is no order
                     setTimeout(function() {
                         $('#dispatch-order-view').addClass('d-none');
                         $('#dispatch-order-view-no_view').removeClass('d-none').find('.lead').text('No details available.');
@@ -928,7 +919,6 @@ $(document).ready(function(){
         var $dispatch_form_container = "dispatch-form";
         var $loading_message = 'Loading';
 
-        // $(`.${$dispatch_form_container}-active`).addClass('d-none');
         $(`.${$dispatch_form_container}-inactive`).removeClass('d-none').find('.lead').text($loading_message);
 
         // Retrieve data from the selected radio button
@@ -1024,9 +1014,12 @@ $(document).ready(function(){
                 if (response.success) {
                     alert('Order successfully added to the queue!');
                     updateDispatchOrderItems(order_id);
+                    console.log('Error: The ID is' + order_id);
                     updateDispatchPendingOrders();
+                    
                 } else {
                     alert('Error: ' + response.error);
+                    alert('Error: The ID is' + order_id);
                 }
             },
             error: function(xhr, status, error) {
@@ -1063,14 +1056,13 @@ $(document).ready(function(){
             },
             success: function (response) {
                 if (response.items) {
-                    // Clear existing items while keeping the type titles intact
                     $('#order-display-items ul.pending li:not(:first)').remove();
                     $('#order-display-items ul.in-queue li:not(:first)').remove();
                     $('#order-display-items ul.in-progress li:not(:first)').remove();
                     $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.failed li:not(:first)').remove();
                     $('#order-display-items ul.canceled li:not(:first)').remove();
 
-                    // Loop through the order items and distribute them by status
                     response.items.forEach(function (item) {
                         var itemHtml = `
                             <li class="list-group-item d-flex justify-content-between">
@@ -1103,8 +1095,13 @@ $(document).ready(function(){
                     console.log('No items found for the order.');
                 }
             },
-            error: function () {
-                console.error('Failed to update order items.');
+            error: function (xhr, status, error) {
+                // Log detailed error information
+                console.error('AJAX Request Failed');
+                console.error('Status: ' + status);
+                console.error('Error: ' + error);
+                console.error('Response Text: ' + xhr.responseText); // Log the server's response
+                console.log(xhr); // Log the full XMLHttpRequest object for debugging
             }
         });
     }

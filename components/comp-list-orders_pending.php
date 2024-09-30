@@ -18,13 +18,14 @@
                     SUM(status = 'in-queue') AS in_queue_count, 
                     SUM(status = 'in-progress') AS in_progress_count, 
                     SUM(status = 'completed') AS completed_count, 
+                    SUM(status = 'failed') AS failed_count,
                     SUM(status = 'canceled') AS canceled_count
                 FROM order_items
                 WHERE order_id = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param('i', $orderId);
             $stmt->execute();
-            $stmt->bind_result($pendingCount, $inQueueCount, $inProgressCount, $completedCount, $canceledCount);
+            $stmt->bind_result($pendingCount, $inQueueCount, $inProgressCount, $completedCount, $failedCount, $canceledCount);
             $stmt->fetch();
             $stmt->close();
         ?>
@@ -41,13 +42,12 @@
                 <div class="w-50 d-flex justify-content-between">
                     <small id="order-list-pending-date"><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
                     <div>
-                        <!-- Display badges dynamically based on the count of order item statuses -->
-                        <!-- here -->
                         <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->
                         <span class="badge text-bg-primary"><?= $inQueueCount ?></span> <!-- Pending -->
-                        <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress -->
+                        <span class="badge text-bg-info"><?= $inProgressCount ?></span> <!-- In Progress --><br>
                         <span class="badge text-bg-success"><?= $completedCount ?></span> <!-- Completed -->
-                        <span class="badge text-bg-dark"><?= $canceledCount ?></span> <!-- Canceled -->
+                        <span class="badge text-bg-dark"><?= $failedCount ?></span> <!-- Failed -->
+                        <span class="badge text-bg-danger"><?= $canceledCount ?></span> <!-- Canceled -->
                     </div>
                 </div>
             </div>

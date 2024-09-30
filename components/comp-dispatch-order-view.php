@@ -69,8 +69,14 @@
             </li>
         </ul>
 
-        <ul class="list-group canceled">
+        <ul class="list-group mb-2 failed">
             <li class="list-group-item list-group-item-dark text-center">
+                <span>Failed</span>
+            </li>
+        </ul>
+
+        <ul class="list-group canceled">
+            <li class="list-group-item list-group-item-danger text-center">
                 <span>Canceled</span>
             </li>
         </ul>
