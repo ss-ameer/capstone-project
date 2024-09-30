@@ -10,7 +10,6 @@
 <ul class="list-group" id="order-list-pending">
     <?php foreach ($pendingOrders as $order): ?>
         <?php
-            // Fetch the count of each status for order items of the current order
             $orderId = $order['id'];
             $query = "
                 SELECT 

@@ -1022,60 +1022,6 @@
         return $result;
     }
     
-
-    // function dbUpdateData($table, $row_name, $row_value, $column_name, $column_value) {
-    //     global $conn;
-    
-    //     $sql = "UPDATE $table SET $column_name = ? WHERE $row_name = ?";
-    
-    //     $stmt = $conn->prepare($sql);
-    
-    //     if ($stmt === false) {
-    //         die("Prepare failed: " . $conn->error);
-    //     }
-    
-    //     $stmt->bind_param("si", $column_value, $row_value);
-    
-    //     $result = $stmt->execute();
-    
-    //     $stmt->close();
-    
-    //     return $result;
-    // }
-
-    // function getDispatchRecords() {
-    //     global $conn;
-    
-    //     $query = "SELECT d.*, t.plate_number, dr.first_name AS driver_name, do.first_name AS officer_name 
-    //             FROM dispatch d
-    //             JOIN trucks t ON d.truck_id = t.id
-    //             JOIN drivers dr ON d.driver_id = dr.id
-    //             JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
-    //             ORDER BY d.created_at DESC";
-        
-    //     $stmt = $conn->prepare($query);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-        
-    //     $dispatches = [
-    //         'in-queue' => [],
-    //         'in_transit' => [],
-    //         'delivered' => [],
-    //         'failed' => []
-    //     ];
-        
-    //     while ($row = $result->fetch_assoc()) {
-    //         $status = $row['status']; 
-    //         if (array_key_exists($status, $dispatches)) {
-    //             $dispatches[$status][] = $row; 
-    //         }
-    //     }
-        
-    //     $stmt->close();
-        
-    //     return $dispatches;
-    // }
-    
     function getDispatchRecords() {
         global $conn;
     
