@@ -1178,12 +1178,12 @@ $(document).ready(function(){
                         descend: {
                             color: 'secondary',
                             icon: 'dash',
-                            action_status: 'pending'
+                            action_status: 'remove'
                         },
                         ascend: {
                             color: 'info',
                             icon: 'plus',
-                            action_status: 'in_transit'
+                            action_status: 'in-transit'
                         }
                     },
 
@@ -1193,6 +1193,7 @@ $(document).ready(function(){
                             icon: 'x',
                             action_status: 'failed'
                         },
+
                         ascend: {
                             color:'success',
                             icon: 'check',
@@ -1202,17 +1203,29 @@ $(document).ready(function(){
 
                     successful: {
                         descend: {
-                            color: 'secondary',
+                            color: 'primary',
                             icon: 'dash',
-                            action_status: 'pending'
+                            action_status: 'in-queue'
+                        },
+
+                        remove: {
+                            color: 'danger',
+                            icon: 'x',
+                            action_status: 'remove'
                         }
                     },
 
                     failed: {
                         descend: {
-                            color: 'secondary',
+                            color: 'primary',
+                            icon: 'dash',
+                            action_status: 'in-queue'
+                        },
+
+                        remove: {
+                            color: 'danger',
                             icon: 'x',
-                            action_status: 'pending'
+                            action_status: 'remove'
                         }
                     }
                 };
@@ -1220,8 +1233,8 @@ $(document).ready(function(){
                 let actions = {};
                 
                 $.each(action_data, function (status, actionsConfig) {
-                    let buttonCount = 0; // Counter to keep track of how many buttons we add
-                    let buttons = '';    // Initialize the buttons variable
+                    let buttonCount = 0; 
+                    let buttons = ''; 
 
                     if (actionsConfig.descend) {
                         buttons += `
@@ -1235,6 +1248,14 @@ $(document).ready(function(){
                         buttons += `
                             <button class="action-button btn btn-sm btn-${actionsConfig.ascend.color}" data-action-status="${actionsConfig.ascend.action_status}">
                                 <i class="bi bi-${actionsConfig.ascend.icon}"></i>
+                            </button>`;
+                        buttonCount++;
+                    }
+
+                    if (actionsConfig.remove) {
+                        buttons += `
+                            <button class="action-button btn btn-sm btn-${actionsConfig.remove.color}" data-action-status="${actionsConfig.remove.action_status}">
+                                <i class="bi bi-${actionsConfig.remove.icon}"></i>
                             </button>`;
                         buttonCount++;
                     }
@@ -1273,6 +1294,11 @@ $(document).ready(function(){
     $(document).on('click', '.dispatch-table .action-button', function() {
         var dispatch_id = $(this).closest('tr').data('dispatch-id');
         var action_status = $(this).data('action-status');
+        var order_id = $(this).closest('tr').data('order-id');
+        var driver_id = $(this).closest('tr').data('driver-id');
+        var truck_id = $(this).closest('tr').data('truck-id');
+
+        // console.log('order id: ' + order_id);
 
         $.ajax({
             url: config_function_url,
@@ -1281,13 +1307,17 @@ $(document).ready(function(){
             data: {
                 action: 'update dispatch status',
                 dispatch_id: dispatch_id,
-                new_status: action_status
+                new_status: action_status,
+                drive_id: driver_id,
+                truck_id: truck_id
             },
             success: function(response) {
                 console.log(response);
 
                 if (response.success) {
                     alert('Dispatch status updated successfully.');
+                    updateDispatchOrderItems(order_id); // this is the problematic line
+                    updateDispatchPendingOrders();
                     updateDispatchTables();
                 } else {
                     alert('Failed to update dispatch status.');
@@ -1296,10 +1326,14 @@ $(document).ready(function(){
             error: function(xhr, status, error) {
                 console.error("Error updating dispatch status:", error);
                 alert('An error occurred while updating the dispatch status.');
+
+                console.error("Status: ", status); 
+                console.error("Error Thrown: ", error); 
+                console.error("Response Text: ", xhr.responseText); 
+                console.error("Status Code: ", xhr.status); 
             }
         });
     });
-
 
     updateDispatchTables();
     

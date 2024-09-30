@@ -948,7 +948,7 @@
                         SUM(status = 'pending') AS pending_count,
                         SUM(status = 'in-queue') AS in_queue_count, 
                         SUM(status = 'in-progress') AS in_progress_count, 
-                        SUM(status = 'completed') AS completed_count, 
+                        SUM(status = 'completed') AS completed_count,
                         SUM(status = 'failed') AS failed_count,
                         SUM(status = 'canceled') AS canceled_count
                     FROM order_items
@@ -1069,37 +1069,101 @@
         return $dispatches;
     }
     
-    // function updateDispatchStatus($dispatch_id, $new_status) {
-    //     $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW()";
-        
-    //     if ($new_status === 'in_transit') {
-    //         $update_query .= ", dispatch_date = CURDATE(), dispatch_time = NOW()";
-    //     }
-    
-    //     $update_query .= " WHERE id = ?";
-        
-    //     if (dbExecuteQuery($update_query, $new_status, $dispatch_id)) {
-            
-    //         if ($new_status === 'delivered') {
-    //             $fetch_order_item_query = "SELECT order_item_id FROM dispatch WHERE id = ?";
-    //             $result = dbExecuteQuery($fetch_order_item_query, $dispatch_id);
-                
-    //             if ($result && isset($result[0]['order_item_id'])) {
-    //                 $order_item_id = $result[0]['order_item_id'];
-                    
-    //                 $update_order_query = "UPDATE order_items SET status = ? WHERE id = ?";
-    //                 dbExecuteQuery($update_order_query, 'delivered', $order_item_id);
-    //             }
-    //         }
-            
-    //         return true; 
-    //     }
-    
-    //     return false; 
-    // }
-    
+
     function updateDispatchStatus($dispatch_id, $new_status) {
         $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW() WHERE id = ?";
         
-        return dbExecuteQuery($update_query, $new_status, $dispatch_id);
-    };   
+        if (dbExecuteQuery($update_query, $new_status, $dispatch_id)) {
+            
+            $dispatch_data = dbGetTableData('dispatch', ['order_item_id', 'truck_id', 'driver_id'], '', "id = $dispatch_id");
+            $order_item_id = $dispatch_data[0]['order_item_id'];
+            $unit_id = $dispatch_data[0]['truck_id'];
+            $driver_id = $dispatch_data[0]['driver_id'];
+            
+            switch ($new_status) {
+                case 'in-queue':
+                    $order_item_status = 'in-queue';
+                    $driver_status = 'available';
+                    $unit_status = 'available';
+
+                    updateOrderItemStatus($order_item_id, $order_item_status);
+                    updateUnitStatus($unit_id, $unit_status);
+                    updateDriverStatus($driver_id, $driver_status);
+                    break;
+
+                case 'in-transit':
+                    $order_item_status = 'in-progress';
+                    $driver_status = 'on_trip';
+                    $unit_status = 'in_use';
+
+                    updateOrderItemStatus($order_item_id, $order_item_status);
+                    updateUnitStatus($unit_id, $unit_status);
+                    updateDriverStatus($driver_id, $driver_status);
+                    break;
+
+                case 'successful':
+                    $order_item_status = 'completed';
+                    $driver_status = 'available';
+                    $unit_status = 'available';
+
+                    updateOrderItemStatus($order_item_id, $order_item_status);
+                    updateUnitStatus($unit_id, $unit_status);
+                    updateDriverStatus($driver_id, $driver_status);
+                    break;
+
+                case 'failed':
+                    $order_item_status = 'failed';
+                    $driver_status = 'available';
+                    $unit_status = 'available';
+                    
+                    updateOrderItemStatus($order_item_id, $order_item_status);
+                    updateUnitStatus($unit_id, $unit_status);
+                    updateDriverStatus($driver_id, $driver_status);
+                    break;
+
+                case 'remove':
+                    $driver_status = 'available';
+                    $unit_status = 'available';
+
+                    removeDispatchRecord($dispatch_id);
+                    updateUnitStatus($unit_id, $unit_status);
+                    updateDriverStatus($driver_id, $driver_status);
+                    break;
+
+                default:
+                    break;
+            }
+            
+            return true; // Success
+        }
+    
+        return false; // Failure
+    }
+
+    function updateOrderItemStatus($order_item_id, $new_status) {
+        $update_order_query = "UPDATE order_items SET status = ? WHERE id = ?";
+        dbExecuteQuery($update_order_query, $new_status, $order_item_id);
+    };
+
+    function updateUnitStatus($unit_id, $unit_status) {
+        $update_truck_query = "UPDATE trucks SET status = ? WHERE id = ?";
+        dbExecuteQuery($update_truck_query, $unit_status, $unit_id);
+    };
+
+    function updateDriverStatus($driver_id, $driver_status) {
+        $update_driver_query = "UPDATE drivers SET status = ? WHERE id = ?";
+        dbExecuteQuery($update_driver_query, $driver_status, $driver_id);
+    };
+
+
+    function removeDispatchRecord($dispatch_id) {
+        $dispatch_data = dbGetTableData('dispatch', ['order_item_id'], '', "id = $dispatch_id");
+    
+        $order_item_id = $dispatch_data[0]['order_item_id'];
+        $reset_order_query = "UPDATE order_items SET status = ? WHERE id = ?";
+        dbExecuteQuery($reset_order_query, 'pending', $order_item_id);  
+
+        $delete_dispatch_query = "DELETE FROM dispatch WHERE id = ?";
+        dbExecuteQuery($delete_dispatch_query, $dispatch_id);
+    };
+    

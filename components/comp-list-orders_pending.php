@@ -16,7 +16,7 @@
                     SUM(status = 'pending') AS pending_count,
                     SUM(status = 'in-queue') AS in_queue_count, 
                     SUM(status = 'in-progress') AS in_progress_count, 
-                    SUM(status = 'completed') AS completed_count, 
+                    SUM(status = 'completed') AS completed_count,
                     SUM(status = 'failed') AS failed_count,
                     SUM(status = 'canceled') AS canceled_count
                 FROM order_items
