@@ -952,6 +952,9 @@ $(document).ready(function(){
                 console.log("Units: ", units);
                 console.log("Drivers: ", drivers);
 
+                $('#dispatch-select-truck').find('option').not(':first').remove();                
+                $('#dispatch-select-driver').find('option').not(':first').remove();
+
                 units.forEach(function(unit) {
                     $('#dispatch-select-truck').append(`<option value="${unit.id}">#${unit.id.padStart(4,'0')} / ${unit.truck_number} / ${unit.status}</option>`);
                 });
@@ -1317,7 +1320,7 @@ $(document).ready(function(){
 
                 if (response.success) {
                     alert('Dispatch status updated successfully.');
-                    updateDispatchOrderItems(order_id); // this is the problematic line
+                    updateDispatchOrderItems(order_id); 
                     updateDispatchPendingOrders();
                     updateDispatchTables();
                 } else {

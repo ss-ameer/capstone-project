@@ -558,6 +558,9 @@
             // order item information
             $order_items = $_POST['items'];
 
+            $insertItemQuery = "INSERT INTO order_items (order_id, item_id, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conn -> prepare($insertItemQuery);
+
             foreach($order_items as $item) {
                 $item_id = $item['item_id'];
                 $quantity = $item['quantity']; 
@@ -568,8 +571,6 @@
 
                 // Loop through each quantity and insert as individual items
                 for ($i = 0; $i < $quantity; $i++) {
-                    $insertItemQuery = "INSERT INTO order_items (order_id, item_id, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?)";
-                    $stmt = $conn -> prepare($insertItemQuery);
                     $stmt -> bind_param("iiddi", $order_id, $item_id, $price, $total, $unit_type);
                     $stmt -> execute();
                 }
