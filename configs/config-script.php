@@ -837,7 +837,7 @@ $(document).ready(function(){
                     $('#order-display-items ul.pending li:not(:first)').remove();
                     $('#order-display-items ul.in-queue li:not(:first)').remove();
                     $('#order-display-items ul.in-progress li:not(:first)').remove();
-                    $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.completed li:not(:first)').remove();
                     $('#order-display-items ul.failed li:not(:first)').remove();
                     $('#order-display-items ul.canceled li:not(:first)').remove();
 
@@ -1059,7 +1059,7 @@ $(document).ready(function(){
                     $('#order-display-items ul.pending li:not(:first)').remove();
                     $('#order-display-items ul.in-queue li:not(:first)').remove();
                     $('#order-display-items ul.in-progress li:not(:first)').remove();
-                    $('#order-display-items ul.successful li:not(:first)').remove();
+                    $('#order-display-items ul.completed li:not(:first)').remove();
                     $('#order-display-items ul.failed li:not(:first)').remove();
                     $('#order-display-items ul.canceled li:not(:first)').remove();
 

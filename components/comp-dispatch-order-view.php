@@ -63,7 +63,7 @@
             </li>
         </ul>
 
-        <ul class="list-group mb-2 successful">
+        <ul class="list-group mb-2 completed">
             <li class="list-group-item list-group-item-success text-center">
                 <span>Successful</span>
             </li>
