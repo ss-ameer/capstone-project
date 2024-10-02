@@ -1016,6 +1016,7 @@ $(document).ready(function(){
                     updateDispatchOrderItems(order_id);
                     console.log('Error: The ID is' + order_id);
                     updateDispatchPendingOrders();
+                    updateDispatchTables();
                     
                 } else {
                     alert('Error: ' + response.error);
