@@ -4,11 +4,11 @@
         <tr>
             <th>ID</th>
             <th>Order</th>
-            <th>Order Item</th>
+            <th>Item</th>
             <th>Amount</th>
             <th>Operator</th>
             <th>Unit</th>
-            <th>Dispatch Officer</th>
+            <th>Officer</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
