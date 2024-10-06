@@ -163,12 +163,10 @@
                 case 'update dispatch status':
                     $dispatch_id = $_POST['dispatch_id'];
                     $new_status = $_POST['new_status'];
+
+                    $results = updateDispatchStatus($dispatch_id, $new_status);
                 
-                    if (updateDispatchStatus($dispatch_id, $new_status)) {
-                        echo json_encode(['success' => true]);
-                    } else {
-                        echo json_encode(['success' => false]);
-                    }
+                    echo json_encode($results);
                     break;
                     
                 default:
@@ -1084,15 +1082,22 @@
             switch ($new_status) {
                 case 'in-queue':
                     $order_item_status = 'in-queue';
-                    $driver_status = 'available';
-                    $unit_status = 'available';
+                    // $driver_status = 'available';
+                    // $unit_status = 'available';
 
                     updateOrderItemStatus($order_item_id, $order_item_status);
-                    updateUnitStatus($unit_id, $unit_status);
-                    updateDriverStatus($driver_id, $driver_status);
+                    // updateUnitStatus($unit_id, $unit_status);
+                    // updateDriverStatus($driver_id, $driver_status);
                     break;
 
                 case 'in-transit':
+                    $unit_status = dbGetStatus('trucks', 'id', $unit_id);
+                    $driver_status = dbGetStatus('drivers', 'id', $driver_id);
+                    
+                    if ($unit_status !== 'available' || $driver_status !== 'available') {
+                        return ['success' => false, 'message' => 'Truck or Driver is not available for transit.'];
+                    }
+
                     $order_item_status = 'in-progress';
                     $driver_status = 'on_trip';
                     $unit_status = 'in_use';
@@ -1123,22 +1128,17 @@
                     break;
 
                 case 'remove':
-                    $driver_status = 'available';
-                    $unit_status = 'available';
-
                     removeDispatchRecord($dispatch_id);
-                    updateUnitStatus($unit_id, $unit_status);
-                    updateDriverStatus($driver_id, $driver_status);
                     break;
 
                 default:
                     break;
             }
             
-            return true; // Success
+            return ['success' => true, 'message' => 'Dispatch status updated successfully.'];
         }
     
-        return false; // Failure
+        return ['success' => false, 'message' => 'Failed to update dispatch status.'];
     }
 
     function updateOrderItemStatus($order_item_id, $new_status) {
@@ -1167,4 +1167,18 @@
         $delete_dispatch_query = "DELETE FROM dispatch WHERE id = ?";
         dbExecuteQuery($delete_dispatch_query, $dispatch_id);
     };
+    
+    function dbGetStatus($table, $id_column, $id_value) {
+        global $conn;
+    
+        $query = "SELECT status FROM $table WHERE $id_column = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_value);
+        $stmt->execute();
+        $stmt->bind_result($status);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $status;
+    }
     

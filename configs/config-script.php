@@ -1154,7 +1154,7 @@ $(document).ready(function(){
                 <tr ${data_att}>
                     <td>${data.id}</td>
                     <td>${data.order_id}</td>
-                    <td>${data.order_item_id} - ${data.item_name}</td>
+                    <td>${data.item_name}</td>
                     <td>${data.item_total}</td>
                     <td>${data.driver_name}</td>
                     <td>${data.truck_number}</td>
