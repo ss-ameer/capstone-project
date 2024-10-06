@@ -1,5 +1,5 @@
 <!-- comp-tables-dispatch-in-transit.php -->
-<table class="table table-striped align-middle dispatch-table in-transit">
+<table class="table table-hover align-middle dispatch-table in-transit">
     <thead class="table-info">
         <tr>
             <th>ID</th>

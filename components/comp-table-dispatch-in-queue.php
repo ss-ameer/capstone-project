@@ -1,5 +1,5 @@
 <!-- comp-tables-dispatch.php -->
-<table class="table table-striped align-middle dispatch-table in-queue">
+<table class="table table-hover align-middle dispatch-table in-queue">
     <thead>
         <tr class="table-primary">
             <th>ID</th>
