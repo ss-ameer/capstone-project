@@ -35,20 +35,21 @@
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
-                        <div class="row">
+
+                        <div class="row mt-3">
                             <div class="col">
                                 <p class="lead">Orders</p>
                             </div>
                         </div>
 
-                        <div class="row g-2">
+                        <div class="row g-3">
                             <div class="col-12">
                                 <div class="border rounded-5 text-center p-1">
                                     <span class="fs-5">Create Order</span>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <form id="order-form" class="border p-3 rounded shadow-sm" style="height: 50vh;" autocomplete="off">
+                                <form id="order-form" class="border p-3 rounded" style="height: 50vh;" autocomplete="off">
                                     <div class="form-floating mb-1">
                                         <input type="text" class="form-control" id="order-form-name" placeholder="Client Name">
                                         <label for="order-form-name">Client Name:</label>
@@ -100,7 +101,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="border rounded p-3 table-responsive">
+                                <div class="border rounded table-responsive bg-primary">
                                     <table class="table align-middle" id="order-items-table">
                                         <thead class="table-primary">
                                             <tr class="text-center">
@@ -110,7 +111,7 @@
                                                 <th scope="col" style="width: 15%;">Quantity</th>
                                                 <th scope="col" style="width: 15%;">Price(m³)</th>
                                                 <th scope="col" style="width: 20%;">TPrice</th>
-                                                <th class="" scope="col" style="width: 5%;"></th>
+                                                <th scope="col" style="width: 5%;">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="">

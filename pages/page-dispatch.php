@@ -38,10 +38,15 @@
                             </div>
                         </div>
 
-                        <div class="row mt-3">
+                        <div class="row mt-3 g-3">
+                            <div class="col-12">
+                                <div class="border rounded-5 text-center p-2 shadow">
+                                    <span class="fs-5">Create Dispatch</span>
+                                </div>
+                            </div>
                             <!-- pending orders list -->
                             <div class="col-md-6 col-sm-12">
-                                <div id="order-list-container" class="container p-0 border shadow-sm rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                <div id="order-list-container" class="container p-0 border rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
                                         <div class="d-flex justify-content-between">
@@ -58,7 +63,7 @@
 
                             <div class="col-md-6 col-sm-12">
                                 <!-- show view -->
-                                <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                <div id="dispatch-order-view" class="container p-0 border rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
                                         <div class="d-flex justify-content-between">
@@ -74,17 +79,14 @@
                                 </div>
 
                                 <!-- no view -->
-                                <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
+                                <div id="dispatch-order-view-no_view" class="container d-flex border p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row mt-3">
-                            <div class="col">
-
+                            <div class="col-12">
                                 <!-- show view -->
-                                <div class="container border shadow-sm rounded p-0 dispatch-form-active d-none">
+                                <div class="container border rounded p-0 dispatch-form-active d-none">
                                     
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
@@ -102,7 +104,7 @@
                                 </div>
 
                                 <!-- no view -->
-                                <div class="container border shadow-sm rounded p-0 dispatch-form-inactive">
+                                <div class="container border rounded p-0 dispatch-form-inactive">
                                 
                                     <div class="d-flex justify-content-center">
                                         <span class="text-muted text-center m-auto lead p-5">Select an order item to view details.</span>
@@ -111,10 +113,16 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                        
+                        <!-- dispatch tables -->
+                        <div class="row mt-3 g-3">
+                            <div class="col-12">
+                                <div class="border rounded-5 text-center p-3 shadow">
+                                    <span class="fs-5">Dispatch Tables</span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-primary">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-primary">
                                         <div class="d-flex justify-content-between">
@@ -126,12 +134,10 @@
                                     <div class="">
                                         <?php include PATH . 'components/comp-table-dispatch-in-queue.php';?>
                                     </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="mt-3">
-                            <div class="col">
-                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                            <div class="col-12">
+                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-info">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-info">
                                         <div class="d-flex justify-content-between">
@@ -145,11 +151,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="mt-3">
                             <div class="col">
-                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-success">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-success">
                                         <div class="d-flex justify-content-between">
@@ -163,11 +167,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="mt-3">
+
                             <div class="col">
-                                <div class="container-fluid border p-0 shadow-sm rounded dispatch-table-container">
+                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-dark">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-dark">
                                         <div class="d-flex justify-content-between">
@@ -182,7 +184,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
