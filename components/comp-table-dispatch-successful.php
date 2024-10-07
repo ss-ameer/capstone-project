@@ -1,5 +1,5 @@
 <!-- comp-table-dispatch-successful.php -->
-<table class="table table-striped align-middle dispatch-table successful">
+<table class="table table-hover align-middle dispatch-table successful">
     <thead class="table-success">
         <tr>
             <th>ID</th>

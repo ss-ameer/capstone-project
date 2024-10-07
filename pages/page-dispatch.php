@@ -41,9 +41,7 @@
                         <div class="row mt-3">
                             <!-- pending orders list -->
                             <div class="col-md-6 col-sm-12">
-
                                 <div id="order-list-container" class="container p-0 border shadow-sm rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
-                                    
                                     <!-- header -->
                                     <div class="sticky-top bg-light p-2 border-bottom">
                                         <div class="d-flex justify-content-between">
@@ -55,13 +53,10 @@
                                     <div id="pending-orders-container" class="p-3">
                                         <?php include PATH . 'components/comp-list-orders_pending.php'; ?>
                                     </div>
-
                                 </div>
-
                             </div>
 
                             <div class="col-md-6 col-sm-12">
-                                
                                 <!-- show view -->
                                 <div id="dispatch-order-view" class="container p-0 border shadow-sm rounded d-none" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <!-- header -->
@@ -82,9 +77,7 @@
                                 <div id="dispatch-order-view-no_view" class="container d-flex border shadow-sm p-3 rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
                                     <span class="text-muted text-center m-auto lead">Select an order to view details.</span>
                                 </div>
-
                             </div>
-
                         </div>
 
                         <div class="row mt-3">
