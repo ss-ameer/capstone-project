@@ -875,12 +875,35 @@
         return []; 
     }
 
+    // function getUnits() {
+    //     global $conn;
+
+    //     $query = "SELECT id, truck_number, truck_type_id, status FROM trucks";
+    //     $result = $conn->query($query);
+
+    //     if ($result->num_rows > 0) {
+    //         $trucks = [];
+    //         while ($row = $result->fetch_assoc()) {
+    //             $trucks[] = $row; 
+    //         }
+    //         return $trucks; 
+    //     }
+
+    //     return [];
+
+    // }
+
     function getUnits() {
         global $conn;
-
-        $query = "SELECT id, truck_number, truck_type_id, status FROM trucks";
+    
+        // Query to fetch trucks along with their truck_type, created_at, and updated_at
+        $query = "
+            SELECT t.id, t.truck_number, t.truck_type_id, t.status, t.created_at, t.updated_at, tt.type_name AS truck_type
+            FROM trucks t
+            LEFT JOIN truck_types tt ON t.truck_type_id = tt.id";  // Assuming truck_types table for types
+    
         $result = $conn->query($query);
-
+    
         if ($result->num_rows > 0) {
             $trucks = [];
             while ($row = $result->fetch_assoc()) {
@@ -888,10 +911,9 @@
             }
             return $trucks; 
         }
-
+    
         return [];
-
-    }
+    }    
 
     function getUnitsFiltered($unit_type_id) {
         
