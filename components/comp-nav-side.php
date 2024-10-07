@@ -13,6 +13,12 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link text-reset" href="#" id="side-orders">
+                <i class="bi bi-receipt"></i> <span class="ms-3">Orders</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-dispatch">
                 <i class="bi bi-send"></i> <span class="ms-3">Dispatch</span>
             </a>
@@ -20,13 +26,19 @@
 
         <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-stock">
-                <i class="bi bi-box2"></i> <span class="ms-3">Stock</span>
+                <i class="bi bi-box2"></i> <span class="ms-3">Items</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-reset" href="#" id="side-orders">
-                <i class="bi bi-receipt"></i> <span class="ms-3">Orders</span>
+            <a class="nav-link text-reset" href="#" id="side-trucks">
+                <i class="bi bi-truck"></i> <span class="ms-3">Units</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-reset" href="#" id="side-drivers">
+                <i class="bi bi-person"></i> <span class="ms-3">Operators</span>
             </a>
         </li>
 

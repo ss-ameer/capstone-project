@@ -13,18 +13,31 @@
                 case 'master':
                     header('Location: pages/page-master.php');
                     break;
+
                 case 'dashboard':
                     header('Location: pages/page-dashboard.php');
                     break;
+
                 case 'stock':
                     header('Location: pages/page-stock.php');
                     break;
+
                 case 'orders':
                     header('Location: pages/page-orders.php');
                     break;
+
                 case 'dispatch':
                     header('Location: pages/page-dispatch.php');
+                break;
+
+                case 'trucks':
+                    header('Location: pages/page-trucks.php');
                     break;
+
+                case 'drivers':
+                    header('Location: pages/page-drivers.php');
+                    break;
+
                 default:
                     break;
             }

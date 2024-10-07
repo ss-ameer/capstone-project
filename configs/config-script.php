@@ -284,7 +284,10 @@ $(document).ready(function(){
         'side-dashboard',
         'side-stock',
         'side-orders',
-        'side-dispatch'
+        'side-dispatch',
+        'side-trucks',
+        'side-drivers'
+
     ]);
 
     // officers table
