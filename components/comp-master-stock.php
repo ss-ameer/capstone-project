@@ -34,13 +34,23 @@
                             </select>
                             <label for="item-edit_category">Category</label>
                         </div>
-                        <div class="form-floating mb-1">
+                        <!-- <div class="form-floating mb-1">
                             <select name="uom" id="item-edit_uom" placeholder="oum" class="form-select">
                                 <option selected>Choose</option>
                                 <option value="test">Test</option>
                             </select>
                             <label for="item-edit_oum">Unit</label>
+                        </div> -->
+                        <div class="form-floating mb-1">
+                            <input name="category" type="text" id="item-edit_category" class="form-control" placeholder="Category">
+                            <label for="item-edit_category">Category</label>
                         </div>
+
+                        <div class="form-floating mb-1">
+                            <input name="density" type="number" step="0.01" id="item-edit_density" class="form-control" placeholder="Density">
+                            <label for="item-edit_density">Density</label>
+                        </div>
+
                         <div class="form-floating mb-1">
                             <input name="price" type="number" id="item-edit_price" class="form-control" placeholder="Price">
                             <label for="item-edit_price">Price</label>
