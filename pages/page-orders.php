@@ -100,13 +100,13 @@
                                     <table class="table align-middle" id="order-items-table">
                                         <thead class="table-primary">
                                             <tr class="text-center">
-                                                <th class="text-center" scope="col" style="width: 5%;">ID</th>
-                                                <th scope="col" style="width: 20%;">Name</th>
-                                                <th scope="col" style="width: 20%;">Unit</th></th>
-                                                <th scope="col" style="width: 15%;">Quantity</th>
-                                                <th scope="col" style="width: 15%;">Price(m³)</th>
-                                                <th scope="col" style="width: 20%;">TPrice</th>
-                                                <th scope="col" style="width: 5%;">Action</th>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Unit</th></th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Price(m³)</th>
+                                                <th scope="col">TPrice</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody class="">
