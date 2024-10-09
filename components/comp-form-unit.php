@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-12">
-                <button type="submit" class="btn btn-primary mb-2">Add Unit</button>
+                <button type="submit" class="btn btn-primary">Add Unit</button>
             </div>
         </div>
     </div>
