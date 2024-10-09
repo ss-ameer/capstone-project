@@ -807,6 +807,8 @@ $(document).ready(function(){
             success: function (response) {
                 console.log(response); 
                 alert('Driver added successfully!');
+
+                $('#add-driver-form')[0].reset();
             },
             error: function () {
                 console.error('Failed to add driver');

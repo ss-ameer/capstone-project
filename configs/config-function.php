@@ -748,8 +748,7 @@
     
         // Prepare data for insertion
         $driverData = [
-            'first_name' => $driverData['first_name'],
-            'last_name' => $driverData['last_name'],
+            'name' => $driverData['name'],
             'license_number' => $driverData['license_number'],
             'phone_number' => $driverData['phone_number'],
             'status' => $driverData['status'],

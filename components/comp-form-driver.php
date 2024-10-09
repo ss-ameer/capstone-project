@@ -4,18 +4,11 @@
         <div class="row g-1">
             <div class="col-md-6 col-sm-12">
                 <div class="form-floating mb-2">
-                    <input type="text" id="add-driver-first_name" name="first_name" class="form-control" placeholder="First Name" required>
-                    <label for="add-driver-first_name">First Name</label>
+                    <input type="text" id="add-driver-name" name="name" class="form-control" placeholder="Name" required>
+                    <label for="add-driver-name">Name</label>
                 </div>
             </div>
 
-            <div class="col-md-6 col-sm-12">
-                <div class="form-floating mb-2">
-                    <input type="text" id="add-driver-last_name" name="last_name" class="form-control" placeholder="Last Name" required>
-                    <label for="add-driver-last_name">Last Name</label>
-                </div>
-            </div>
-            
             <div class="col-md-6 col-sm-12">
                 <div class="form-floating mb-2">
                     <input type="text" id="add-driver-license_number" name="license_number" class="form-control" placeholder="License Number" required>
