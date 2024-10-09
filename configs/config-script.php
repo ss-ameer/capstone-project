@@ -24,15 +24,11 @@ $(document).ready(function(){
     };
 
     // stocks
-    function itemAdd() {
+    function itemAdd(form_data) {
         var data = {
-            item_name: $('#item-add_name').val(),
-            item_category: $('#item-add_category').val(),
-            item_uom: $('#item-add_uom').val(),
-            item_price: $('#item-add_price').val(),
-            item_desc: $('#item-add_desc').val(),
+            form_data: form_data,
             action: 'item add'
-        }
+        };
 
         $.ajax({
             url: config_function_url,
@@ -42,14 +38,17 @@ $(document).ready(function(){
                 console.log(response);
                 if (response !== 'success') {
                     console.log('error');
+                    console.log(data);
                 } else {
-                    $('#master-stock-preview').load(' #master-stock-preview');
-                    $('#item-add-form')[0].reset();
-                    alert(data['item_name'] + ' successfully added.');
+                    console.log('form_data');
+                    // $('#master-stock-preview').load(' #master-stock-preview');
+                    $('#add-item-form')[0].reset();
+                    alert(form_data.item_name + ' successfully added.');
                 };
             }
-        })
+        });
     }
+
 
     function stockAdd() {
         var data = {
@@ -315,9 +314,15 @@ $(document).ready(function(){
     })
 
     // stocks
-    $('#item-add-form').submit(function(event){
+    $('#add-item-submit').on('click', function(event){
         event.preventDefault();
-        itemAdd();
+        $('#add-item-form').submit();
+    });
+
+    $('#add-item-form').submit(function(event){
+        event.preventDefault();
+        var form_data = $(this).serialize();
+        itemAdd(form_data);
     });
 
     $('#stock-delete').on('click', function(event){
@@ -750,10 +755,12 @@ $(document).ready(function(){
             data: data,
             success: function(response) {
                 console.log(response);
+                $('#add-unit-form')[0].reset();
                 alert('Unit added successfully');
             },
             error: function() {
                 console.error('Failed to add unit');
+                alert('Failed to add unit');
             }
         });
 
@@ -774,7 +781,8 @@ $(document).ready(function(){
             type: 'POST',
             data: data,
             success: function (response) {
-                console.log(response); 
+                console.log(response);
+                $('#add-unit_type-form')[0].reset();
                 alert('Unit Type added successfully!');
             },
             error: function () {
@@ -1341,6 +1349,8 @@ $(document).ready(function(){
             }
         });
     });
+
+
 
     updateDispatchTables();
     

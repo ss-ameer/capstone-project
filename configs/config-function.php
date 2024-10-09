@@ -243,14 +243,17 @@
 
         global $conn;
 
-        $item_name = $_POST['item_name'];
-        $item_category = $_POST['item_category'];
-        $item_uom = $_POST['item_uom'];
-        $item_price = $_POST['item_price'];
-        $item_desc = $_POST['item_desc'];
+        $form_data_string = $_POST['form_data'];
+        parse_str($form_data_string, $form_data);
 
-        $stmt = $conn -> prepare ("INSERT INTO items (item_name, category, unit_of_measure, price, description) VALUES (?, ?, ?, ?, ?)");
-        $stmt -> bind_param("sssis", $item_name, $item_category, $item_uom, $item_price, $item_desc);
+        $item_name = $form_data['item_name'];
+        $item_category = $form_data['item_category'];
+        $item_density = $form_data['item_density'];
+        $item_price = $form_data['item_price'];
+        $item_description = $form_data['item_description'];
+
+        $stmt = $conn -> prepare ("INSERT INTO items (item_name, category, density, description, price) VALUES (?, ?, ?, ?, ?)");
+        $stmt -> bind_param("ssdsd", $item_name, $item_category, $item_density, $item_description, $item_price);
 
         if($stmt -> execute()){
             echo'success';
@@ -739,7 +742,7 @@
         }
     }
 
-    function addDriver() {
+    function addDriver() { 
         // Parse the serialized form data
         parse_str($_POST['formData'], $driverData);
     
