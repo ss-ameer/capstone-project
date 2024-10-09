@@ -47,18 +47,20 @@
                                             <th scope="col">ID</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Category</th>
+                                            <th scope="col">Density</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        <?php getStocks(); ?>
+                                        <?php getItems(); ?>
                                         <?php foreach ($_SESSION['items'] as $item) : ?>
                                         
                                         <tr class="item" data-id_item="<?= $item['item_id'] ?>">
                                             <td><?= $item['item_id'] ?></td>
                                             <td><?= $item['item_name'] ?></td>
                                             <td><?= $item['category'] ?></td>
+                                            <td><?= $item['density'] ?></td>
                                             <td><?= $item['price'] ?></td>
                                             <td><?= $item['description'] ?></td>
                                         </tr>

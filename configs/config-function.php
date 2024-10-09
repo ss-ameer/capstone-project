@@ -57,7 +57,7 @@
                     break;
 
                 case 'get stocks':
-                    getStocks();
+                    getItems();
                     break;
 
                 case 'item add':
@@ -223,10 +223,10 @@
 
     }
 
-    function getStocks () {
+    function getItems () {
         global $conn;
 
-        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, price FROM items");
+        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, density, price FROM items");
         $stmt -> execute();
         $result = $stmt -> get_result();
 
