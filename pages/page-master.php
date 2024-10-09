@@ -22,24 +22,19 @@
 </head>
 <body>
 <header>
-
 </header>
 <main>
 
     <div class="container-fluid vh-100 scrollbar-hidden">
-        <div class="row h-100">
+        
+        <!-- header -->
+        <?php include_once(PATH. 'components/comp-header.php') ?>
+        <div class="row" style="height: 90%; max-height: 90%;">
             <!-- sidebar -->
             <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
             <!-- main -->
-            <div class="col mh-100 overflow-auto border">
+            <div class="col mh-100 overflow-auto">
                 <div class="container">
-
-                    <div class="row mt-3">
-                        <divl class="col">
-                            <p class="lead">Master</p>
-                        </divl>
-                    </div>
-
                     <div class="row mt-3 g-3">
                         <div class="col-12">
                             <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".master-create">
