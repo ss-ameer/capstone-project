@@ -25,18 +25,13 @@
     <header></header>
     <main>
         <div class="container-fluid vh-100 scrollbar-hidden">
-            <div class="row h-100">
+            <?php include_once PATH . 'components/comp-header.php'; ?>
+            <div class="row main-content">
                 <!-- sidebar -->
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <p class="lead">Dispatch</p>
-                            </div>
-                        </div>
 
                         <div class="row mt-3 g-3">
                             <div class="col-12">
@@ -117,7 +112,7 @@
                         <!-- dispatch tables -->
                         <div class="row mt-3 g-3">
                             <div class="col-12">
-                                <div class="border rounded-5 text-center p-3 shadow">
+                                <div class="border rounded-5 text-center p-2 shadow">
                                     <span class="fs-5">Dispatch Tables</span>
                                 </div>
                             </div>

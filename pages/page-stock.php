@@ -23,21 +23,23 @@
 <body>
 <main>
     <div class="container-fluid vh-100">
-        <div class="row h-100">
+        <!-- header -->
+        <?php include_once PATH . 'components/comp-header.php'; ?>
+        <div class="row main-content">
             <!-- sidebar -->
             <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
             <!-- main -->
-            <div class="col mh-100 overflow-auto border">
+            <div class="col mh-100 overflow-auto">
                 <div class="container">
+                    <div class="row mt-3 g-3">
 
-                    <div class="row mt-3">
-                        <div class="col">
-                            <p class="lead">Items</p>
+                        <div class="col-12">
+                            <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".items-table">
+                                <a class="fs-5" href="#">Items Table</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row mt-3">
-                        <div class="col">
+                        <div class="col-12 collapse items-table">
                             <div class="container p-0 border rounded">
                                 <table class="table table-hover align-middle table-bordered" id="table-stocks">
                                     <thead>

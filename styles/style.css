@@ -12269,6 +12269,10 @@ textarea.form-control-lg {
   display: none;
 }
 
+.main-content {
+  height: 90%;
+}
+
 @media print {
   body {
     margin: 0;

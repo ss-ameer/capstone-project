@@ -29,7 +29,7 @@
         
         <!-- header -->
         <?php include_once(PATH. 'components/comp-header.php') ?>
-        <div class="row" style="height: 90%; max-height: 90%;">
+        <div class="row main-content">
             <!-- sidebar -->
             <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
             <!-- main -->
@@ -42,7 +42,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 collapse master-create master-create">
+                        <div class="col-12 collapse master-create">
                             <div class="container p-0 border rounded">
                                 <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target="#add-user-container">
                                     <div class="d-flex justify-content-between align-items-center">

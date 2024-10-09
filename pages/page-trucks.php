@@ -25,7 +25,9 @@
     <header></header>
     <main>
         <div class="container-fluid vh-100 scrollbar-hidden">
-            <div class="row h-100">
+            <!-- header -->
+            <?php include_once PATH . 'components/comp-header.php'; ?>
+            <div class="row main-content">
                 <!-- sidebar -->
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
                 <!-- main -->

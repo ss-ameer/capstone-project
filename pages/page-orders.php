@@ -29,22 +29,17 @@
         <?php include_once(PATH . 'components/comp-modal-orders-prev.php'); ?>
 
         <div class="container-fluid vh-100">
-            <div class="row h-100">
+            <!-- header -->
+            <?php include_once PATH . 'components/comp-header.php'; ?>
+            <div class="row main-content">
                 <!-- side-nav -->
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
-
-                        <div class="row mt-3">
-                            <div class="col">
-                                <p class="lead">Orders</p>
-                            </div>
-                        </div>
-
-                        <div class="row g-3">
+                        <div class="row g-3 mt-3">
                             <div class="col-12">
-                                <div class="border rounded-5 text-center p-1">
+                                <div class="border rounded-5 text-center p-2">
                                     <span class="fs-5">Create Order</span>
                                 </div>
                             </div>
