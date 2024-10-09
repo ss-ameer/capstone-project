@@ -226,7 +226,7 @@
     function getStocks () {
         global $conn;
 
-        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, unit_of_measure, quantity_in_stock, price FROM items");
+        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, price FROM items");
         $stmt -> execute();
         $result = $stmt -> get_result();
 

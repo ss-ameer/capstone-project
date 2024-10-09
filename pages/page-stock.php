@@ -39,13 +39,14 @@
                     <div class="row mt-3">
                         <div class="col">
                             <div class="container p-0 border rounded">
-                                <table class="table table-hover" id="table-stocks">
+                                <table class="table table-hover align-middle table-bordered" id="table-stocks">
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Description</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Description</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
@@ -57,6 +58,7 @@
                                             <td><?= $item['item_name'] ?></td>
                                             <td><?= $item['category'] ?></td>
                                             <td><?= $item['price'] ?></td>
+                                            <td><?= $item['description'] ?></td>
                                         </tr>
 
                                         <?php endforeach; ?>
