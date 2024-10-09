@@ -1,9 +1,4 @@
-<div class="col-2 col-lg-2 col-md-3 col-sm-3 p-0 d-flex flex-column h-100 bg-dark" id="nav-side">
-    <div class="bg-light p-3 text-center">
-        <i class="bi bi-truck"></i>
-        <span>Dispatch</span>
-    </div>
-
+<div class="col-2 col-lg-2 col-md-3 col-sm-3 p-0 d-flex flex-column bg-dark shadow border-end" id="nav-side">
     <!-- navigation -->
     <ul class="nav flex-column" style="color: white;">
         <li class="nav-item">
