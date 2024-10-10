@@ -855,7 +855,7 @@
         global $conn;
 
         $query = "
-            SELECT id, name, status 
+            SELECT id, name, license_number, phone_number, status 
             FROM drivers 
             ORDER BY 
             CASE status
