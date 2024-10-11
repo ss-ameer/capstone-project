@@ -411,10 +411,12 @@ $(document).ready(function(){
                     let items = JSON.parse(data);
                     let suggestions = '';
                     items.forEach(function(item) {
-                        suggestions += '<li class="list-group-item suggestion-item" data-id="' + item.item_id + '" data-name="' + item.item_name + '" data-uom="' + item.unit_of_measure + '" data-price="' + item.price + '" data-description="' + item.description + '" ><span class="badge bg-dark">' + item.item_id + '</span> ' + item.item_name + '</li>';
+                        suggestions += '<li class="list-group-item suggestion-item" data-id="' + item.item_id + '" data-name="' + item.item_name + '" data-density="' + item.density + '" data-price="' + item.price + '" data-description="' + item.description + '" ><span class="badge bg-dark">' + item.item_id + '</span> ' + item.item_name + '</li>';
+                        console.log(item.density);
                     });
                     $("#item-suggestions").html(suggestions).show();
                     $('#item-suggestions li:gt(4)').remove();
+
                 }
             });
         } else {
@@ -435,7 +437,7 @@ $(document).ready(function(){
                 price: row.find('.item-price').text(),
                 total: row.find('.item-total').text(),
                 unit_type_id: parseInt(row.find('.item-unit option:selected').val()),
-                unit_capacity: parseInt(row.find('.item-unit option:selected').data('unit-capacity'))
+                unit_capacity: parseFloat(row.find('.item-unit option:selected').data('unit-capacity'))
             };
             
             orderItems.push(item);
@@ -551,13 +553,13 @@ $(document).ready(function(){
     $(document).on('click', '#item-suggestions li', function(){
         var itemId = $(this).data('id');
         var itemName = $(this).data('name');
-        var itemUnit = $(this).data('uom');
+        var itemDensity = $(this).data('density');
         var itemDescription = $(this).data('description');
         var itemPrice = $(this).data('price');
         
         console.log('clicked');
         console.log('item id: ' + itemId);
-        addItemToTable(itemId, itemName, itemUnit, itemPrice);
+        addItemToTable(itemId, itemName, itemPrice, itemDensity);
         $('#item-search').val('');
         $('#item-suggestions').hide();
         
@@ -592,36 +594,73 @@ $(document).ready(function(){
         updateOrderTable($row);
     });
 
-    function updateOrderTable($row) {
-        if(!$row) {
-            $('#order-items-table tbody tr').each(function() {
-                var $thisRow = $(this);
-                var qty = parseInt($thisRow.find('.item-qty').val());
-                var price = parseFloat($thisRow.find('.item-price').text());
+    // function updateOrderTable($row) {
+    //     if(!$row) {
+    //         $('#order-items-table tbody tr').each(function() {
+    //             var $thisRow = $(this);
+    //             var qty = parseInt($thisRow.find('.item-qty').val());
+    //             var price = parseFloat($thisRow.find('.item-price').text());
+    //             var density = parseFloat($thisRow.find('.item-density').text());
 
-                var selectedOption = $thisRow.find('.item-unit option:selected');
-                var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
+    //             var selectedOption = $thisRow.find('.item-unit option:selected');
+    //             var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
                 
-                console.log('Selected Unit Capacity:', unitCapacity);
+    //             console.log('Selected Unit Capacity:', unitCapacity);
 
-                var total = qty * price * unitCapacity;
-                $thisRow.find('.item-total').text(total.toFixed(2));
-            });
-        } else {
-            var qty = parseInt($row.find('.item-qty').val());
-            var price = parseFloat($row.find('.item-price').text());
+    //             var volume = unitCapacity / density;
+    //             var total = qty * volume * price;
 
-            var selectedOption = $row.find('.item-unit option:selected');
-            var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
+    //             console.log('Volume: ' + volume);
+    //             console.log('Total: ' + total);
+
+    //             $thisRow.find('.item-total').text(total.toFixed(2));
+    //         });
+    //     } else {
+    //         var qty = parseInt($row.find('.item-qty').val());
+    //         var price = parseFloat($row.find('.item-price').text());
+    //         var density = parseFloat($row.find('.item-density').text());
+
+    //         var selectedOption = $row.find('.item-unit option:selected');
+    //         var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
             
+    //         console.log('Selected Unit Capacity:', unitCapacity);
+
+    //         var volume = unitCapacity / density;
+    //         var total = qty * volume * price;
+            
+    //         console.log('Volume: ' + volume);
+    //             console.log('Total: ' + total);
+    //         $row.find('.item-total').text(total.toFixed(2));
+    //     }
+    //     calculateOrderSummary();
+    // }
+
+    function updateOrderTable($row = null) {
+        var $rows = $row ? $row : $('#order-items-table tbody tr');
+
+        $rows.each(function() {
+            var $thisRow = $(this);
+            var qty = parseInt($thisRow.find('.item-qty').val());
+            var price = parseFloat($thisRow.find('.item-price').text());
+            var density = parseFloat($thisRow.find('.item-density').text());
+            var selectedOption = $thisRow.find('.item-unit option:selected');
+            var unitCapacity = parseFloat(selectedOption.data('unit-capacity'));
+
             console.log('Selected Unit Capacity:', unitCapacity);
 
-            var total = qty * price * unitCapacity;
+            var volume = unitCapacity / density;
+            var total = qty * volume * price;
 
-            $row.find('.item-total').text(total.toFixed(2));
-        }
+            console.log('Density: ' + density);
+            console.log('Volume: ' + volume);
+            console.log('Total: ' + total);
+
+            $thisRow.find('.item-total').text(total.toFixed(2));
+        });
+
         calculateOrderSummary();
     }
+
 
     function calculateOrderSummary() {
         var totalQty = 0;
@@ -647,7 +686,7 @@ $(document).ready(function(){
 
     }
 
-    function addItemToTable(id, name, unit, price) {
+    function addItemToTable(id, name, price, density) {
         var newRow = 
                     '<tr class="">' +
                         '<td class="item-id text-center">' + id + '</td>' +
@@ -666,7 +705,8 @@ $(document).ready(function(){
                         '</td>' +
                         '<td class="item-price text-center">' + price + '</td>' +
                         '<td class="item-total text-center">' + price + '</td>' +
-                        '<td class="text-center"><i class="bi bi-x-circle fs-6" id="order-item-remove"></i></td>'
+                        '<td class="text-center"><i class="bi bi-x-circle fs-6" id="order-item-remove"></i></td>' +
+                        '<td class="item-density d-none">' + density + '</td>' +
                     '</tr>';
         
         $('#order-items-table tbody').append(newRow);

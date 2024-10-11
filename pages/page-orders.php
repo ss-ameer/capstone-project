@@ -21,80 +21,58 @@
 
 </head>
 <body>
-    <header>
-        
-    </header>
     <main>
         <!-- modal -->
         <?php include_once(PATH . 'components/comp-modal-orders-prev.php'); ?>
 
-        <div class="container-fluid vh-100">
+        <div class="container-fluid vh-100 scrollbar-hidden">
             <!-- header -->
             <?php include_once PATH . 'components/comp-header.php'; ?>
-            <div class="row main-content">
+            <div class="row c-main-content">
                 <!-- side-nav -->
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
                 <!-- main -->
-                <div class="col mh-100 overflow-auto border">
+                <div class="col mh-100 overflow-auto">
                     <div class="container">
-                        <div class="row g-3 mt-3">
+                        <div class="row mt-3 g-3">
                             <div class="col-12">
-                                <div class="border rounded-5 text-center p-2">
-                                    <span class="fs-5">Create Order</span>
+                                <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".order-create">
+                                    <a class="fs-5" href="#">Create Order</a>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <form id="order-form" class="border p-3 rounded" style="height: 50vh;" autocomplete="off">
-                                    <div class="form-floating mb-1">
-                                        <input type="text" class="form-control" id="order-form-name" placeholder="Client Name">
-                                        <label for="order-form-name">Client Name:</label>
-                                        <ul id="order-form-client-suggestions" class="list-group position-absolute w-100 z-3" style="display:none"><li></li></ul>
-                                    </div>
-                                    <!-- address -->
-                                    <div class="input-group mb-1">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="order-form-address_city" placeholder="City">
-                                            <label for="order-form-address_city">City</label>
-                                        </div>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="order-form-address_brgy" placeholder="Barangay">
-                                            <label for="order-form-address_brgy">Barangay</label>
-                                        </div>
 
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="order-form-address_street" placeholder="Street">
-                                            <label for="order-form-address_street">Street</label>
+                            <div class="col-6">
+                                <div class="container p-0 border rounded">
+                                    <div class="c-section-header">
+                                        <div class="c-title-container">
+                                            <span class="lead">Client Info</span>
                                         </div>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="order-form-address_number" placeholder="Number">
-                                            <label for="order-form-address_number">Number</label>
-                                        </div>
-                                    </div>
-                                    <!-- contact -->
-                                    <div class="form-floating mb-1">
-                                        <input type="number" class="form-control" id="order-form-number" placeholder="Contact Number">
-                                        <label for="order-form-numer">Contact Number</label>
-                                    </div>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="order-form-email" placeholder="Email">
-                                        <label for="order-form-email">Email</label>
                                     </div>
 
-                                    <div>
-                                        <input type="hidden" id="order-items-total_qty-input" name="total_qty" value="0">
-                                        <input type="hidden" id="order-items-total_price-input" name="total_amount" value="0.00">
+                                    <div class="p-3">
+                                        <?php include_once('../components/comp-form-order.php'); ?>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="col-6">
-                                <div class="p-3 border rounded overflow-auto" style="height: 50vh;">
-                                    <div class="input-group">
-                                        <input type="search" name="item search" autocomplete="off" class="form-control" id="item-search">
-                                        <span class="input-group-text"><i class="bi bi-search"> Search</i></span>
-                                    </div>
-                                    <ul id="item-suggestions" class="list-group mt-2 w-100 mh-100" style="display: none;"></ul>
                                 </div>
                             </div>
+
+                            <div class="col-6">
+                                <div class="container p-0 border rounded">
+                                    <div class="c-section-header">
+                                        <div class="c-title-container">
+                                            <span class="lead">Item Search</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-3">
+                                        <div class="input-group">
+                                            <input type="search" name="item search" autocomplete="off" class="form-control" id="item-search">
+                                            <span class="input-group-text"><i class="bi bi-search"> Search</i></span>
+                                        </div>
+                                        <ul id="item-suggestions" class="list-group mt-2 w-100 mh-100" style="display: none;"></ul>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="border rounded table-responsive bg-primary">
                                     <table class="table align-middle" id="order-items-table">
@@ -114,6 +92,7 @@
                                     </table>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="p-3 border rounded d-flex justify-content-between">
                                     <div class="">
@@ -128,7 +107,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
 
