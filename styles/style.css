@@ -7594,7 +7594,7 @@ textarea.form-control-lg {
   display: none !important;
 }
 
-.shadow {
+.shadow, .c-section-toggler {
   box-shadow: var(--bs-box-shadow) !important;
 }
 
@@ -7722,7 +7722,7 @@ textarea.form-control-lg {
   transform: translateY(-50%) !important;
 }
 
-.border {
+.border, .c-section-toggler {
   border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
@@ -8338,7 +8338,7 @@ textarea.form-control-lg {
   padding: 0.25rem !important;
 }
 
-.p-2, .c-section-header {
+.p-2, .c-section-header, .c-section-toggler {
   padding: 0.5rem !important;
 }
 
@@ -8676,7 +8676,7 @@ textarea.form-control-lg {
   text-align: right !important;
 }
 
-.text-center {
+.text-center, .c-section-toggler {
   text-align: center !important;
 }
 
@@ -9190,7 +9190,7 @@ textarea.form-control-lg {
   border-radius: var(--bs-border-radius-xl) !important;
 }
 
-.rounded-5 {
+.rounded-5, .c-section-toggler {
   border-radius: var(--bs-border-radius-xxl) !important;
 }
 

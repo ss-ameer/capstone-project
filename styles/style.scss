@@ -12,6 +12,14 @@
     height: 90%;
 }
 
+.c-section-toggler {
+    @extend .border;
+    @extend .rounded-5;
+    @extend .text-center;
+    @extend .p-2;
+    @extend .shadow ;
+}
+
 .c-section-header {
     @extend .sticky-top !optional;
     @extend .bg-light !optional;

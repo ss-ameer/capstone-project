@@ -34,41 +34,51 @@
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
 
-                        <div class="row mt-3">
-                            <div class="col">
-                                <p class="lead">Units</p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="container p-0 border rounded">
-                                    <table class="table table-striped table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Type</th>
-                                                <th>Number</th>
-                                                <th>Status</th>
-                                                <th>Created</th>
-                                                <th>Updated</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <?php foreach($trucks as $truck): ?>
-                                                <tr>
-                                                <td><?php echo str_pad($truck['id'], 4, '0', STR_PAD_LEFT); ?></td>
-                                                    <td><?php echo $truck['truck_type'];?></td>
-                                                    <td><?php echo $truck['truck_number'];?></td>
-                                                    <td><?php echo htmlspecialchars($truck['status']);?></td>
-                                                    <td><?php echo date('Y-m-d', strtotime($truck['created_at']));?></td>
-                                                    <td><?php echo date('Y-m-d', strtotime($truck['updated_at']));?></td>
-                                                </tr>
-                                            <?php endforeach;?>
-                                        </tbody>
-                                    </table>
+                        <div class="row mt-3 g-3">
+                            <div class="col-12">
+                                <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target="#units-table">
+                                    <a href="#" class="fs-5">Units Table</a>
                                 </div>
                             </div>
+                            
+                            <div class="col-12 collapse" id="units-table">
+                                <div class="container p-0 border rounded">
+                                    <div class="c-section-header">
+                                        <div class="c-title-container">
+                                            <span class="lead">Units Table</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Number</th>
+                                                    <th>Status</th>
+                                                    <th>Created</th>
+                                                    <th>Updated</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                <?php foreach($trucks as $truck): ?>
+                                                    <tr>
+                                                    <td><?php echo str_pad($truck['id'], 4, '0', STR_PAD_LEFT); ?></td>
+                                                        <td><?php echo $truck['truck_type'];?></td>
+                                                        <td><?php echo $truck['truck_number'];?></td>
+                                                        <td><?php echo htmlspecialchars($truck['status']);?></td>
+                                                        <td><?php echo date('Y-m-d', strtotime($truck['created_at']));?></td>
+                                                        <td><?php echo date('Y-m-d', strtotime($truck['updated_at']));?></td>
+                                                    </tr>
+                                                <?php endforeach;?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
