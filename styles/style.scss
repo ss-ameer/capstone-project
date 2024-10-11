@@ -7,9 +7,23 @@
     }
 }
 
-// group class
-.main-content {
+// group classes
+.c-main-content {
     height: 90%;
+}
+
+.c-section-header {
+    @extend .sticky-top !optional;
+    @extend .bg-light !optional;
+    @extend .p-2 !optional;
+    @extend .px-3 !optional;
+    @extend .border-bottom !optional;
+
+    .c-title-container {
+        @extend .d-flex !optional;
+        @extend .align-items-center !optional;
+        @extend .align-items-center !optional;
+    }
 }
 
 #dispatch-form-details {

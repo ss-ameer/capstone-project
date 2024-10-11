@@ -59,8 +59,8 @@
 
                         <div class="col-12 collapse master-create">
                             <div class="container p-0 border rounded">
-                                <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target="#add-item-container">
-                                    <div class="d-flex justify-content-between align-items-center">
+                                <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-item-container">
+                                    <div class="c-title-container">
                                         <!-- title -->
                                         <span class="lead">Add Item</span>
                                         <!-- icon -->

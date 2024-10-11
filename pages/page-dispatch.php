@@ -22,9 +22,9 @@
     <?php include_once PATH . 'configs/config-script.php'; ?>
 </head>
 <body>
-    <header></header>
     <main>
         <div class="container-fluid vh-100 scrollbar-hidden">
+            <!-- header -->
             <?php include_once PATH . 'components/comp-header.php'; ?>
             <div class="row main-content">
                 <!-- sidebar -->
@@ -32,7 +32,6 @@
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container">
-
                         <div class="row mt-3 g-3">
                             <div class="col-12">
                                 <div class="border rounded-5 text-center p-2 shadow">
