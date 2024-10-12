@@ -467,6 +467,7 @@ $(document).ready(function(){
             success: function(response) {
                 console.log(`Unit type for the first item: ${orderItems[0]['unit_type_id']}`);
                 console.log(response);
+                alert('Order created successfully.');
             },
             error: function() {
                 alert('An error occurred. Please try again.');
