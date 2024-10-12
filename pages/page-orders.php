@@ -41,7 +41,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 collapse order-create">
                                 <div class="container p-0 border rounded">
                                     <div class="c-section-header">
                                         <div class="c-title-container">
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-6 collapse order-create">
                                 <div class="container p-0 border rounded">
                                     <div class="c-section-header">
                                         <div class="c-title-container">
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-12 collapse order-create">
                                 <div class="border rounded table-responsive bg-primary">
                                     <table class="table align-middle" id="order-items-table">
                                         <thead class="table-primary">
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-12 collapse order-create">
                                 <div class="p-3 border rounded d-flex justify-content-between">
                                     <div class="">
                                         <button class="btn btn-outline fw-light" id="order-items-total_qty">Total Quantity: <span>00</span></button>

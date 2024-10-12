@@ -712,8 +712,7 @@
         
         $unitData = [
             'truck_number' => $unitData['truck_number'],
-            'truck_type_id' => $unitData['truck_type_id'],
-            'status' => $unitData['status'],
+            'truck_type_id' => $unitData['truck_type_id']
         ];
 
         $result = dbAddRecord('trucks', $unitData);
@@ -902,7 +901,7 @@
         $query = "
             SELECT t.id, t.truck_number, t.truck_type_id, t.status, t.created_at, t.updated_at, tt.type_name AS truck_type
             FROM trucks t
-            LEFT JOIN truck_types tt ON t.truck_type_id = tt.id";  // Assuming truck_types table for types
+            LEFT JOIN truck_types tt ON t.truck_type_id = tt.id";
     
         $result = $conn->query($query);
     
