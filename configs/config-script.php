@@ -897,7 +897,7 @@ $(document).ready(function(){
 
                     response.items.forEach(function(item) {
                         var itemHtml = `
-                            <li class="list-group-item d-flex justify-content-between">
+                            <li class="list-group-item list-group-item-action d-flex justify-content-between">
                                 ${item.status === 'pending' ? 
                                     '<input class="form-check-input" type="radio" name="orderListViewRadio" value="' + item.order_item_id + 
                                     '" data-order-id="' + response.order.id + 

@@ -29,16 +29,16 @@
             $stmt->close();
         ?>
 
-        <li class="list-group-item list-group-item-action text-center order" data-order-id="<?= $order['id'] ?>">
+        <li class="order" data-order-id="<?= $order['id'] ?>">
             <div class="d-flex">
-                <div class="d-flex w-50">
+                <div class="section">
                     <small class="text-body-secondary"><?= sprintf('%04d', $order['id']) ?></small>
                     <div class="mx-2 text-nowrap overflow-x-auto">
-                        <h6 class=""><?= $order['name'] ?></h6>
+                        <span class="fw-bold"><?= $order['name'] ?></span>
                     </div>
                 </div>
 
-                <div class="w-50 d-flex justify-content-between">
+                <div class="section">
                     <small id="order-list-pending-date"><?= date("m/d/y", strtotime($order['created_at'])) ?></small>
                     <div>
                         <span class="badge text-bg-secondary"><?= $pendingCount ?></span> <!-- Pending -->

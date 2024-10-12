@@ -53,6 +53,27 @@
 
 }
 
+#order-list-pending {
+    
+    .order {
+        
+        @extend .list-group-item;
+        @extend .list-group-item-action;
+        @extend .text-center;
+
+        .section {
+
+            @extend .d-flex;
+            @extend .w-50;
+            @extend .justify-content-between;
+            @extend .align-items-center;
+            
+        }
+
+    }
+    
+}
+
 @media print {
     
     body {
