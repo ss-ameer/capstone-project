@@ -1218,6 +1218,8 @@ $(document).ready(function(){
                     </td>
                 </tr>`;
 
+            $('#dispatch-form')[0].reset();
+
             return table_data;
         };
 
