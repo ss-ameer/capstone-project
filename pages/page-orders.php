@@ -95,7 +95,7 @@
 
                             <div class="col-12 collapse order-create">
                                 <div class="p-3 border rounded d-flex justify-content-between">
-                                    <div class="">
+                                    <div>
                                         <button class="btn btn-outline fw-light" id="order-items-total_qty">Total Quantity: <span>00</span></button>
                                         <button class="btn btn-outline fw-light" id="order-items-total_price">Total Price: <span>00.00</span></button>
                                     </div>
