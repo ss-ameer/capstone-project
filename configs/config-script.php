@@ -1231,7 +1231,7 @@ $(document).ready(function(){
                 action: 'update dispatch table'
             },
             success: function(response) { 
-                $('.dispatch-table-container tbody').empty();
+                $('.dispatch-table tbody').empty();
                 
                 let action_data = {
                     in_queue: {
@@ -1320,14 +1320,14 @@ $(document).ready(function(){
                         buttonCount++;
                     }
 
-                    let divClass = buttonCount === 2 ? 'd-flex gap-1' : 'd-flex justify-content-center';
+                    let divClass = buttonCount === 2 ? 'd-flex gap-1 justify-content-center' : 'd-flex justify-content-center';
 
                     let buttonGroup = `<div class="${divClass}">${buttons}</div>`;
 
                     actions[status] = buttonGroup;
                 });
                 
-                const statuses = ['in-queue', 'in-transit', 'successful', 'failed'];
+                const statuses = Object.keys(response); 
 
                 $.each(statuses, function(_, status) {
                     $.each(response[status], function(index, dispatch) {
@@ -1336,6 +1336,20 @@ $(document).ready(function(){
                         console.log(tableClass);
                     });
                 });
+
+                // $('.action-button').on('click', function() {
+                //     let actionStatus = $(this).data('action-status');
+                //     if (actionStatus === 'in-transit') {
+                //         // alert('Dispatch is now going to "in-transit". This is a placeholder for a modal.');
+                //         let dispatchRow = $(this).closest('tr').data();
+                    
+                //         // Populate the modal with data from the dispatch
+                //         populateDispatchModal(dispatchRow);
+
+                //         // Show the modal
+                //         $('#dispatchModal').modal('show');
+                //     }
+                // });
 
                 console.log(response);
             },
@@ -1351,6 +1365,18 @@ $(document).ready(function(){
         });
     }
 
+    function populateDispatchModal (data) {
+        $('#modal-order-id').text(data.order_id);
+        $('#modal-item-name').text(data.item_name);
+        $('#modal-item-total').text(data.item_total);
+        $('#modal-driver-name').text(data.driver_name);
+        $('#modal-truck-number').text(data.truck_number);
+        $('#modal-officer-name').text(data.officer_name);
+        $('#modal-status').text(data.status);
+        $('#modal-dispatch-date').text(data.dispatch_date);
+        $('#modal-dispatch-time').text(data.dispatch_time);
+    }
+
     $(document).on('click', '.dispatch-table .action-button', function() {
         var dispatch_id = $(this).closest('tr').data('dispatch-id');
         var action_status = $(this).data('action-status');
@@ -1358,44 +1384,140 @@ $(document).ready(function(){
         var driver_id = $(this).closest('tr').data('driver-id');
         var truck_id = $(this).closest('tr').data('truck-id');
 
-        // console.log('order id: ' + order_id);
+        var data = {
+            order_id: order_id,
+            driver_name: '',
+            truck_number: '',
+            officer_name: '',
+            dispatch_date: '',
+            dispatch_time: '',
+            dispatch_id: ''
+        };
 
-        $.ajax({
-            url: config_function_url,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'update dispatch status',
-                dispatch_id: dispatch_id,
-                new_status: action_status,
-                drive_id: driver_id,
-                truck_id: truck_id
-            },
-            success: function(response) {
-                console.log(response);
+        if (action_status === 'in-transit') {
+            // // Populate the modal with order and dispatch details
+            // $('#modal-order-id').text(order_id);
+            // $('#modal-driver-name').text($(this).closest('tr').data('driver-name'));
+            // $('#modal-truck-number').text($(this).closest('tr').data('truck-number'));
+            // $('#modal-officer-name').text($(this).closest('tr').data('officer-name'));
+            // $('#modal-status').text($(this).closest('tr').data('status'));
+            // $('#modal-dispatch-date').text($(this).closest('tr').data('dispatch-date'));
+            // $('#modal-dispatch-time').text($(this).closest('tr').data('dispatch-time'));
+            // // Any other details can be populated similarly
 
-                if (response.success) {
-                    alert('Dispatch status updated successfully.');
-                    updateDispatchOrderItems(order_id); 
-                    updateDispatchPendingOrders();
-                    updateDispatchTables();
-                } else {
-                    alert('Failed to update dispatch status.');
+            populateDispatchModal(data);
+
+            // Show the modal
+            $('#dispatchModal').modal('show');
+
+            // Add a listener for the modal's confirm button
+            $('#confirmInTransit').off('click').on('click', function() {
+                // Perform the AJAX request to update the dispatch status when the user confirms
+                $.ajax({
+                    url: config_function_url,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        action: 'update dispatch status',
+                        dispatch_id: dispatch_id,
+                        new_status: action_status,
+                        driver_id: driver_id,
+                        truck_id: truck_id
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Dispatch status updated to "in-transit" successfully.');
+                            updateDispatchOrderItems(order_id); 
+                            updateDispatchPendingOrders();
+                            updateDispatchTables();
+                        } else {
+                            alert('Failed to update dispatch status.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating dispatch status:", error);
+                        alert('An error occurred while updating the dispatch status.');
+                    }
+                });
+
+                // Hide the modal after confirming
+                $('#dispatchModal').modal('hide');
+            });
+        } else {
+            // For other statuses, perform the status update without showing the modal
+            $.ajax({
+                url: config_function_url,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    action: 'update dispatch status',
+                    dispatch_id: dispatch_id,
+                    new_status: action_status,
+                    driver_id: driver_id,
+                    truck_id: truck_id
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Dispatch status updated successfully.');
+                        updateDispatchOrderItems(order_id); 
+                        updateDispatchPendingOrders();
+                        updateDispatchTables();
+                    } else {
+                        alert('Failed to update dispatch status.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error updating dispatch status:", error);
+                    alert('An error occurred while updating the dispatch status.');
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error updating dispatch status:", error);
-                alert('An error occurred while updating the dispatch status.');
-
-                console.error("Status: ", status); 
-                console.error("Error Thrown: ", error); 
-                console.error("Response Text: ", xhr.responseText); 
-                console.error("Status Code: ", xhr.status); 
-            }
-        });
+            });
+        }
     });
 
 
+    // $(document).on('click', '.dispatch-table .action-button', function() {
+    //     var dispatch_id = $(this).closest('tr').data('dispatch-id');
+    //     var action_status = $(this).data('action-status');
+    //     var order_id = $(this).closest('tr').data('order-id');
+    //     var driver_id = $(this).closest('tr').data('driver-id');
+    //     var truck_id = $(this).closest('tr').data('truck-id');
+
+    //     // console.log('order id: ' + order_id);
+
+    //     $.ajax({
+    //         url: config_function_url,
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {
+    //             action: 'update dispatch status',
+    //             dispatch_id: dispatch_id,
+    //             new_status: action_status,
+    //             drive_id: driver_id,
+    //             truck_id: truck_id
+    //         },
+    //         success: function(response) {
+    //             console.log(response);
+
+    //             if (response.success) {
+    //                 alert('Dispatch status updated successfully.');
+    //                 updateDispatchOrderItems(order_id); 
+    //                 updateDispatchPendingOrders();
+    //                 updateDispatchTables();
+    //             } else {
+    //                 alert('Failed to update dispatch status.');
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error("Error updating dispatch status:", error);
+    //             alert('An error occurred while updating the dispatch status.');
+
+    //             console.error("Status: ", status); 
+    //             console.error("Error Thrown: ", error); 
+    //             console.error("Response Text: ", xhr.responseText); 
+    //             console.error("Status Code: ", xhr.status); 
+    //         }
+    //     });
+    // });
 
     updateDispatchTables();
     
