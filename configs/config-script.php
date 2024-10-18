@@ -64,7 +64,6 @@ $(document).ready(function(){
             success: function(response) {
                 console.log(response);
                 if (response == 'success') {
-
                     // $('#master-stock-preview').reload();
                     // location.reload();
                 }
@@ -83,10 +82,6 @@ $(document).ready(function(){
             data: data,
             success: function(response) {
                 console.log(response);
-                // if (response.startsWith('success:')) {
-                //     var stock = JSON.parse(response.slice(8));
-                //     $('#stock-preview').html(stockTable(stock));
-                // }
             }
         })
     }
@@ -157,6 +152,8 @@ $(document).ready(function(){
             }
         })
     }
+
+    
 
 // account functions
     function selectAccount(id) {
@@ -247,7 +244,7 @@ $(document).ready(function(){
             success: function(response) {
                 console.log("Success" + response);
                 $('#feedback').html(response);
-                goToIndex(); // Redirect to the login page
+                goToIndex(); 
             }
         })
     }
@@ -595,47 +592,6 @@ $(document).ready(function(){
         updateOrderTable($row);
     });
 
-    // function updateOrderTable($row) {
-    //     if(!$row) {
-    //         $('#order-items-table tbody tr').each(function() {
-    //             var $thisRow = $(this);
-    //             var qty = parseInt($thisRow.find('.item-qty').val());
-    //             var price = parseFloat($thisRow.find('.item-price').text());
-    //             var density = parseFloat($thisRow.find('.item-density').text());
-
-    //             var selectedOption = $thisRow.find('.item-unit option:selected');
-    //             var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
-                
-    //             console.log('Selected Unit Capacity:', unitCapacity);
-
-    //             var volume = unitCapacity / density;
-    //             var total = qty * volume * price;
-
-    //             console.log('Volume: ' + volume);
-    //             console.log('Total: ' + total);
-
-    //             $thisRow.find('.item-total').text(total.toFixed(2));
-    //         });
-    //     } else {
-    //         var qty = parseInt($row.find('.item-qty').val());
-    //         var price = parseFloat($row.find('.item-price').text());
-    //         var density = parseFloat($row.find('.item-density').text());
-
-    //         var selectedOption = $row.find('.item-unit option:selected');
-    //         var unitCapacity = parseInt(selectedOption.data('unit-capacity'));
-            
-    //         console.log('Selected Unit Capacity:', unitCapacity);
-
-    //         var volume = unitCapacity / density;
-    //         var total = qty * volume * price;
-            
-    //         console.log('Volume: ' + volume);
-    //             console.log('Total: ' + total);
-    //         $row.find('.item-total').text(total.toFixed(2));
-    //     }
-    //     calculateOrderSummary();
-    // }
-
     function updateOrderTable($row = null) {
         var $rows = $row ? $row : $('#order-items-table tbody tr');
 
@@ -910,7 +866,8 @@ $(document).ready(function(){
                                     '" data-type-id="' + item.truck_type_id + 
                                     '" data-order-item-id="' + item.id + 
                                     '" data-item-name="' + item.item_name + 
-                                    '" data-item-total="' + item.item_total + '">' 
+                                    '" data-item-total="' + item.item_total + 
+                                    '" data-item-price="' + item.item_price + '>' 
                                     : ''}
                                 <div class="w-50 d-flex justify-content-between">
                                     <span>${item.item_name}</span>
@@ -1136,7 +1093,8 @@ $(document).ready(function(){
                                     '" data-type-id="' + item.truck_type_id + 
                                     '" data-order-item-id="' + item.id + 
                                     '" data-item-name="' + item.item_name + 
-                                    '" data-item-total="' + item.item_total + '">' 
+                                    '" data-item-total="' + item.item_total +
+                                    '" data-item-total="' + item.truck_capacity + '">' 
                                     : ''}
                                 <div class="w-50 d-flex justify-content-between">
                                     <span>${item.item_name}</span>
@@ -1158,8 +1116,8 @@ $(document).ready(function(){
                 console.error('AJAX Request Failed');
                 console.error('Status: ' + status);
                 console.error('Error: ' + error);
-                console.error('Response Text: ' + xhr.responseText); // Log the server's response
-                console.log(xhr); // Log the full XMLHttpRequest object for debugging
+                console.error('Response Text: ' + xhr.responseText); 
+                console.log(xhr);
             }
         });
     }
@@ -1201,7 +1159,14 @@ $(document).ready(function(){
                 data-order-item-id = "${data.order_item_id}" 
                 data-status = "${data.status}"  
                 data-truck-id = "${data.truck_id}" 
-                data-updated-at = "${data.updated_at}"                 
+                data-updated-at = "${data.updated_at}"
+                data-client-name = "${data.client_name}"
+                data-dispatch-address = "${data.house_number} ${data.street} Street, ${data.barangay}, ${data.city}"  
+                data-truck-number = "${data.truck_number}"
+                data-item-price = "${data.item_price}"
+                data-truck-capacity = "${data.truck_capacity}" 
+                data-client-phone = "${data.client_phone}" 
+                data-client-email = "${data.client_email}"
             `;
             
             var table_data = `
@@ -1337,20 +1302,6 @@ $(document).ready(function(){
                     });
                 });
 
-                // $('.action-button').on('click', function() {
-                //     let actionStatus = $(this).data('action-status');
-                //     if (actionStatus === 'in-transit') {
-                //         // alert('Dispatch is now going to "in-transit". This is a placeholder for a modal.');
-                //         let dispatchRow = $(this).closest('tr').data();
-                    
-                //         // Populate the modal with data from the dispatch
-                //         populateDispatchModal(dispatchRow);
-
-                //         // Show the modal
-                //         $('#dispatchModal').modal('show');
-                //     }
-                // });
-
                 console.log(response);
             },
             error: function(xhr, status, error) {
@@ -1365,16 +1316,28 @@ $(document).ready(function(){
         });
     }
 
+    function padModalText (text) {
+        return String(' ' + text).padStart(30,' .');
+    };
+
     function populateDispatchModal (data) {
-        $('#modal-order-id').text(data.order_id);
-        $('#modal-item-name').text(data.item_name);
-        $('#modal-item-total').text(data.item_total);
-        $('#modal-driver-name').text(data.driver_name);
-        $('#modal-truck-number').text(data.truck_number);
-        $('#modal-officer-name').text(data.officer_name);
-        $('#modal-status').text(data.status);
-        $('#modal-dispatch-date').text(data.dispatch_date);
-        $('#modal-dispatch-time').text(data.dispatch_time);
+        $('#order-id').text(data.order_id);
+        $('#item-name').text(data.item_name);
+        $('#item-total').text(data.item_total);
+        $('#driver-name').text(data.driver_name);
+        $('#truck-number').text(data.truck_number);
+        $('#officer-name').text(data.officer_name);
+        $('#status').text(data.status);
+        $('#dispatch-date').text(data.dispatch_date);
+        $('#dispatch-time').text(data.dispatch_time);
+        $('#client-name').text(data.client_name);
+        $('#dispatch-address').text(data.dispatch_address);
+        $('#item-price').text(data.item_price);
+        $('#truck-capacity').text(data.truck_capacity);
+        $('#client-phone').text(data.client_phone);
+        $('#client-email').text(data.client_email);
+        $('#dispatch-date').text(data.updated_at);
+        $('#order-date').text(data.created_at);
     }
 
     $(document).on('click', '.dispatch-table .action-button', function() {
@@ -1383,36 +1346,69 @@ $(document).ready(function(){
         var order_id = $(this).closest('tr').data('order-id');
         var driver_id = $(this).closest('tr').data('driver-id');
         var truck_id = $(this).closest('tr').data('truck-id');
+        var driver_name = $(this).closest('tr').data('driver-name');
+        var truck_number = $(this).closest('tr').data('truck-number');
+        var officer_name = $(this).closest('tr').data('officer-name');
+        var dispatch_date = $(this).closest('tr').data('dispatch-date');
+        var dispatch_time = $(this).closest('tr').data('dispatch-time');
+        var client_name = $(this).closest('tr').data('client-name');
+        var dispatch_address = $(this).closest('tr').data('dispatch-address');
+        var item_total = $(this).closest('tr').data('item-total');
+        var item_price = $(this).closest('tr').data('item-price');
+        var truck_capacity = $(this).closest('tr').data('truck-capacity');
+        var item_name = $(this).closest('tr').data('item-name');
+        var client_phone = $(this).closest('tr').data('client-phone');
+        var client_email = $(this).closest('tr').data('client-email');
+        var updated_at = $(this).closest('tr').data('updated-at');
+        var created_at = $(this).closest('tr').data('created-at');
 
         var data = {
             order_id: order_id,
-            driver_name: '',
-            truck_number: '',
-            officer_name: '',
-            dispatch_date: '',
-            dispatch_time: '',
-            dispatch_id: ''
+            driver_name: driver_name,
+            truck_number: truck_number,
+            officer_name: officer_name,
+            dispatch_date: dispatch_date,
+            dispatch_time: dispatch_time,
+            dispatch_id: dispatch_id,
+            client_name: client_name,
+            dispatch_address: dispatch_address,
+            item_total: item_total,
+            item_price: item_price,
+            truck_capacity: truck_capacity,
+            item_name: item_name,
+            client_email: client_email,
+            client_phone: client_phone,
+            updated_at: updated_at,
+            created_at: created_at
         };
 
+        // var data_att = `
+        //         data-created-at = "${data.created_at}" 
+        //         data-dispatch-date = "${data.dispatch_date}" 
+        //         data-dispatch-time = "${data.dispatch_time}" 
+        //         data-driver-id = "${data.driver_id}" 
+        //         data-driver-name = "${data.driver_name}" 
+        //         data-dispatch-id = "${data.id}" 
+        //         data-item-id = "${data.item_id}" 
+        //         data-item-name = "${data.item_name}"
+        //         data-item-total = "${data.item_total}" 
+        //         data-officer-id = "${data.officer_id}" 
+        //         data-officer-name = "${data.officer_name}" 
+        //         data-order-id = "${data.order_id}" 
+        //         data-order-item-id = "${data.order_item_id}" 
+        //         data-status = "${data.status}"  
+        //         data-truck-id = "${data.truck_id}" 
+        //         data-updated-at = "${data.updated_at}"                 
+        //     `;
+
         if (action_status === 'in-transit') {
-            // // Populate the modal with order and dispatch details
-            // $('#modal-order-id').text(order_id);
-            // $('#modal-driver-name').text($(this).closest('tr').data('driver-name'));
-            // $('#modal-truck-number').text($(this).closest('tr').data('truck-number'));
-            // $('#modal-officer-name').text($(this).closest('tr').data('officer-name'));
-            // $('#modal-status').text($(this).closest('tr').data('status'));
-            // $('#modal-dispatch-date').text($(this).closest('tr').data('dispatch-date'));
-            // $('#modal-dispatch-time').text($(this).closest('tr').data('dispatch-time'));
-            // // Any other details can be populated similarly
 
             populateDispatchModal(data);
 
             // Show the modal
-            $('#dispatchModal').modal('show');
+            $('#dispatch-modal').modal('show');
 
-            // Add a listener for the modal's confirm button
-            $('#confirmInTransit').off('click').on('click', function() {
-                // Perform the AJAX request to update the dispatch status when the user confirms
+            $('#confirm-in-transit').off('click').on('click', function() {
                 $.ajax({
                     url: config_function_url,
                     type: 'POST',
@@ -1441,7 +1437,7 @@ $(document).ready(function(){
                 });
 
                 // Hide the modal after confirming
-                $('#dispatchModal').modal('hide');
+                $('#dispatch-modal').modal('hide');
             });
         } else {
             // For other statuses, perform the status update without showing the modal
@@ -1474,50 +1470,44 @@ $(document).ready(function(){
         }
     });
 
+    $('#print-dispatch-slip').on('click', function() {
+        var printContents = document.querySelector('#dispatch-modal .modal-body').innerHTML;
+        var originalContents = document.body.innerHTML;
 
-    // $(document).on('click', '.dispatch-table .action-button', function() {
-    //     var dispatch_id = $(this).closest('tr').data('dispatch-id');
-    //     var action_status = $(this).data('action-status');
-    //     var order_id = $(this).closest('tr').data('order-id');
-    //     var driver_id = $(this).closest('tr').data('driver-id');
-    //     var truck_id = $(this).closest('tr').data('truck-id');
+        // Create a new window for printing
+        var printWindow = window.open('', '_blank', 'height=1000,width=1600');
+        printWindow.document.write('<html><head><title>Dispatch Slip</title>');
+        printWindow.document.write('<link rel="stylesheet" href="../styles/style.css">');
+        printWindow.document.write('<link href="../imports/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">');
+        printWindow.document.write(
+            `<style>
+                body { 
+                    font-family: Arial, sans-serif; margin-top: 3em; 
+                }
 
-    //     // console.log('order id: ' + order_id);
+                span {
+                    font-size: small;
+                }
+                
+                strong {
+                    font-size: small;
+                }
 
-    //     $.ajax({
-    //         url: config_function_url,
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         data: {
-    //             action: 'update dispatch status',
-    //             dispatch_id: dispatch_id,
-    //             new_status: action_status,
-    //             drive_id: driver_id,
-    //             truck_id: truck_id
-    //         },
-    //         success: function(response) {
-    //             console.log(response);
+                .fine-print {
+                    font-size: x-small;
+                    color: lightblue;
+                }
+            </style>`);
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        
+        printWindow.focus();
+        printWindow.document.close();
 
-    //             if (response.success) {
-    //                 alert('Dispatch status updated successfully.');
-    //                 updateDispatchOrderItems(order_id); 
-    //                 updateDispatchPendingOrders();
-    //                 updateDispatchTables();
-    //             } else {
-    //                 alert('Failed to update dispatch status.');
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error("Error updating dispatch status:", error);
-    //             alert('An error occurred while updating the dispatch status.');
-
-    //             console.error("Status: ", status); 
-    //             console.error("Error Thrown: ", error); 
-    //             console.error("Response Text: ", xhr.responseText); 
-    //             console.error("Status Code: ", xhr.status); 
-    //         }
-    //     });
-    // });
+        printWindow.print();
+        printWindow.close();
+    });
 
     updateDispatchTables();
     

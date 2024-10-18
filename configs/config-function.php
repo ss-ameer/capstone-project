@@ -354,7 +354,6 @@
             $officers[] = $row;
         }
 
-        // session_start();
         $_SESSION['officers'] = $officers;
 
     }
@@ -876,24 +875,6 @@
         return []; 
     }
 
-    // function getUnits() {
-    //     global $conn;
-
-    //     $query = "SELECT id, truck_number, truck_type_id, status FROM trucks";
-    //     $result = $conn->query($query);
-
-    //     if ($result->num_rows > 0) {
-    //         $trucks = [];
-    //         while ($row = $result->fetch_assoc()) {
-    //             $trucks[] = $row; 
-    //         }
-    //         return $trucks; 
-    //     }
-
-    //     return [];
-
-    // }
-
     function getUnits() {
         global $conn;
     
@@ -1047,30 +1028,50 @@
     function getDispatchRecords() {
         global $conn;
     
-        $query = "SELECT d.*, 
-                t.truck_number, 
-                dr.id AS driver_id, 
-                dr.name AS driver_name, 
-                do.id AS officer_id, 
-                do.name AS officer_name, 
-                oi.item_id, 
-                oi.item_total,
-                i.item_name,
-                o.id AS order_id
-                FROM dispatch d
-                JOIN trucks t ON d.truck_id = t.id
-                JOIN drivers dr ON d.driver_id = dr.id
-                JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
-                JOIN order_items oi ON d.order_item_id = oi.id
-                JOIN items i ON oi.item_id = i.item_id
-                JOIN orders o ON oi.order_id = o.id 
-                ORDER BY d.created_at DESC";
+        $query = "SELECT 
+            d.*, 
+            t.truck_number, 
+            tt.capacity AS truck_capacity, 
+            dr.id AS driver_id, 
+            dr.name AS driver_name, 
+            do.id AS officer_id, 
+            do.name AS officer_name, 
+            oi.item_id, 
+            oi.item_total,
+            i.item_name,
+            i.price AS item_price,
+            o.id AS order_id,
+            c.name AS client_name,
+            a.city, 
+            a.barangay, 
+            a.street, 
+            a.house_number,
+            contact_info.phone AS client_phone, 
+            contact_info.email AS client_email
+        FROM dispatch d
+        JOIN trucks t ON d.truck_id = t.id
+        JOIN truck_types tt ON t.truck_type_id = tt.id  
+        JOIN drivers dr ON d.driver_id = dr.id
+        JOIN dispatch_officers do ON d.dispatch_officer_id = do.id
+        JOIN order_items oi ON d.order_item_id = oi.id
+        JOIN items i ON oi.item_id = i.item_id
+        JOIN orders o ON oi.order_id = o.id 
+        JOIN clients c ON o.client_id = c.client_id  
+        JOIN addresses a ON o.address_id = a.address_id 
+        -- Subquery to get the latest phone and email for each client
+        LEFT JOIN (
+            SELECT client_id,
+                MAX(CASE WHEN contact_type = 'phone' THEN contact_value END) AS phone,
+                MAX(CASE WHEN contact_type = 'email' THEN contact_value END) AS email
+            FROM contacts
+            GROUP BY client_id
+        ) AS contact_info ON c.client_id = contact_info.client_id
+        ORDER BY d.created_at DESC;";
         
         $stmt = $conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
     
-        // Initialize arrays for status groups
         $dispatches = [
             'in-queue' => [],
             'in-transit' => [],
@@ -1090,7 +1091,6 @@
     
         return $dispatches;
     }
-    
 
     function updateDispatchStatus($dispatch_id, $new_status) {
         $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW() WHERE id = ?";
@@ -1204,4 +1204,8 @@
     
         return $status;
     }
+
+    function modalTitle($title) {
+        echo str_pad($title, 30, ' .');
+    };
     

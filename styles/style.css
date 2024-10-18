@@ -7582,7 +7582,7 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex, #order-list-pending .order .section, .c-section-header .c-title-container {
+.d-flex, #order-list-pending .order .section, .c-section-header .c-title-container, .c-flex-between {
   display: flex !important;
 }
 
@@ -8008,7 +8008,7 @@ textarea.form-control-lg {
   justify-content: center !important;
 }
 
-.justify-content-between, #order-list-pending .order .section {
+.justify-content-between, #order-list-pending .order .section, .c-flex-between {
   justify-content: space-between !important;
 }
 
@@ -12273,49 +12273,13 @@ textarea.form-control-lg {
   height: 90%;
 }
 
-@media print {
-  body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #orderPreviewModal {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: none;
-    background-color: white;
-  }
-  #orderPreviewMain {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  #orderPreviewMain h6 {
-    font-size: 1.5em;
-    margin-bottom: 0.5em;
-  }
-  #orderPreviewMain p {
-    margin: 0.5em 0;
-  }
-  #orderPreviewMain table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  #orderPreviewMain table th, #orderPreviewMain table td {
-    border: 1px solid #000;
-    padding: 0.5em;
-  }
-  #orderPreviewMain table th {
-    background-color: #f2f2f2;
-  }
-  .modal-footer, .modal-header {
-    display: none;
-  }
-  /* Hide scrollbar for Chrome, Safari and Opera */
+#dispatch-modal span {
+  font-size: small;
+}
+#dispatch-modal strong {
+  font-size: small;
+}
+#dispatch-modal .fine-print {
+  font-size: x-small;
+  color: lightblue;
 }/*# sourceMappingURL=style.css.map */

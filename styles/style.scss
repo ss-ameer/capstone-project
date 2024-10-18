@@ -8,6 +8,11 @@
 }
 
 // group classes
+.c-flex-between {
+    @extend .d-flex;
+    @extend .justify-content-between;
+}
+
 .c-main-content {
     height: 90%;
 }
@@ -74,71 +79,85 @@
     
 }
 
-@media print {
+#dispatch-modal {
+    span {
+        font-size: small;
+    }
     
-    body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
+    strong {
+        font-size: small;
     }
 
-    #orderPreviewModal {
-        // Set the modal width to 100% of the page for printing
-        width: 100% !important;
-        height: 100% !important; // Allow the height to auto-adjust based on content
-        max-width: none; // Remove the default max-width
-        background-color: white;
+    .fine-print {
+        font-size: x-small;
+        color: lightblue;
     }
-
-    #orderPreviewMain {
-        width: 100%;
-        height: auto; // Allow for dynamic height
-        overflow: visible; 
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        h6 {
-            font-size: 1.5em;
-            margin-bottom: 0.5em;
-        }
-
-        p {
-            margin: 0.5em 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-
-            th, td {
-                border: 1px solid #000;
-                padding: 0.5em;
-            }
-
-            th {
-                background-color: #f2f2f2;
-            }
-        }
-    }
-
-    .modal-footer, .modal-header {
-        display: none;
-    }
-
-    // .scrollbar-disabled {
-    //     scrollbar-width: none; /* Firefox */
-    //     -ms-overflow-style: none;  /* IE 10+ */
-
-    //     &::-webkit-scrollbar {
-    //         background: transparent; /* Chrome/Safari/Webkit */
-    //         width: 0px;
-    //     }
-    // }
-
-    /* Hide scrollbar for Chrome, Safari and Opera */
-
 }
+// @media print {
+    
+//     body {
+//         margin: 0;
+//         padding: 0;
+//         width: 100%;
+//         height: 100%;
+//     }
+
+//     #orderPreviewModal {
+//         // Set the modal width to 100% of the page for printing
+//         width: 100% !important;
+//         height: 100% !important; // Allow the height to auto-adjust based on content
+//         max-width: none; // Remove the default max-width
+//         background-color: white;
+//     }
+
+//     #orderPreviewMain {
+//         width: 100%;
+//         height: auto; // Allow for dynamic height
+//         overflow: visible; 
+//         background-color: white;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         align-items: center;
+
+//         h6 {
+//             font-size: 1.5em;
+//             margin-bottom: 0.5em;
+//         }
+
+//         p {
+//             margin: 0.5em 0;
+//         }
+
+//         table {
+//             width: 100%;
+//             border-collapse: collapse;
+
+//             th, td {
+//                 border: 1px solid #000;
+//                 padding: 0.5em;
+//             }
+
+//             th {
+//                 background-color: #f2f2f2;
+//             }
+//         }
+//     }
+
+//     .modal-footer, .modal-header {
+//         display: none;
+//     }
+
+//     // .scrollbar-disabled {
+//     //     scrollbar-width: none; /* Firefox */
+//     //     -ms-overflow-style: none;  /* IE 10+ */
+
+//     //     &::-webkit-scrollbar {
+//     //         background: transparent; /* Chrome/Safari/Webkit */
+//     //         width: 0px;
+//     //     }
+//     // }
+
+//     /* Hide scrollbar for Chrome, Safari and Opera */
+
+// }
