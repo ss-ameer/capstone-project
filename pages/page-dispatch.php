@@ -147,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <div class="col">
+                            <div class="col-12">
                                 <div class="container-fluid border p-0 rounded dispatch-table-container bg-success">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-success">
@@ -163,7 +163,7 @@
                                 </div>
                             </div>
 
-                            <div class="col">
+                            <div class="col-12">
                                 <div class="container-fluid border p-0 rounded dispatch-table-container bg-dark">
                                     <!-- header -->
                                     <div class="sticky-top p-3 border-bottom rounded-top bg-dark">

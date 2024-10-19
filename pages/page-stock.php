@@ -39,9 +39,9 @@
                             </div>
                         </div>
 
-                        <div class="col-12 collapse items-table">
-                            <div class="container p-0 border rounded">
-                                <table class="table table-hover align-middle table-bordered" id="table-stocks">
+                        <div class="col-12 items-table">
+                            <div class="c-table-container">
+                                <table class="table-bordered" id="table-stocks">
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>
@@ -52,16 +52,16 @@
                                             <th scope="col">Description</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="table-group-divider">
+                                    <tbody>
                                         <?php getItems(); ?>
                                         <?php foreach ($_SESSION['items'] as $item) : ?>
                                         
                                         <tr class="item" data-id_item="<?= $item['item_id'] ?>">
-                                            <td><?= $item['item_id'] ?></td>
+                                            <td><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
                                             <td><?= $item['item_name'] ?></td>
                                             <td><?= $item['category'] ?></td>
-                                            <td><?= $item['density'] ?></td>
-                                            <td><?= $item['price'] ?></td>
+                                            <td class="text-center"><?= $item['density'] ?></td>
+                                            <td class="text-center"><?= $item['price'] ?></td>
                                             <td><?= $item['description'] ?></td>
                                         </tr>
 

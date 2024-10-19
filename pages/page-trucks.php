@@ -41,16 +41,16 @@
                                 </div>
                             </div>
                             
-                            <div class="col-12 collapse" id="units-table">
-                                <div class="container p-0 border rounded">
-                                    <div class="c-section-header">
+                            <div class="col-12" id="units-table">
+                                <div class="c-table-container">
+                                    <!-- <div class="c-section-header">
                                         <div class="c-title-container">
                                             <span class="lead">Units Table</span>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="">
-                                        <table class="table table-striped table-hover">
+                                    <div>
+                                        <table>
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -61,7 +61,7 @@
                                                     <th>Updated</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="table-group-divider">
+                                            <tbody>
                                                 <?php foreach($trucks as $truck): ?>
                                                     <tr>
                                                     <td><?php echo str_pad($truck['id'], 4, '0', STR_PAD_LEFT); ?></td>

@@ -39,7 +39,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 collapse drivers-table">
+                        <div class="col-12 drivers-table">
                             <div class="container p-0 border rounded">
                                 <table class="table table-hover align-middle table-bordered" id="table-drivers">
                                     <thead>

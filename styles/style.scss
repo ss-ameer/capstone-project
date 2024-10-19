@@ -39,6 +39,27 @@
     }
 }
 
+.c-table-container {
+    @extend .border;
+    @extend .rounded;
+    @extend .table-responsive;
+
+    table {
+        @extend .table;
+        @extend .table-hover;
+        @extend .table-bordered;
+        @extend .align-middle;
+
+        // th {
+        //     @extend .text-center;
+        // }
+
+        tbody {
+            @extend .table-group-divider;
+        }
+    }
+}
+
 #dispatch-form-details {
 
     span:not(.fw-bold) {
