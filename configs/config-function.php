@@ -925,6 +925,18 @@
             $update_query = "UPDATE order_items SET status = ? WHERE id = ?";
             
             if (dbExecuteQuery($update_query, 'in-queue', $order_item_id)) {
+
+                // logging event
+                $logData = [
+                    'entity_type' => 'dispatch',
+                    'entity_id' => $order_item_id,
+                    'event_type' => 'create',
+                    'event_description' => "Dispatch record created for Order: $order_item_id",
+                    'user_id' => $officer_id
+                ];
+
+                logEvent($logData);
+
                 $success = true;
             }
         }
