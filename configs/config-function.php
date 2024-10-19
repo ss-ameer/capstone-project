@@ -1209,3 +1209,31 @@
         echo str_pad($title, 30, ' .');
     };
     
+    function logEvent($logData) {
+        global $conn;
+        $stmt = $conn->prepare("INSERT INTO logs (entity_type, entity_id, event_type, event_description, user_id) VALUES (?, ?, ?, ?, ?)");
+
+        $stmt->bind_param(
+                            "sisss", 
+                            $logData['entity_type'], 
+                            $logData['entity_id'], 
+                            $logData['event_type'], 
+                            $logData['event_description'], 
+                            $logData['user_id']);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    function getLogs() {
+        global $conn;
+        $query = "SELECT * FROM logs";
+        $result = $conn->query($query);
+        
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            return []; 
+        }
+    }
+    
+    

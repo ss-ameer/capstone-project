@@ -282,8 +282,8 @@ $(document).ready(function(){
         'side-orders',
         'side-dispatch',
         'side-trucks',
-        'side-drivers'
-
+        'side-drivers',
+        'side-logs'
     ]);
 
     // officers table
@@ -1183,7 +1183,7 @@ $(document).ready(function(){
                     </td>
                 </tr>`;
 
-            $('#dispatch-form')[0].reset();
+            // $('#dispatch-form')[0].reset();
 
             return table_data;
         };

@@ -38,6 +38,12 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link text-reset" href="#" id="side-logs">
+                <i class="bi bi-star"></i> <span class="ms-3">Logs</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-master">
                 <i class="bi bi-star"></i> <span class="ms-3">Master</span>
             </a>

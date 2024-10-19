@@ -38,6 +38,10 @@
                     header('Location: pages/page-drivers.php');
                     break;
 
+                case 'logs':
+                    header('Location: pages/page-logs.php');
+                    break;
+
                 default:
                     break;
             }
