@@ -87,7 +87,7 @@
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="">
+                                        <tbody>
                                         </tbody>
                                     </table>
                                 </div>
