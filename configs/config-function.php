@@ -931,7 +931,7 @@
                     'entity_type' => 'dispatch',
                     'entity_id' => $order_item_id,
                     'event_type' => 'create',
-                    'event_description' => "Dispatch record created for Order: $order_item_id",
+                    'event_description' => "Dispatch record created for Order $order_item_id.",
                     'user_id' => $officer_id
                 ];
 
