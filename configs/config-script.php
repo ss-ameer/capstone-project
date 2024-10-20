@@ -1382,25 +1382,6 @@ $(document).ready(function(){
             created_at: created_at
         };
 
-        // var data_att = `
-        //         data-created-at = "${data.created_at}" 
-        //         data-dispatch-date = "${data.dispatch_date}" 
-        //         data-dispatch-time = "${data.dispatch_time}" 
-        //         data-driver-id = "${data.driver_id}" 
-        //         data-driver-name = "${data.driver_name}" 
-        //         data-dispatch-id = "${data.id}" 
-        //         data-item-id = "${data.item_id}" 
-        //         data-item-name = "${data.item_name}"
-        //         data-item-total = "${data.item_total}" 
-        //         data-officer-id = "${data.officer_id}" 
-        //         data-officer-name = "${data.officer_name}" 
-        //         data-order-id = "${data.order_id}" 
-        //         data-order-item-id = "${data.order_item_id}" 
-        //         data-status = "${data.status}"  
-        //         data-truck-id = "${data.truck_id}" 
-        //         data-updated-at = "${data.updated_at}"                 
-        //     `;
-
         if (action_status === 'in-transit') {
 
             populateDispatchModal(data);
