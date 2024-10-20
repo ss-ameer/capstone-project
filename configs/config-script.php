@@ -1321,15 +1321,15 @@ $(document).ready(function(){
     };
 
     function populateDispatchModal (data) {
-        $('#order-id').text(data.order_id);
+        $('#order-id').text(String((data.order_id).padStart(4, '0')));
+        $('#dispatch-id').text(String(data.dispatch_id).padStart(4, '0'));
+        $('#dispatch-id').attr('data-dispatch-id', data.dispatch_id);
         $('#item-name').text(data.item_name);
         $('#item-total').text(data.item_total);
         $('#driver-name').text(data.driver_name);
         $('#truck-number').text(data.truck_number);
         $('#officer-name').text(data.officer_name);
         $('#status').text(data.status);
-        $('#dispatch-date').text(data.dispatch_date);
-        $('#dispatch-time').text(data.dispatch_time);
         $('#client-name').text(data.client_name);
         $('#dispatch-address').text(data.dispatch_address);
         $('#item-price').text(data.item_price);
