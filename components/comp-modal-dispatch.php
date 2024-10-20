@@ -51,11 +51,15 @@
                             <div class="container p-2 d-flex flex-column align-items-center">
                                 <div>
                                     <strong>Order : </strong>
+                                    <span id="order-id"></span>
+                                    <strong> : </strong>
                                     <span id="order-date"></span>
                                 </div>
 
                                 <div>
                                     <strong>Dispatch : </strong>
+                                    <span id="dispatch-id"></span>
+                                    <strong> : </strong>
                                     <span id="dispatch-date"></span>
                                 </div>
                             </div>
