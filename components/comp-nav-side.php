@@ -39,7 +39,7 @@
 
         <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-logs">
-                <i class="bi bi-star"></i> <span class="ms-3">Logs</span>
+                <i class="bi bi-file-earmark-text"></i> <span class="ms-3">Logs</span>
             </a>
         </li>
 
