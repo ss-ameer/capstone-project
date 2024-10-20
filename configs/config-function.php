@@ -8,6 +8,14 @@
         $officer_logged_in_name = $_SESSION['user_info']['name'];
     };
 
+    function getCurrentOfficer($return_type) {
+        if (isset($_SESSION['user_info'])) {
+            return $return_type == 'id' ? $_SESSION['user_info']['id'] : $_SESSION['user_info']['name'];
+        }
+
+        return false;
+    };
+
 // database initialization
 
     $servername = 'localhost';
@@ -1113,6 +1121,17 @@
             $order_item_id = $dispatch_data[0]['order_item_id'];
             $unit_id = $dispatch_data[0]['truck_id'];
             $driver_id = $dispatch_data[0]['driver_id'];
+
+            // Log the dispatch status change
+            $logData = [
+                'entity_type' => 'dispatch',
+                'entity_id' => $dispatch_id,
+                'event_type' => 'update',
+                'event_description' => "Status updated to $new_status.",
+                'user_id' => getCurrentOfficer('id')
+            ];
+
+            logEvent($logData);
             
             switch ($new_status) {
                 case 'in-queue':
