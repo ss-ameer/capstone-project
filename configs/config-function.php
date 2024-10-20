@@ -489,6 +489,9 @@
         mysqli_begin_transaction($conn);
 
         try {
+
+            $user_id = getCurrentOfficer('id');
+
             // client information
             $client_name = $_POST['client_name'];
             $client_number = $_POST['client_number'];
@@ -503,6 +506,16 @@
             if ($stmt -> num_rows > 0) {
                 $stmt -> bind_result($client_id);
                 $stmt -> fetch();
+
+                $log_data = [
+                    'entity_type' => 'client',
+                    'entity_id' => $client_id,
+                    'event_type' => 'reuse',
+                    'event_description' => 'Client reused: ' . $client_name,
+                    'user_id' => $user_id
+                ];
+
+                logEvent($log_data);
                 
                 // contact information
                 // checking mobile number
@@ -529,6 +542,17 @@
                 $stmt -> store_result();
 
                 if ($stmt -> num_rows == 0) {
+                    
+                    $log_data = [
+                        'entity_type' => 'contact',
+                        'entity_id' => $conn->insert_id,
+                        'event_type' => 'create',
+                        'event_description' => 'Email contact created for client: ' . $client_email,
+                        'user_id' => $user_id
+                    ];
+
+                    logEvent($log_data);
+
                     $insertContactQuery = $stmt = $conn -> prepare($insertContactQuery);
                     $stmt -> bind_param("iss", $client_id, $contactType, $client_email);
                     $stmt -> execute();
@@ -542,6 +566,16 @@
                 $stmt -> execute();
                 $client_id = $conn -> insert_id;
 
+                $log_data = [
+                    'entity_type' => 'client',
+                    'entity_id' => $client_id,
+                    'event_type' => 'create',
+                    'event_description' => 'New client created: ' . $client_name,
+                    'user_id' => $user_id
+                ];
+
+                logEvent($log_data);
+
                 $insertContactQuery = "INSERT INTO contacts (client_id, contact_type, contact_value) VALUES (?, ?, ?)";
                 
                 // phone number
@@ -550,11 +584,31 @@
                 $stmt->bind_param("iss", $client_id, $contactType, $client_number);
                 $stmt->execute();
 
+                $log_data = [
+                    'entity_type' => 'contact',
+                    'entity_id' => $conn->insert_id,
+                    'event_type' => 'create',
+                    'event_description' => 'Phone contact created for new client: ' . $client_number,
+                    'user_id' => $user_id
+                ];
+                
+                logEvent($log_data);
+
                 // email
                 $contactType = 'email';
                 $stmt = $conn->prepare($insertContactQuery);
                 $stmt->bind_param("iss", $client_id, $contactType, $client_email);
                 $stmt->execute();
+
+                $log_data = [
+                    'entity_type' => 'contact',
+                    'entity_id' => $conn->insert_id,
+                    'event_type' => 'create',
+                    'event_description' => 'Email contact created for new client: ' . $client_email,
+                    'user_id' => $user_id
+                ];
+                
+                logEvent($log_data);
             }
 
             // address information
@@ -569,15 +623,36 @@
             $stmt -> execute();
             $stmt -> store_result();
 
-            if ($stmt -> num_rows() > 0) {
+            if ($stmt -> num_rows > 0) {
                 $stmt -> bind_result($address_id);
                 $stmt -> fetch();
+
+                $log_data = [
+                    'entity_type' => 'address',
+                    'entity_id' => $address_id,
+                    'event_type' => 'reuse',
+                    'event_description' => 'Address reused for client.',
+                    'user_id' => $user_id
+                ];
+
+                logEvent($log_data);
+
             } else {
                 $insertAddressQuery = 'INSERT INTO addresses (client_id, city, barangay, street, house_number) VALUES (?, ?, ?, ?, ?)';
                 $stmt = $conn -> prepare($insertAddressQuery);
                 $stmt -> bind_param("issss", $client_id, $city, $barangay, $street, $number);
                 $stmt -> execute();
                 $address_id = $conn -> insert_id;
+
+                $log_data = [
+                    'entity_type' => 'address',
+                    'entity_id' => $address_id,
+                    'event_type' => 'create',
+                    'event_description' => 'New address created for client.',
+                    'user_id' => $user_id
+                ];
+
+                logEvent($log_data);
             }
 
             // order information
@@ -590,6 +665,16 @@
             $order_id = $conn -> insert_id;
 
             // order item information
+            $log_data = [
+                'entity_type' => 'order',
+                'entity_id' => $order_id,
+                'event_type' => 'create',
+                'event_description' => 'Order created for client.',
+                'user_id' => $user_id
+            ];
+
+            logEvent($log_data);
+
             $order_items = $_POST['items'];
 
             $insertItemQuery = "INSERT INTO order_items (order_id, item_id, price, item_total, truck_type_id) VALUES (?, ?, ?, ?, ?)";
@@ -607,6 +692,16 @@
                 for ($i = 0; $i < $quantity; $i++) {
                     $stmt -> bind_param("iiddi", $order_id, $item_id, $price, $total, $unit_type);
                     $stmt -> execute();
+
+                    $log_data = [
+                        'entity_type' => 'order_item',
+                        'entity_id' => $conn->insert_id,
+                        'event_type' => 'create',
+                        'event_description' => 'Order item inserted for order ID: ' . $order_id,
+                        'user_id' => $user_id
+                    ];
+                    
+                    logEvent($log_data);
                 }
             }
 
