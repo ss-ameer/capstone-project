@@ -2,7 +2,7 @@
 <form id="add-driver-form">
     <div class="container">
         <div class="row g-1">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-12 col-sm-12">
                 <div class="form-floating mb-2">
                     <input type="text" id="add-driver-name" name="name" class="form-control" placeholder="Name" required>
                     <label for="add-driver-name">Name</label>

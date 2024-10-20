@@ -64,7 +64,6 @@
                                         <!-- title -->
                                         <span class="lead">Add Item</span>
                                         <!-- icon -->
-                                        <i class="bi bi-caret-down"></i>
                                     </div>
                                 </div>
                                 <div class="p-3 collapse" id="add-item-container">
