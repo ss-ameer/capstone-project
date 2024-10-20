@@ -16,14 +16,16 @@
         <?php foreach ($logs as $log) :?>
             <?php
                 $paddedId = str_pad($log['entity_id'], 4, '0', STR_PAD_LEFT);
+                $entity = ucfirst($log['entity_type']);
+                $event = ucfirst($log['event_type']);
                 $dateTime = new DateTime($log['timestamp']);
-                $date = $dateTime->format('Y-m-d');  // Format the date part
-                $time = $dateTime->format('H:i:s');  // Format the time part
+                $date = $dateTime->format('Y-m-d'); 
+                $time = $dateTime->format('H:i:s'); 
             ?>
             <tr>
-                <td><?= $log['entity_type'] ?></td>
+                <td><?= $entity ?></td>
                 <td><?= $paddedId ?></td>
-                <td><?= $log['event_type'] ?></td>
+                <td><?= $event ?></td>
                 <td><?= $log['event_description'] ?></td>
                 <td><?= $date ?></td>
                 <td><?= $time ?></td>
