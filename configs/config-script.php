@@ -1321,7 +1321,7 @@ $(document).ready(function(){
     };
 
     function populateDispatchModal (data) {
-        $('#order-id').text(String((data.order_id).padStart(4, '0')));
+        $('#order-id').text(String(data.order_id).padStart(4, '0'));
         $('#dispatch-id').text(String(data.dispatch_id).padStart(4, '0'));
         $('#dispatch-id').attr('data-dispatch-id', data.dispatch_id);
         $('#item-name').text(data.item_name);
