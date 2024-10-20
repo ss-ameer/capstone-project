@@ -18,6 +18,21 @@
                                 Phone: <span id="contact-number">(+63) 912 345 6789</span>
                             </p>
                         </div>
+
+                        <!-- <div class="col-6 text-end">
+                            <div class="d-flex flex-column">
+                                <div>
+                                    <strong>Dispatch </strong>
+                                    <span>0001</span>
+                                    <span id="dispatch-date"></span>
+                                </div>
+                                <div>
+                                    <strong>Order </strong>
+                                    <span id="">0001</span>
+                                    <span id="order-date"></span>
+                                </div>
+                            </div>
+                        </div> -->
                     </div>
                     
                     <div class="row">
@@ -32,17 +47,17 @@
                     <!-- main content -->
                     
                     <div class="row g-3">
-                        <div class="col-6">
-                            <div class="container border p-2">
-                                <strong>Dispatch Date: </strong>
-                                <span id="dispatch-date"></span>
-                            </div>
-                        </div>
+                        <div class="col-12">
+                            <div class="container p-2 d-flex flex-column align-items-center">
+                                <div>
+                                    <strong>Order : </strong>
+                                    <span id="order-date"></span>
+                                </div>
 
-                        <div class="col-6">
-                            <div class="container border p-2">
-                                <strong>Order Date: </strong>
-                                <span id="order-date"></span>
+                                <div>
+                                    <strong>Dispatch : </strong>
+                                    <span id="dispatch-date"></span>
+                                </div>
                             </div>
                         </div>
 
