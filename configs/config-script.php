@@ -1451,7 +1451,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#print-dispatch-slip').on('click', function() {
+    $(document).on('click', '#print-dispatch-slip', function() {
         var printContents = document.querySelector('#dispatch-modal .modal-body').innerHTML;
         var originalContents = document.body.innerHTML;
 
@@ -1488,6 +1488,29 @@ $(document).ready(function(){
 
         printWindow.print();
         printWindow.close();
+
+        var dispatch_id = $('#dispatch-id').data('dispatch-id'); 
+        console.log(dispatch_id);
+
+        $.ajax({
+            url: config_function_url, 
+            type: 'POST',
+            data: {
+                entity_type: 'dispatch',
+                entity_id: dispatch_id,
+                event_type: 'print',
+                event_description: 'Dispatch slip printed.',
+                action: 'print dispatch slip'
+            },
+            success: function(response) {
+                if (response['success']) {
+                    console.log('Print event logged successfully');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error logging print event: ' + error);
+            }
+        });
     });
 
     updateDispatchTables();

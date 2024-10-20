@@ -176,7 +176,33 @@
                 
                     echo json_encode($results);
                     break;
+
+                case 'print dispatch slip':
                     
+                    $entity_type = $_POST['entity_type'];
+                    $entity_id = $_POST['entity_id'];
+                    $event_type = $_POST['event_type'];
+                    $event_description = $_POST['event_description'];
+                    $user_id = getCurrentOfficer('id');
+
+                    $log_data = [
+                        'entity_type' => $entity_type,
+                        'entity_id' => $entity_id,
+                        'event_type' => $event_type,
+                        'event_description' => $event_description,
+                        'user_id' => $user_id
+                    ];
+                
+                    if (!logEvent($log_data)) {
+                        
+                        echo json_encode(['success' => false]);
+
+                    } else {
+                        echo json_encode(['success' => true]);
+                    }
+                    
+                    break;
+
                 default:
                     break;
 
@@ -1251,8 +1277,12 @@
                             $logData['event_type'], 
                             $logData['event_description'], 
                             $logData['user_id']);
-        $stmt->execute();
-        $stmt->close();
+        if($stmt->execute()){
+            $stmt->close();
+            return true;
+        };
+
+        return false;
     }
 
     function getLogs() {
