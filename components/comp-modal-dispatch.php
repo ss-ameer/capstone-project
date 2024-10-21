@@ -18,21 +18,6 @@
                                 Phone: <span id="contact-number">(+63) 912 345 6789</span>
                             </p>
                         </div>
-
-                        <!-- <div class="col-6 text-end">
-                            <div class="d-flex flex-column">
-                                <div>
-                                    <strong>Dispatch </strong>
-                                    <span>0001</span>
-                                    <span id="dispatch-date"></span>
-                                </div>
-                                <div>
-                                    <strong>Order </strong>
-                                    <span id="">0001</span>
-                                    <span id="order-date"></span>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                     
                     <div class="row">
@@ -178,7 +163,7 @@
                         </div>
                     </div>
                 </div>
-                <script src="../imports/bootstrap/js/bootstrap.bundle.js"></script>
+                <!-- <script src="../imports/bootstrap/js/bootstrap.bundle.js"></script> -->
             </div>
 
             <div class="modal-footer">
