@@ -865,6 +865,8 @@
     }
 
     function addUnitType() {
+        global $conn;
+
         parse_str($_POST['formData'], $unitTypeData);
 
         $unitTypeData = [
@@ -876,6 +878,19 @@
     
         if ($result === true) {
             echo "success";
+            
+            $last_inserted_id = mysqli_insert_id($conn);
+
+            $logData = [
+                'entity_type' => 'truck type',
+                'entity_id' => $last_inserted_id,
+                'event_type' => 'create',
+                'event_description' => 'New unit type added: ' . $unitTypeData['type_name'],
+                'user_id' => getCurrentOfficer('id')
+            ];
+    
+            logEvent($logData); 
+
         } else {
             echo "error";
         }
