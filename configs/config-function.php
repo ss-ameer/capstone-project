@@ -870,6 +870,9 @@
     }
 
     function addDriver() { 
+        global $conn;
+        $user_id = getCurrentOfficer('id');
+
         // Parse the serialized form data
         parse_str($_POST['formData'], $driverData);
     
@@ -887,6 +890,17 @@
         // Return success or error response
         if ($result === true) {
             echo "success";
+
+            $log_data = [
+                'entity_type' => 'driver',
+                'entity_id' => $conn->insert_id,
+                'event_type' => 'create',
+                'event_description' => 'New driver added: ' . $driverData['name'],
+                'user_id' => $user_id
+            ];
+
+            logEvent($log_data);
+            
         } else {
             echo "error";
         }
