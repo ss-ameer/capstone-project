@@ -848,6 +848,8 @@
     }
 
     function addUnit() {
+        global $conn;
+
         parse_str($_POST['formData'], $unitData);
         
         $unitData = [
@@ -858,6 +860,19 @@
         $result = dbAddRecord('trucks', $unitData);
 
         if($result === true) {
+            $user_id = getCurrentOfficer('id'); 
+            $last_inserted_id = mysqli_insert_id($conn);
+
+            $log_data = [
+                'entity_type' => 'truck', 
+                'entity_id' => $last_inserted_id, 
+                'event_type' => 'create',
+                'event_description' => 'Truck added: ' . $unitData['truck_number'], 
+                'user_id' => $user_id 
+            ];
+
+            logEvent($log_data);
+
             echo "success";
         } else {
             echo "error";
