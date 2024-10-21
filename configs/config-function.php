@@ -277,6 +277,8 @@
 
         global $conn;
 
+        $user_id = getCurrentOfficer('id');
+
         $form_data_string = $_POST['form_data'];
         parse_str($form_data_string, $form_data);
 
@@ -290,6 +292,16 @@
         $stmt -> bind_param("ssdsd", $item_name, $item_category, $item_density, $item_description, $item_price);
 
         if($stmt -> execute()){
+            
+            $log_data = [
+                'entity_type' => 'item',
+                'entity_id' => $conn->insert_id, 
+                'event_type' => 'create',
+                'event_description' => 'Item added: ' . $item_name,
+                'user_id' => $user_id
+            ];
+
+            logEvent($log_data);
             echo'success';
         }
 
@@ -900,7 +912,7 @@
             ];
 
             logEvent($log_data);
-            
+
         } else {
             echo "error";
         }
