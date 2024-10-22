@@ -53,16 +53,23 @@
                 <td><?= htmlspecialchars($order['total_price']) ?></td>
                 <td><?= htmlspecialchars($order['status']) ?></td>
                 <td class="d-flex justify-content-center">
-                    <button class="btn btn-secondary btn-sm view-order-btn">
-                        <i class="bi bi-eye"></i>
+                    <button class="btn btn-secondary btn-sm view-order-btn"
+                        data-order-id="<?= $order['id'] ?>"
+                        data-client-name="<?= htmlspecialchars($order['client_name']) ?>"
+                        data-order-date="<?= htmlspecialchars($order['created_at']) ?>"
+                        data-total-price="<?= htmlspecialchars($order['total_price']) ?>"
+                        data-status="<?= htmlspecialchars($order['status']) ?>"
+                        data-address="<?= htmlspecialchars($order['house_number'] . ' ' . $order['street'] . ', ' . $order['barangay'] . ', ' . $order['city']) ?>"
+                        data-order-item-ids="<?= htmlspecialchars($order['order_item_ids']) ?>"
+                        ><i class="bi bi-eye"></i>
                     </button>
                 </td>
-                <input type="hidden" name="order_data_<?= $order['id'] ?>" 
-                    data-ids="<?= htmlspecialchars(json_encode([
-                        'order_item_ids' => explode(',', $order['order_item_ids']),
-                        'address_id' => $order['address_id']
-                    ])) ?>"
-                >
+                <!-- <input type="hidden" name="order_data_<?php //$order['id'] ?>" 
+                    data-ids="<?php //htmlspecialchars(json_encode([
+                        //'order_item_ids' => explode(',', $order['order_item_ids']),
+                        //'address_id' => $order['address_id']
+                    //])) ?>"
+                > -->
             </tr>
         <?php endforeach ?>
     </tbody>
