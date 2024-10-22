@@ -119,7 +119,7 @@
                                 <div class="c-section bg-light">
                                     <div class="c-section-header_table">
                                         <div class="c-title-container">
-                                            <span class="lead">Pending</span>
+                                            <span class="lead">Orders</span>
                                         </div>
                                     </div>
                                     
@@ -128,14 +128,62 @@
                                             <thead>
                                                 <tr>
                                                     <th scope="col">ID</th>
-                                                    <th scope="col">Client Name</th>
+                                                    <th scope="col">Client</th>
                                                     <th scope="col">Order Date</th>
+                                                    <th scope="col">Items</th>
                                                     <th scope="col">Total Price</th>
-                                                    <th scope="col">Action</th>
+                                                    <th scope="col">Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-    
+                                                <?php 
+                                                    $columns = [
+                                                        'o.id', 
+                                                        'o.client_id', 
+                                                        'o.address_id',  // Fetch address_id
+                                                        'c.name AS client_name', 
+                                                        'o.created_at', 
+                                                        '(SELECT SUM(oi.item_total) FROM order_items oi WHERE oi.order_id = o.id) AS total_price', 
+                                                        'o.status',
+                                                        'a.house_number', 
+                                                        'a.street', 
+                                                        'a.barangay', 
+                                                        'a.city',
+                                                        '(SELECT GROUP_CONCAT(oi.id) FROM order_items oi WHERE oi.order_id = o.id) AS order_item_ids'  // Get all order_item ids
+                                                    ];
+                                                    $joins = "
+                                                        JOIN clients c ON o.client_id = c.client_id 
+                                                        JOIN addresses a ON o.address_id = a.address_id
+                                                    ";
+                                                    $orders = dbGetTableData('orders o', $columns, $joins, '', 'created_at DESC');
+                                                ?>
+
+                                                <?php foreach ($orders as $order) : ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($order['id']) ?></td>
+                                                        <td><?= htmlspecialchars($order['client_name']) ?></td>
+                                                        <td><?= htmlspecialchars($order['created_at']) ?></td>
+                                                        <!-- <td>
+                                                            <?php //htmlspecialchars($order['house_number'] . ' ' . $order['street']) ?><br>
+                                                            <?php //htmlspecialchars('Brgy. ' . $order['barangay'] . ', ' . $order['city']) ?>
+                                                        </td> -->
+                                                        <td>
+                                                            <?php 
+                                                            // Fetch number of items for each order
+                                                                $items = dbGetTableData('order_items', ['COUNT(*) AS item_count'], '', 'order_id = ' . intval($order['id']));
+                                                                echo $items[0]['item_count'] ?? 0; 
+                                                            ?>
+                                                        </td>
+                                                        <td><?= htmlspecialchars($order['total_price']) ?></td>
+                                                        <td><?= htmlspecialchars($order['status']) ?></td>
+                                                        <input type="hidden" name="order_data_<?= $order['id'] ?>" 
+                                                            data-ids="<?= htmlspecialchars(json_encode([
+                                                                'order_item_ids' => explode(',', $order['order_item_ids']),
+                                                                'address_id' => $order['address_id']
+                                                            ])) ?>"
+                                                        >
+                                                    </tr>
+                                                <?php endforeach ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -144,6 +192,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
 
