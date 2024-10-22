@@ -117,63 +117,63 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-primary">
+                                <div class="c-section bg-primary">
                                     <!-- header -->
-                                    <div class="sticky-top p-3 border-bottom rounded-top bg-primary">
+                                    <div class=" bg-primary c-section-header_table">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead text-light">In-Queue</span>
                                         </div>
                                     </div>
 
                                     <!-- content -->
-                                    <div class="">
+                                    <div class="c-table-container">
                                         <?php include PATH . 'components/comp-table-dispatch-in-queue.php';?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-info">
+                                <div class="c-section bg-info">
                                     <!-- header -->
-                                    <div class="sticky-top p-3 border-bottom rounded-top bg-info">
+                                    <div class="c-section-header_table bg-info">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead">In-Transit</span>
                                         </div>
                                     </div>
 
                                     <!-- content -->
-                                    <div class="">
+                                    <div class="c-table-container">
                                         <?php include PATH . 'components/comp-table-dispatch-in-transit.php';?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-success">
+                                <div class="c-section bg-success">
                                     <!-- header -->
-                                    <div class="sticky-top p-3 border-bottom rounded-top bg-success">
+                                    <div class="c-section-header_table bg-success">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead text-light">Successful</span>
                                         </div>
                                     </div>
 
                                     <!-- content -->
-                                    <div class="">
+                                    <div class="c-table-container">
                                         <?php include PATH . 'components/comp-table-dispatch-successful.php';?>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="col-12">
-                                <div class="container-fluid border p-0 rounded dispatch-table-container bg-dark">
+                                <div class="c-section bg-dark">
                                     <!-- header -->
-                                    <div class="sticky-top p-3 border-bottom rounded-top bg-dark">
+                                    <div class="c-section-header_table bg-dark">
                                         <div class="d-flex justify-content-between">
                                             <span class="lead text-light">Failed</span>
                                         </div>
                                     </div>
 
                                     <!-- content -->
-                                    <div class="">
+                                    <div class="c-table-container">
                                         <?php include PATH . 'components/comp-table-dispatch-failed.php';?>
                                     </div>
                                 </div>
