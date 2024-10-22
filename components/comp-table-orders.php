@@ -61,7 +61,8 @@
                         data-status="<?= htmlspecialchars($order['status']) ?>"
                         data-address="<?= htmlspecialchars($order['house_number'] . ' ' . $order['street'] . ', ' . $order['barangay'] . ', ' . $order['city']) ?>"
                         data-order-item-ids="<?= htmlspecialchars($order['order_item_ids']) ?>"
-                        ><i class="bi bi-eye"></i>
+                        >
+                        <i class="bi bi-eye"></i>
                     </button>
                 </td>
                 <!-- <input type="hidden" name="order_data_<?php //$order['id'] ?>" 
