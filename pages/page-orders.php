@@ -36,7 +36,7 @@
                     <div class="container">
                         <div class="row mt-3 g-3">
                             <div class="col-12">
-                                <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".order-create">
+                                <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".order-create">
                                     <a class="fs-5" href="#">Create Order</a>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="col-12 collapse order-create">
-                                <div class="border rounded table-responsive bg-primary">
+                                <div class="c-table-container">
                                     <table class="table align-middle" id="order-items-table">
                                         <thead class="table-primary">
                                             <tr class="text-center">
@@ -104,6 +104,43 @@
                                         <button type="submit" form="order-form" class="btn btn-outline-success">Create Order</button>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-1 g-3">
+                            <div class="col-12">
+                                <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".order-view">
+                                    <a class="fs-5" href="#">Order Tables</a>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 collapse order-view">
+                                <div class="c-section bg-light">
+                                    <div class="c-section-header_table">
+                                        <div class="c-title-container">
+                                            <span class="lead">Pending</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="c-table-container">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">ID</th>
+                                                    <th scope="col">Client Name</th>
+                                                    <th scope="col">Order Date</th>
+                                                    <th scope="col">Total Price</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
