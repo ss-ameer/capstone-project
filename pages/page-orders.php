@@ -133,6 +133,7 @@
                                                     <th scope="col">Items</th>
                                                     <th scope="col">Total Price</th>
                                                     <th scope="col">Status</th>
+                                                    <th scope="col" class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -176,6 +177,11 @@
                                                         </td>
                                                         <td><?= htmlspecialchars($order['total_price']) ?></td>
                                                         <td><?= htmlspecialchars($order['status']) ?></td>
+                                                        <td class="d-flex justify-content-center">
+                                                            <button class="btn btn-secondary btn-sm view-order-btn">
+                                                                <i class="bi bi-eye"></i>
+                                                            </button>
+                                                        </td>
                                                         <input type="hidden" name="order_data_<?= $order['id'] ?>" 
                                                             data-ids="<?= htmlspecialchars(json_encode([
                                                                 'order_item_ids' => explode(',', $order['order_item_ids']),
