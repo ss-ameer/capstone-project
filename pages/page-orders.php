@@ -23,7 +23,10 @@
 <body>
     <main>
         <!-- modal -->
-        <?php include_once(PATH . 'components/comp-modal-orders-prev.php'); ?>
+        <?php
+            include_once(PATH . 'components/comp-modal-orders-prev.php'); 
+            include_once(PATH . 'components/comp-modal-order.php'); 
+        ?>
 
         <div class="container-fluid vh-100 scrollbar-hidden">
             <!-- header -->
@@ -40,9 +43,9 @@
                                     <a class="fs-5" href="#">Create Order</a>
                                 </div>
                             </div>
-
+                        
                             <div class="col-6 collapse order-create">
-                                <div class="container p-0 border rounded">
+                                <div class="c-section">
                                     <div class="c-section-header">
                                         <div class="c-title-container">
                                             <span class="lead">Client Info</span>
@@ -117,7 +120,7 @@
 
                             <div class="col-12 collapse order-view">
                                 <div class="c-section bg-light">
-                                    <div class="c-section-header_table">
+                                    <div class="c-section-header_table bg-light">
                                         <div class="c-title-container">
                                             <span class="lead">Orders</span>
                                         </div>

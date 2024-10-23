@@ -1513,6 +1513,37 @@ $(document).ready(function(){
         });
     });
 
+    // Handle click on "View Details" button
+    $('.view-order-btn').on('click', function() {
+        // Get data from the button
+        var order_id = $(this).data('order-id');
+        var client_id = $(this).data('client-id');
+        var client_name = $(this).data('client-name');
+        var client_phone = $(this).data('client-phone');
+        var client_email = $(this).data('client-email');
+        var total_price = $(this).data('total-price');
+        var status = $(this).data('status');
+        var address = $(this).data('address');
+        var order_items = $(this).data('order-items');
+        var order_date = $(this).data('order-date');
+        var order_time = $(this).data('order-time');
+        
+        // Populate the modal with the data
+        $('#modal-order-id').text(order_id);
+        $('#modal-client-name').text(client_name);
+        $('#modal-order-date').text(order_date);
+        $('#modal-order-time').text(order_time);
+        $('#modal-total-price').text(total_price);
+        $('#modal-status').text(status);
+        $('#modal-address').text(address);
+        $('#modal-client-id').text(client_id);
+        $('#modal-client-phone').text(client_phone);
+        $('#modal-client-email').text(client_email);
+
+        // Show the modal
+        $('#order-details-modal').modal('show');
+    });
+
     updateDispatchTables();
     
 });
