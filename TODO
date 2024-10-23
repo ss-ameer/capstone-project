@@ -1,4 +1,6 @@
 To Fix:
+    [ ] fix empty fields scenario.
+        [ ] orders
     [x] master-stock-preview, table refresh and stock select conflict
         Note: 
             To resolve the issue where you can't select an item after adding a new one, there are a few key areas to check:
