@@ -37,7 +37,8 @@
     @extend .bg-light !optional;
     @extend .p-2 !optional;
     @extend .px-3 !optional;
-    // @extend .border-bottom !optional;
+    @extend .border-bottom !optional;
+    // @extend .border-danger !optional;
 
     .c-title-container {
         @extend .d-flex !optional;
@@ -49,7 +50,7 @@
     @extend .sticky-top !optional;
     @extend .p-2 !optional;
     @extend .px-3 !optional;
-    // @extend .border-bottom !optional;
+    @extend .border-bottom !optional;
     @extend .rounded-top;
 
     .c-title-container {
