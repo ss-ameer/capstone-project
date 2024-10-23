@@ -468,7 +468,8 @@ $(document).ready(function(){
                 
                 $('#order-form')[0].reset();
                 $('.orders-table-container').load(location.href + ' .orders-table-container');
-                // console.log('../components/comp-table-orders.php')
+                $('#order-items-table tbody').empty();
+                calculateOrderSummary();
             },
             error: function() {
                 alert('An error occurred. Please try again.');
