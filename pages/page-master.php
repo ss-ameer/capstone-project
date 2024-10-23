@@ -37,7 +37,7 @@
                 <div class="container">
                     <div class="row mt-3 g-3">
                         <div class="col-12">
-                            <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".master-create">
+                            <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".master-create">
                                 <a class="fs-5" href="#">Create</a>
                             </div>
                         </div>
@@ -118,45 +118,15 @@
                             </div>    
                         </div>
                     </div>
+
+                    <div class="row g-3 mt-2">
+                        <div class="col-12">
+                            <div class="c-section-toggler" data-bs-target="collapse">
+                                <a class="fs-5" href="#">Views</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                    <!-- <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-12">
-                                        
-                                    </div>
-
-                                    
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item">
-                            <div data-bs-toggle="collapse" data-bs-target="#master-view">
-                                <a class="" href="#">View Accounts</a>
-                            </div>
-
-                            <div class="collapse container" id="master-view">
-                                <hr>
-                                <?php //include_once('../components/comp-table-officers.php') ?>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item">
-                            <div data-bs-toggle="collapse" data-bs-target="#master-stocks">
-                                <a href="#" class="">Manage Stocks</a>
-                            </div>
-                            
-                            <div class="collapse container" id="master-stocks">
-                                <hr>
-                                <?php //include_once('../components/comp-master-stock.php'); ?>
-                            </div>
-                        </li>
-                    </ul> -->
-                </div>
-                
             </div>
         </div>
     </div>

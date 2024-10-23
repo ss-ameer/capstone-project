@@ -465,6 +465,10 @@ $(document).ready(function(){
                 console.log(`Unit type for the first item: ${orderItems[0]['unit_type_id']}`);
                 console.log(response);
                 alert('Order created successfully.');
+                
+                $('#order-form')[0].reset();
+                $('.orders-table-container').load(location.href + ' .orders-table-container');
+                // console.log('../components/comp-table-orders.php')
             },
             error: function() {
                 alert('An error occurred. Please try again.');
@@ -699,7 +703,7 @@ $(document).ready(function(){
         updateOrderTable();
     };  
 
-    $('#preview-order-btn').on('click', function() {
+    $(document).on('click', '#preview-order-btn', function() {
         $('#preview-client-name').text('Name: ' + $('#order-form-name').val());
         $('#preview-client-address').text('Address: ' + 
             $('#order-form-address_number').val() + ', ' +
@@ -1514,7 +1518,7 @@ $(document).ready(function(){
     });
 
     // Handle click on "View Details" button
-    $('.view-order-btn').on('click', function() {
+    $(document).on('click', '.view-order-btn', function() {
         // Get data from the button
         var order_id = $(this).data('order-id');
         var client_id = $(this).data('client-id');

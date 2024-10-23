@@ -1,5 +1,5 @@
 <!-- comp-table-orders.php -->
-<table>
+<table id="orders-table">
     <thead>
         <tr>
             <th scope="col">ID</th>
