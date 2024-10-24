@@ -43,9 +43,9 @@
                         </div>
 
                         <div class="col-12 collapse master-create">
-                            <div class="container p-0 border rounded">
-                                <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target="#add-user-container">
-                                    <div class="d-flex justify-content-between align-items-center">
+                            <div class="c-section">
+                                <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-user-container">
+                                    <div class="c-title-container">
                                         <!-- title -->
                                         <span class="lead">Add User</span>
                                     </div>
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="col-12 collapse master-create">
-                            <div class="container p-0 border rounded">
+                            <div class="c-section">
                                 <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-item-container">
                                     <div class="c-title-container">
                                         <!-- title -->
@@ -74,9 +74,9 @@
                         </div>
 
                         <div class="col-6 collapse master-create">
-                            <div class="container p-0 border rounded">
-                                <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target=".units-section">
-                                    <div class="d-flex justify-content-between align-items-center">
+                            <div class="c-section">
+                                <div class="c-section-header" data-bs-toggle="collapse" data-bs-target=".units-section">
+                                    <div class="c-title-container">
                                         <!-- title -->
                                         <span class="lead">Add Unit</span>
                                     </div>
@@ -89,9 +89,9 @@
                         </div>
 
                         <div class="col-6 collapse master-create">
-                            <div class="container p-0 border rounded-2">
-                                <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target=".units-section">
-                                    <div class="d-flex justify-content-between align-items-center">
+                            <div class="c-section">
+                                <div class="c-section-header" data-bs-toggle="collapse" data-bs-target=".units-section">
+                                    <div class="c-title-container">
                                         <!-- title -->
                                         <span class="lead">Add Unit Type</span>
                                     </div>
@@ -104,9 +104,9 @@
                         </div>
 
                         <div class="col-12 collapse master-create">
-                            <div class="container p-0 border rounded">
-                                <div class="sticky-top bg-light p-2 px-3 border-bottom" data-bs-toggle="collapse" data-bs-target="#add-driver-container">
-                                    <div class="d-flex justify-content-between align-items-center">
+                            <div class="c-section">
+                                <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-driver-container">
+                                    <div class="c-title-container">
                                         <!-- title -->
                                         <span class="lead">Add Operator</span>
                                     </div>
@@ -123,6 +123,19 @@
                         <div class="col-12">
                             <div class="c-section-toggler" data-bs-target="collapse">
                                 <a class="fs-5" href="#">Views</a>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="c-section">
+                                <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="">
+                                    <div class="c-title-container">
+                                        <span class="lead">Users</span>
+                                    </div>
+                                </div>
+                                <div class="c-table-container">
+                                    <?php include_once PATH . 'components/comp-table-dispatch_officers.php'; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
