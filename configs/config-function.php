@@ -1456,3 +1456,21 @@
         return $result;
     }    
     
+    function dbDeleteRow($table, $column, $value) {
+        global $conn;
+    
+        $query = "DELETE FROM `$table` WHERE `$column` = ?";
+        $stmt = $conn->prepare($query);
+        if ($stmt === false) {
+            return ['status' => 'error', 'message' => 'Failed to prepare statement'];
+        }
+
+        $stmt->bind_param('s', $value); 
+        
+        // Execute the statement
+        if ($stmt->execute()) {
+            return ['status' => 'success', 'message' => 'Row deleted successfully'];
+        } else {
+            return ['status' => 'error', 'message' => 'Failed to delete row'];
+        }
+    }
