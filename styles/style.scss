@@ -13,6 +13,10 @@
     @extend .justify-content-between;
 }
 
+.c-flex-center {
+    @extend .d-flex;
+    @extend .justify-content-evenly;
+}
 .c-main-content {
     height: 90%;
 }

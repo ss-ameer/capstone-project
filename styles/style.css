@@ -7584,7 +7584,7 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex, #order-list-pending .order .section, .c-section-header_table .c-title-container, .c-section-header .c-title-container, .c-flex-between {
+.d-flex, #order-list-pending .order .section, .c-section-header_table .c-title-container, .c-section-header .c-title-container, .c-flex-center, .c-flex-between {
   display: flex !important;
 }
 
@@ -8018,7 +8018,7 @@ textarea.form-control-lg {
   justify-content: space-around !important;
 }
 
-.justify-content-evenly {
+.justify-content-evenly, .c-flex-center {
   justify-content: space-evenly !important;
 }
 

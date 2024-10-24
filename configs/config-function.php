@@ -1447,5 +1447,12 @@
             return []; 
         }
     }
-    
+
+    function getDispatchOfficers () {
+        global $conn;
+        
+        $result = dbGetTableData('dispatch_officers');
+
+        return $result;
+    }    
     
