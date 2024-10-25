@@ -34,6 +34,7 @@
             <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
             <!-- main -->
             <div class="col mh-100 overflow-auto">
+                <?php include PATH . 'components/comp-modal-dependency_check.php' ?>
                 <div class="container">
                     <div class="row mt-3 g-3">
                         <div class="col-12">
@@ -130,11 +131,24 @@
                             <div class="c-section">
                                 <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="">
                                     <div class="c-title-container">
-                                        <span class="lead">Users</span>
+                                        <span class="lead">Dispatch Officer</span>
                                     </div>
                                 </div>
                                 <div class="c-table-container">
                                     <?php include_once PATH . 'components/comp-table-dispatch_officers.php'; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="c-section">
+                                <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="#table-units">
+                                    <div class="c-title-container">
+                                        <span class="lead">Units</span>
+                                    </div>
+                                </div>
+                                <div class="c-table-container">
+                                    <?php include_once PATH . 'components/comp-table-units-master.php'; ?>
                                 </div>
                             </div>
                         </div>
