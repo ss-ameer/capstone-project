@@ -1549,6 +1549,55 @@ $(document).ready(function(){
         $('#order-details-modal').modal('show');
     });
 
+    // delete a row
+    $(document).on('click', '[data-action="delete"]', function() {
+        var table = $(this).data('table'); 
+        var id = $(this).data('id'); 
+        var name = $(this).data('name');
+        var column = $(this).data('column');
+        var dependencies = $(this).data('dependencies');
+        var reassign_id = $(this).data('reassign_id');
+
+        console.log('Raw dependencies:', dependencies);
+        
+        // Confirmation prompt
+        if (confirm('Are you sure you want to delete ' + name + '?')) {
+
+            $.ajax({
+                url: config_function_url, 
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    table: table,
+                    id: id,
+                    column: column,
+                    dependency_checks: dependencies,
+                    action: 'check dependencies'
+                },
+                success: function(response) {
+                    
+                    if(response.success) {
+                        $('#dependency-modal').modal('show');
+                        
+                        $('#dependency-list').html(response.dependencies.map(function(dep) {
+                            return `<li>${dep.table} - ${dep.count} affected rows </li>`;
+                        }).join(''));
+                    }
+                    else {
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', xhr.responseText);
+                    console.log(JSON.stringify(dependencies));
+                    alert('An error occurred while trying to check dependencies.');
+                }
+            
+            });
+        }
+    });
+    
+
     updateDispatchTables();
     
 });
