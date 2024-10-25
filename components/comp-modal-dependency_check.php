@@ -12,11 +12,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <p>This has dependencies:</p>
-                            <ul id="dependency-list"></ul>
+                            <p class="text-center"><span class="reassign-name">None Selected</span> has Dependencies</p>
+                            <div class="container border rounded">
+                                <ul class="list-group list-group-flush" id="dependency-list"></ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-12">
                             <div class="input-group">
                                 <label for="reassign-value" class="input-group-text">Reassign Value</label>
@@ -26,13 +28,15 @@
                     </div>
     
                     <input type="hidden" id="reassign-id" value="">
-                    <input type="hidden" id="reassign-column" value="truck_id">
+                    <input type="hidden" id="reassign-table" value="">
+                    <input type="hidden" id="reassign-name" value="">
+                    <input type="hidden" id="reassign-column" value="">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirm-dependency-action">Proceed</button>
+                <button type="button" class="btn btn-primary" id="confirm-dependency-action" data-action="reassign">Proceed</button>
             </div>
         </div>
     </div>

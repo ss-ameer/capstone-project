@@ -1568,23 +1568,36 @@ $(document).ready(function(){
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    table: table,
                     id: id,
-                    column: column,
                     dependency_checks: dependencies,
                     action: 'check dependencies'
                 },
                 success: function(response) {
                     
-                    if(response.success) {
-                        $('#dependency-modal').modal('show');
+                    if(response.success && response.dependencies != []) {
+                        $('.reassign-name').text(name);
+                        $('#reassign-name').val(name);
+                        $('#reassign-id').val(id);
+                        $('#reassign-column').val(column);
+                        $('#reassign-table').val(table);
                         
+                        $('#dependency-modal').modal('show');
+
                         $('#dependency-list').html(response.dependencies.map(function(dep) {
-                            return `<li>${dep.table} - ${dep.count} affected rows </li>`;
-                        }).join(''));
+                            return `
+                                <li class="list-group-item d-flex justify-content-between align-items-center"
+                                    data-table="${dep.table}" 
+                                    data-column="${dep.column}">
+                                    <span style="text-transform: capitalize;">
+                                        ${dep.table}</span> <span class="badge text-bg-primary rounded-pill">${dep.count}
+                                    </span>
+                                </li>`;
+                            }).join('')
+                        );
+
                     }
                     else {
-
+                        console.log('DELETE')
                     }
                 },
                 error: function(xhr, status, error) {
@@ -1596,6 +1609,74 @@ $(document).ready(function(){
             });
         }
     });
+
+    $(document).on('click', '[data-action="reassign"]', function() {
+        var name = $('#reassign-name').val();
+        var id = $('#reassign-id').val();
+        var column = $('#reassign-column').val();
+        var table = $('#reassign-table').val();
+        var reassign_value = $('#reassign-value').val();
+
+        var dependency_checks = [];
+
+        $('#dependency-list li').each(function() {
+            dependency_checks.push({
+                table: $(this).data('table'),
+                column: $(this).data('column')
+            });
+        });
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id: id,
+                reassign_value: reassign_value,
+                dependency_checks: dependency_checks,
+                action:'reassign'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Reassigned ' + name + ' successfully.'); 
+                    $('#dependency-modal').modal('hide');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText);
+                alert('An error occurred during reassignment.');
+            }
+        });
+    });
+
+    // function reassignDependencies(reassign_value, reassign_id, reassign_column, table) {
+    //     $.ajax({
+    //         url: config_function_url,
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {
+    //             action: 'reassign dependencies',
+    //             table: table,
+    //             id: reassign_id,
+    //             column: reassign_column,
+    //             reassign_value: reassign_value
+    //         },
+    //         success: function(response) {
+    //             if (response.success) {
+                    
+    //                 alert(response.message); 
+    //                 $('#dependency-modal').modal('hide'); 
+
+    //             } else {
+    //                 alert('Error: ' + response.message); 
+    //             }
+    //         },
+    //         error: function(xhr, status, error) {
+    //             console.error('Error:', xhr.responseText);
+    //             alert('An error occurred while trying to reassign dependencies.');
+    //         }
+    //     });
+    // }
     
 
     updateDispatchTables();

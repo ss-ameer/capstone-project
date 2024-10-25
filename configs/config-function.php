@@ -203,24 +203,40 @@
                     
                     break;
 
-                case 'delete':
-                    $value = $_POST['id'];
-                    $table = $_POST['table'];
-                    $column = $_POST['column'];
-                    $result = dbDeleteRow($table, $column, $value);
+                // case 'delete':
+                //     $value = $_POST['id'];
+                //     $table = $_POST['table'];
+                //     $column = $_POST['column'];
+                //     $result = dbDeleteRow($table, $column, $value);
 
-                    echo json_encode($result);
-                    break;
+                //     echo json_encode($result);
+                //     break;
 
                 case 'check dependencies':
-                    $table = $_POST['table'];
-                    $column = $_POST['column'];
                     $id = $_POST['id'];
                     $dependency_checks = $_POST['dependency_checks']; 
                     
-                    $result = dbCheckDependencies($table, $column, $id, $dependency_checks);
+                    $result = dbCheckDependencies($id, $dependency_checks);
                     
                     echo json_encode($result);
+                    break;
+
+                case 'reassign':
+                    $id = $_POST['id'];
+                    $reassign_value = $_POST['reassign_value'];
+                    $dependency_checks = $_POST['dependency_checks'];
+
+                    $results = [];
+
+                    foreach ($dependency_checks as $dependency) {
+                        $dep_table = $dependency['table'];
+                        $dep_column = $dependency['column'];
+
+                        $result = reassignDependencies($dep_table, $dep_column, $id, $reassign_value);
+                        $results[] = $result;
+                    }
+
+                    echo json_encode(['success' => true, 'results' => $results]);
                     break;
 
                 default:
@@ -1439,12 +1455,12 @@
         $stmt = $conn->prepare("INSERT INTO logs (entity_type, entity_id, event_type, event_description, user_id) VALUES (?, ?, ?, ?, ?)");
 
         $stmt->bind_param(
-                            "sisss", 
-                            $logData['entity_type'], 
-                            $logData['entity_id'], 
-                            $logData['event_type'], 
-                            $logData['event_description'], 
-                            $logData['user_id']);
+            "sisss", 
+            $logData['entity_type'], 
+            $logData['entity_id'], 
+            $logData['event_type'], 
+            $logData['event_description'], 
+            $logData['user_id']);
         if($stmt->execute()){
             $stmt->close();
             return true;
@@ -1492,38 +1508,38 @@
     //     }
     // }
 
-    function dbDeleteRow($table, $column, $value, $reassign_column = null, $reassign_value = null, $dependency_checks = []) {
-        global $conn;
+    // function dbDeleteRow($table, $column, $value, $reassign_column = null, $reassign_value = null, $dependency_checks = []) {
+    //     global $conn;
     
-        foreach ($dependency_checks as $dependency) {
-            $dependency_table = $dependency['table'];
-            $dependency_column = $dependency['column'];
+    //     foreach ($dependency_checks as $dependency) {
+    //         $dependency_table = $dependency['table'];
+    //         $dependency_column = $dependency['column'];
     
-            $dependency_query = "SELECT COUNT(*) as count FROM $dependency_table WHERE $dependency_column = ?";
-            $dependency_stmt = $conn->prepare(query: $dependency_query);
-            $dependency_stmt->bind_param('s', $value);
-            $dependency_stmt->execute();
-            $dependency_result = $dependency_stmt->get_result();
-            $dependency_count = $dependency_result->fetch_assoc()['count'];
-            $dependency_stmt->close();
+    //         $dependency_query = "SELECT COUNT(*) as count FROM $dependency_table WHERE $dependency_column = ?";
+    //         $dependency_stmt = $conn->prepare(query: $dependency_query);
+    //         $dependency_stmt->bind_param('s', $value);
+    //         $dependency_stmt->execute();
+    //         $dependency_result = $dependency_stmt->get_result();
+    //         $dependency_count = $dependency_result->fetch_assoc()['count'];
+    //         $dependency_stmt->close();
     
-            if ($dependency_count > 0) {
-                if ($reassign_column && $reassign_value) {
-                    $updateQuery = "UPDATE $dependency_table SET $dependency_column = ? WHERE $dependency_column = ?";
-                    dbExecuteQuery($updateQuery, $reassign_value, $value);
-                } else {
-                    return ['status' => 'error', 'message' => "Cannot delete row due to existing dependencies in $dependency_table."];
-                }
-            }
-        }
+    //         if ($dependency_count > 0) {
+    //             if ($reassign_column && $reassign_value) {
+    //                 $updateQuery = "UPDATE $dependency_table SET $dependency_column = ? WHERE $dependency_column = ?";
+    //                 dbExecuteQuery($updateQuery, $reassign_value, $value);
+    //             } else {
+    //                 return ['status' => 'error', 'message' => "Cannot delete row due to existing dependencies in $dependency_table."];
+    //             }
+    //         }
+    //     }
     
-        $query = "DELETE FROM `$table` WHERE `$column` = ?";
-        return dbExecuteQuery($query, $value)
-            ? ['status' => 'success', 'message' => 'Row deleted successfully.']
-            : ['status' => 'error', 'message' => 'Failed to delete row: ' . $conn->error];
-    }
+    //     $query = "DELETE FROM `$table` WHERE `$column` = ?";
+    //     return dbExecuteQuery($query, $value)
+    //         ? ['status' => 'success', 'message' => 'Row deleted successfully.']
+    //         : ['status' => 'error', 'message' => 'Failed to delete row: ' . $conn->error];
+    // }
 
-    function dbCheckDependencies($table, $column, $id, $dependency_checks) {
+    function dbCheckDependencies($id, $dependency_checks) {
         global $conn;
         $dependencies_found = [];
 
@@ -1542,6 +1558,7 @@
             if ($count > 0) {
                 $dependencies_found[] = [
                     'table' => $dependency_table,
+                    'column' => $dependency_column,
                     'count' => $count
                 ];
             }
@@ -1556,11 +1573,45 @@
             ];
         } else {
             return [
-                'success' => true,
-                'dependencies' => []  // No dependencies found
+                'success' => false,
+                'dependencies' => 'none'  // No dependencies found
             ];
         }
 
     }
+
+    function reassignDependencies($table, $column, $id, $reassign_value) {
+        global $conn;
     
+        $query = "UPDATE `$table` SET `$column` = ? WHERE `$column` = ?";
+        $stmt = $conn->prepare($query);
+    
+        if ($stmt === false) {
+            return [
+                'success' => false,
+                'message' => 'Failed to prepare statement: ' . $conn->error
+            ];
+        }
+    
+        if ($reassign_value === null) {
+            $stmt->bind_param('si', $reassign_value, $id);
+        } else {
+            $stmt->bind_param('si', $reassign_value, $id);
+        }
+    
+        if ($stmt->execute()) {
+            $affected_rows = $stmt->affected_rows;
+            $stmt->close();
+    
+            return [
+                'success' => true,
+                'message' => "Reassignment successful. $affected_rows rows updated."
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to execute query: ' . $stmt->error
+            ];
+        }
+    }    
     
