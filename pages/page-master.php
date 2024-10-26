@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                                 <div class="c-table-container">
-                                    <?php include_once PATH . 'components/comp-table-dispatch_officers.php'; ?>
+                                    <?php include PATH . 'components/comp-table-dispatch_officers-master.php'; ?>
                                 </div>
                             </div>
                         </div>
