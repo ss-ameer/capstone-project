@@ -1557,6 +1557,7 @@ $(document).ready(function(){
         var column = $(this).data('column');
         var dependencies = $(this).data('dependencies');
         var reassign_id = $(this).data('reassign_id');
+        var $row = $(this).closest('tr');
 
         console.log('Raw dependencies:', dependencies);
         
@@ -1574,7 +1575,7 @@ $(document).ready(function(){
                 },
                 success: function(response) {
                     
-                    if(response.success && response.dependencies != []) {
+                    if(response.success && response.dependencies.length > 0) {
                         $('.reassign-name').text(name);
                         $('#reassign-name').val(name);
                         $('#reassign-id').val(id);
@@ -1594,10 +1595,11 @@ $(document).ready(function(){
                                 </li>`;
                             }).join('')
                         );
-
                     }
                     else {
-                        console.log('DELETE')
+                        deleteRecord(table, id, function() {
+                            $row.remove();
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
@@ -1648,36 +1650,31 @@ $(document).ready(function(){
             }
         });
     });
-
-    // function reassignDependencies(reassign_value, reassign_id, reassign_column, table) {
-    //     $.ajax({
-    //         url: config_function_url,
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         data: {
-    //             action: 'reassign dependencies',
-    //             table: table,
-    //             id: reassign_id,
-    //             column: reassign_column,
-    //             reassign_value: reassign_value
-    //         },
-    //         success: function(response) {
-    //             if (response.success) {
-                    
-    //                 alert(response.message); 
-    //                 $('#dependency-modal').modal('hide'); 
-
-    //             } else {
-    //                 alert('Error: ' + response.message); 
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.error('Error:', xhr.responseText);
-    //             alert('An error occurred while trying to reassign dependencies.');
-    //         }
-    //     });
-    // }
     
+    function deleteRecord(table, id, callback) {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                table: table,
+                id: id,
+                action: 'delete'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Record deleted successfully.');
+                    if (callback) callback();
+                } else {
+                    alert('Failed to delete record: ' + response.message); 
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText);
+                alert('An error occurred while trying to delete the record.');
+            }
+        });
+    }
 
     updateDispatchTables();
     

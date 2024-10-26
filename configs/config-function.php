@@ -203,14 +203,25 @@
                     
                     break;
 
-                // case 'delete':
-                //     $value = $_POST['id'];
-                //     $table = $_POST['table'];
-                //     $column = $_POST['column'];
-                //     $result = dbDeleteRow($table, $column, $value);
+                case 'delete':
+                    $value = $_POST['id'];
+                    $table = $_POST['table'];
+                    $result = dbDeleteRow($table, $value);
 
-                //     echo json_encode($result);
-                //     break;
+                    echo json_encode($result);
+
+                    if($result['success']) {
+                        $log_data = [
+                            'entity_type' => $table,
+                            'entity_id' => $value,
+                            'event_type' => 'Delete',
+                            'event_description' => 'Deleted '. $table.'with ID '. $value,
+                            'user_id' => getCurrentOfficer('id')
+                        ];
+
+                        logEvent($log_data);
+                    }
+                    break;
 
                 case 'check dependencies':
                     $id = $_POST['id'];
