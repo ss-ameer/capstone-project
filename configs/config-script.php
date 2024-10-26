@@ -1619,6 +1619,8 @@ $(document).ready(function(){
         var table = $('#reassign-table').val();
         var reassign_value = $('#reassign-value').val();
 
+        console.log('Reassign Value: ' + reassign_value);
+
         var dependency_checks = [];
 
         $('#dependency-list li').each(function() {
