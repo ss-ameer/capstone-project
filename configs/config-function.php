@@ -372,7 +372,7 @@
         $name = $_POST['name'];
         $password = $_POST['password'];
         $password_rep = $_POST['password_rep'];
-        $acc_type = $_POST['acc_type'] == 'true' ? 1 : 0;
+        $acc_type = $_POST['acc_type'] == 'true' ? 0 : 1;
 
         // check: filled
         if (empty($name) || empty($password) || empty($password_rep)) {
