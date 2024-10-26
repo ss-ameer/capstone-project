@@ -1500,24 +1500,24 @@
         return $result;
     }
     
-    // function dbDeleteRow($table, $column, $value) {
-    //     global $conn;
+    function dbDeleteRow($table, $value) {
+        global $conn;
     
-    //     $query = "DELETE FROM `$table` WHERE `$column` = ?";
-    //     $stmt = $conn->prepare($query);
-    //     if ($stmt === false) {
-    //         return ['status' => 'error', 'message' => 'Failed to prepare statement'];
-    //     }
+        $query = "DELETE FROM `$table` WHERE `id` = ?";
+        $stmt = $conn->prepare($query);
+        if ($stmt === false) {
+            return ['success' => true, 'message' => 'Failed to prepare statement'];
+        }
 
-    //     $stmt->bind_param('s', $value); 
+        $stmt->bind_param('s', $value); 
         
-    //     // Execute the statement
-    //     if ($stmt->execute()) {
-    //         return ['status' => 'success', 'message' => 'Row deleted successfully'];
-    //     } else {
-    //         return ['status' => 'error', 'message' => 'Failed to delete row: ' . $stmt->error];
-    //     }
-    // }
+        // Execute the statement
+        if ($stmt->execute()) {
+            return ['success' => true, 'message' => 'Row deleted successfully'];
+        } else {
+            return ['success' => false, 'message' => 'Failed to delete row: ' . $stmt->error];
+        }
+    }
 
     // function dbDeleteRow($table, $column, $value, $reassign_column = null, $reassign_value = null, $dependency_checks = []) {
     //     global $conn;
