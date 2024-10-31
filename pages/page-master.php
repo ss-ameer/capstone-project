@@ -34,6 +34,7 @@
             <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
             <!-- main -->
             <div class="col mh-100 overflow-auto">
+                <?php include PATH . 'components/comp-modal-edit.php' ?>
                 <?php include PATH . 'components/comp-modal-dependency_check.php' ?>
                 <div class="container">
                     <div class="row mt-3 g-3">
