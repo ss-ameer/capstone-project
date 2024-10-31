@@ -1685,7 +1685,9 @@ $(document).ready(function(){
 
         var $form = $('#edit-form');
 
-        $($form).empty();
+        $form.empty();
+        $form.append(`<input type="hidden" name="id" value="${id}">`);
+        $form.append(`<input type="hidden" name="table" value="${table}">`);
 
         columns.forEach(function (field) {
             var $form_group = $(`<div class="form-floating mt-3"></div>`);
@@ -1755,14 +1757,10 @@ $(document).ready(function(){
         event.preventDefault();
 
         var form_data = $(this).serializeArray();
-        var id = $('[data-action="edit"]').data('id');
-        var table = $('[data-action="edit"]').data('table');
 
-        form_data.push({ name: 'id', value: id});
-        form_data.push({ name: 'table', value: table});
         form_data.push({ name: 'action', value: 'edit'});
 
-        console.log(form_data); // log event
+        console.log(form_data); 
 
         $.ajax({
             url: config_function_url,
