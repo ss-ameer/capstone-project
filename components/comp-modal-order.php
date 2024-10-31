@@ -10,21 +10,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- <p><strong>Order ID:</strong> <span id="modal-order-id"></span></p>
-                <p><strong>Client Name:</strong> <span id="modal-client-name"></span></p>
-                <p><strong>Order Date:</strong> <span id="modal-order-date"></span></p>
-                <p><strong>Total Price:</strong> <span id="modal-total-price"></span></p>
-                <p><strong>Status:</strong> <span id="modal-status"></span></p>
-                <p><strong>Address:</strong> <span id="modal-address"></span></p>
-                <p><strong>Order Items:</strong> <span id="modal-order-items"></span></p> -->
                 <div class="container">
-                    <!-- <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <hr>
-                            <h3>Order Report</h3>
-                            <hr>
-                        </div>
-                    </div> -->
                     <div class="row mt-3">
                         <div class="col-12">
                             <div class="c-section">
