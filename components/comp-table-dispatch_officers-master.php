@@ -16,6 +16,18 @@
             $dependencies = [['table' => 'dispatch', 'column' => 'dispatch_officer_id']];
         ?>
         <?php foreach ($dispatch_officers as $officer) : ?>
+            <?php $columns = [
+                [
+                    'type' => 'text',
+                    'data' => ['name' => $officer['name']] 
+                ],
+
+                [
+                    'type' => 'select manual',
+                    'options' => ['officer', 'master'],
+                    'data' => ['role' => $officer['role']]
+                ]
+            ]; ?>
             <tr class="officer" data-officer-id="<?= $officer['id'] ?>">
                 <td><?= str_pad($officer['id'], 4, '0', STR_PAD_LEFT) ?></td>
                 <td><?= $officer['name'] ?></td>
@@ -24,8 +36,11 @@
                 <td><?= $officer['updated_at'] ?></td>
                 <td class="c-flex-center g-3">
                     <button class="btn btn-primary btn-sm edit-btn"
-                        data-officer-id="<?= $officer['id'] ?>" 
-                        data-officer-name="<?= $officer['name'] ?>">
+                        data-action="edit"
+                        data-table="dispatch_officers"
+                        data-columns='<?= json_encode($columns) ?>'
+                        data-id="<?= $officer['id'] ?>" 
+                        >
                         <i class="bi bi-pencil-square"></i>
                     </button>
 
