@@ -250,6 +250,54 @@
                     echo json_encode(['success' => true, 'results' => $results]);
                     break;
 
+                case 'get modal options':
+                    $table = $_POST['table'];
+                    $columns = $_POST['columns'];
+                    $display = $_POST['display'];
+
+                    $stmt = $conn->prepare("SELECT `$columns`, `$display` FROM `$table`");
+                    $stmt->execute();
+                    echo json_encode($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
+                    break;
+
+                case 'edit':
+                    $id = $_POST['id'];
+                    $table = $_POST['table'];
+
+                    $fields = [];
+
+                    foreach ($_POST as $column => $value) {
+                        if ($column != 'id' && $column != 'table' && $column != 'action' ) {
+                            $fields[] = "`$column` = ?";
+                        }
+                    }
+
+                    $set_clause = implode(', ', $fields);
+
+                    $sql = "UPDATE `$table` SET $set_clause WHERE id = ?";
+                    $stmt = $conn->prepare($sql);
+                    $types = str_repeat('s', count($fields)) . 'i';
+                    $values = array_values(array_diff_key($_POST, array_flip(['id', 'table', 'action'])));
+                    $values[] = $id;
+                    $stmt -> bind_param($types,...$values);
+
+                    if ($stmt->execute()) {
+                        echo json_encode(['success' => true]);
+                        $log_data = [
+                            'entity_type' => $table,
+                            'entity_id' => $id,
+                            'event_type' => 'edit',
+                            'event_description' => 'Edited ' . $table . ' with ID: ' . $id . '.',
+                            'user_id' => getCurrentOfficer('id')
+                        ];
+
+                        logEvent($log_data);
+
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Failed to update record.']);
+                    }
+                    break;
+
                 default:
                     break;
 

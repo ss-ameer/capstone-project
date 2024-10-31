@@ -1634,7 +1634,7 @@ $(document).ready(function(){
             url: config_function_url,
             type: 'POST',
             dataType: 'json',
-            data: {
+            data: { 
                 id: id,
                 reassign_value: reassign_value,
                 dependency_checks: dependency_checks,
@@ -1677,6 +1677,114 @@ $(document).ready(function(){
             }
         });
     }
+
+    $(document).on('click', '[data-action="edit"]', function() {
+        var id = $(this).data('id');
+        var table = $(this).data('table');
+        var columns = $(this).data('columns');
+
+        var $form = $('#edit-form');
+
+        $($form).empty();
+
+        columns.forEach(function (field) {
+            var $form_group = $(`<div class="form-floating mt-3"></div>`);
+            var label = Object.keys(field.data)[0];
+            var value = Object.values(field.data)[0];
+            
+            if(field.type === 'text') {
+                var $input = $(`<input type="text" class="form-control" name="${label}">`).val(value);
+                $form_group.append($input);
+            } else if (field.type === 'select manual') {
+                var $select = $(`<select class="form-select" name="${label}"></select>`);
+                var $options = field.options;
+
+                $.each($options, function (index, option) {
+                    var $option = $('<option></option>').val(option).text(option);
+                    if (option == value) $option.prop('selected', true);
+                    $select.append($option);
+                });
+                
+                $form_group.append($select);
+            } else if (field.type === 'select' && field.table) {
+                // Create select dropdown with options from foreign key table
+                var $select = $(`<select class="form-select" name="${label}"></select>`);
+
+                $.ajax({
+                    url: config_function_url, 
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { 
+                        table: field.table,
+                        columns: field.columns,
+                        display: field.display,
+                        action: 'get modal options'
+                    },
+                    success: function (options) {
+                        options.forEach(function (option) {
+                            console.log('RESULT: ' + option['id']);
+                            var $option = $('<option></option>').val(option[field.columns]).text(option[field.display]);
+                            if (option[field.columns] == value) $option.prop('selected', true);
+                            $select.append($option);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error:', xhr.responseText);
+                        alert('An error occurred while trying to delete the record.');
+                    }
+                });
+                
+                $form_group.append($select);
+            } else {
+                console.warn('Unknown field type:', field.type);
+            }
+            
+            $form.append($form_group);
+            $form_group.append(`<label>${label}</label>`);
+        })
+
+        $('#edit-modal').modal('show');
+    })
+
+    $(document).on('click', '#edit-modal #edit-form-submit', function() {
+        $('#edit-form').submit();
+        console.log('update: edit form submitted.');
+    });
+
+    $(document).on('submit', '#edit-form', function(event) {
+        event.preventDefault();
+
+        var form_data = $(this).serializeArray();
+        var id = $('[data-action="edit"]').data('id');
+        var table = $('[data-action="edit"]').data('table');
+
+        form_data.push({ name: 'id', value: id});
+        form_data.push({ name: 'table', value: table});
+        form_data.push({ name: 'action', value: 'edit'});
+
+        console.log(form_data); // log event
+
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: form_data,
+            success: function(response) {
+                if (response.success) {
+                    alert('Record updated successfully.');
+                    $('#edit-modal').modal('hide');
+                    location.reload();
+                } else {
+                    alert('Failed to update record:'+ response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText);
+                alert('An error occurred while trying to update the record.');
+            }
+        });
+
+    })
 
     updateDispatchTables();
     

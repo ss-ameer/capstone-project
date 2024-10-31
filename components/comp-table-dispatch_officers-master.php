@@ -41,7 +41,9 @@
                             data-table="dispatch_officers"
                             data-column="id"
                             data-id="<?= $officer['id'] ?>"
-                            data-name="<?= $officer['name'] ?>" >
+                            data-name="<?= $officer['name'] ?>" 
+                            data-dependencies='<?= json_encode($dependencies) ?>'
+                        >
                             <i class="bi bi-trash-fill"></i>
                         </button>
                     </span>
