@@ -55,7 +55,7 @@
                         <?php endif; ?>"
                             data-action="delete"
                             data-table="dispatch_officers"
-                            data-column="id"
+                            data-id-column="id"
                             data-id="<?= $officer['id'] ?>"
                             data-name="<?= $officer['name'] ?>" 
                             data-dependencies='<?= json_encode($dependencies) ?>'

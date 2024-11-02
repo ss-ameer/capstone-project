@@ -56,7 +56,7 @@
                         data-action="delete" 
                         data-table="trucks" 
                         data-column="id" 
-                        
+                        data-id-column="id"
                         data-id="<?= $unit['id'] ?>" 
                         data-name="<?= $unit['truck_number'] ?>"
                         data-dependencies='<?= json_encode($dependencies) ?>'
