@@ -38,6 +38,7 @@
                     <button class="btn btn-primary btn-sm edit-btn"
                         data-action="edit"
                         data-table="dispatch_officers"
+                        data-id-column="id"
                         data-columns='<?= json_encode($columns) ?>'
                         data-id="<?= $officer['id'] ?>" 
                         >

@@ -206,7 +206,8 @@
                 case 'delete':
                     $value = $_POST['id'];
                     $table = $_POST['table'];
-                    $result = dbDeleteRow($table, $value);
+                    $id_column = $_POST['id_column'];
+                    $result = dbDeleteRow($table, $id_column, $value);
 
                     echo json_encode($result);
 
@@ -263,21 +264,22 @@
                 case 'edit':
                     $id = $_POST['id'];
                     $table = $_POST['table'];
+                    $id_column = $_POST['id-column'];
 
                     $fields = [];
 
                     foreach ($_POST as $column => $value) {
-                        if ($column != 'id' && $column != 'table' && $column != 'action' ) {
+                        if ($column != 'id' && $column != 'table' && $column != 'action' && $column != 'id-column') {
                             $fields[] = "`$column` = ?";
                         }
                     }
 
                     $set_clause = implode(', ', $fields);
 
-                    $sql = "UPDATE `$table` SET $set_clause WHERE id = ?";
+                    $sql = "UPDATE `$table` SET $set_clause WHERE `$id_column` = ?";
                     $stmt = $conn->prepare($sql);
                     $types = str_repeat('s', count($fields)) . 'i';
-                    $values = array_values(array_diff_key($_POST, array_flip(['id', 'table', 'action'])));
+                    $values = array_values(array_diff_key($_POST, array_flip(['id', 'table', 'action', 'id-column'])));
                     $values[] = $id;
                     $stmt -> bind_param($types,...$values);
 
@@ -366,6 +368,23 @@
 
         $_SESSION['items'] = $items;
         $stmt->close();
+    }
+
+    function returnItems () {
+        global $conn;
+
+        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, density, price FROM items");
+        $stmt -> execute();
+        $result = $stmt -> get_result();
+
+        $items = [];
+        while ($row = $result -> fetch_assoc()) {
+            $items[] = $row;
+        }
+
+        $stmt->close();
+
+        return $items;
     }
 
     function addItem() {
@@ -1548,10 +1567,10 @@
         return $result;
     }
     
-    function dbDeleteRow($table, $value) {
+    function dbDeleteRow($table, $id_column, $value) {
         global $conn;
     
-        $query = "DELETE FROM `$table` WHERE `id` = ?";
+        $query = "DELETE FROM `$table` WHERE `$id_column` = ?";
         $stmt = $conn->prepare($query);
         if ($stmt === false) {
             return ['success' => true, 'message' => 'Failed to prepare statement'];

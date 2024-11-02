@@ -46,7 +46,7 @@
                     <button class="btn btn-danger btn-sm delete-btn"
                         data-action="delete" 
                         data-table="items" 
-                        data-column="item_id" 
+                        data-id-column="item_id" 
                         data-id="<?= $item['item_id'] ?>" 
                         data-name="<?= $item['item_name'] ?>"
                         data-dependencies='<?= json_encode($dependencies) ?>'

@@ -1555,9 +1555,10 @@ $(document).ready(function(){
         var id = $(this).data('id'); 
         var name = $(this).data('name');
         var column = $(this).data('column');
+        var id_column = $(this).data('id-column');
         var dependencies = $(this).data('dependencies');
         var reassign_id = $(this).data('reassign_id');
-        var $row = $(this).closest('tr');
+        var row = $(this).closest('tr');
 
         console.log('Raw dependencies:', dependencies);
         
@@ -1597,8 +1598,9 @@ $(document).ready(function(){
                         );
                     }
                     else {
-                        deleteRecord(table, id, function() {
-                            $row.remove();
+                        console.log('id column: ' + id_column);
+                        deleteRecord(table, id_column, id, function() {
+                            row.remove();
                         });
                     }
                 },
@@ -1653,13 +1655,14 @@ $(document).ready(function(){
         });
     });
     
-    function deleteRecord(table, id, callback) {
+    function deleteRecord(table, id_column, id, callback) {
         $.ajax({
             url: config_function_url,
             type: 'POST',
             dataType: 'json',
             data: {
                 table: table,
+                id_column: id_column,
                 id: id,
                 action: 'delete'
             },
@@ -1681,22 +1684,24 @@ $(document).ready(function(){
     $(document).on('click', '[data-action="edit"]', function() {
         var id = $(this).data('id');
         var table = $(this).data('table');
+        var id_column = $(this).data('id-column');
         var columns = $(this).data('columns');
 
-        var $form = $('#edit-form');
+        var form = $('#edit-form');
 
-        $form.empty();
-        $form.append(`<input type="hidden" name="id" value="${id}">`);
-        $form.append(`<input type="hidden" name="table" value="${table}">`);
+        form.empty();
+        form.append(`<input type="hidden" name="id" value="${id}">`);
+        form.append(`<input type="hidden" name="table" value="${table}">`);
+        form.append(`<input type="hidden" name="id-column" value="${id_column}">`);
 
         columns.forEach(function (field) {
-            var $form_group = $(`<div class="form-floating mt-3"></div>`);
+            var form_group = $(`<div class="form-floating mt-3"></div>`);
             var label = Object.keys(field.data)[0];
             var value = Object.values(field.data)[0];
             
             if(field.type === 'text') {
                 var $input = $(`<input type="text" class="form-control" name="${label}">`).val(value);
-                $form_group.append($input);
+                form_group.append($input);
             } else if (field.type === 'select manual') {
                 var $select = $(`<select class="form-select" name="${label}"></select>`);
                 var $options = field.options;
@@ -1707,7 +1712,7 @@ $(document).ready(function(){
                     $select.append($option);
                 });
                 
-                $form_group.append($select);
+                form_group.append($select);
             } else if (field.type === 'select' && field.table) {
                 // Create select dropdown with options from foreign key table
                 var $select = $(`<select class="form-select" name="${label}"></select>`);
@@ -1736,13 +1741,13 @@ $(document).ready(function(){
                     }
                 });
                 
-                $form_group.append($select);
+                form_group.append($select);
             } else {
                 console.warn('Unknown field type:', field.type);
             }
             
-            $form.append($form_group);
-            $form_group.append(`<label>${label}</label>`);
+            form.append(form_group);
+            form_group.append(`<label>${label}</label>`);
         })
 
         $('#edit-modal').modal('show');

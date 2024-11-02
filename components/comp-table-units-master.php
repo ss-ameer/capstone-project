@@ -46,6 +46,7 @@
                     <button class="btn btn-primary btn-sm edit-btn"
                         data-action = "edit"
                         data-table = "trucks"
+                        data-id-column = "id"
                         data-columns = '<?= json_encode($columns) ?>'
                         data-id = "<?= $unit['id'] ?>" >
                         <i class="bi bi-pencil-square"></i>
@@ -55,6 +56,7 @@
                         data-action="delete" 
                         data-table="trucks" 
                         data-column="id" 
+                        
                         data-id="<?= $unit['id'] ?>" 
                         data-name="<?= $unit['truck_number'] ?>"
                         data-dependencies='<?= json_encode($dependencies) ?>'
