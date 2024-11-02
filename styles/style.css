@@ -12275,6 +12275,16 @@ textarea.form-control-lg {
   height: 90%;
 }
 
+.c-table-container table tbody td {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.c-table-container table tbody td.too-long {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
 #dispatch-modal span {
   font-size: small;
 }

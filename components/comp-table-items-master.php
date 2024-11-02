@@ -29,7 +29,7 @@
             <tr class="item" data-officer-id="<?= $item['item_id'] ?>" style="width: 100%;">
                 <td><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
                 <td><?= $item['item_name'] ?></td>
-                <td><?= $item['description'] ?></td>
+                <td class="too-long"><?= $item['description'] ?></td>
                 <td><?= $item['category'] ?></td>
                 <td><?= $item['density'] ?></td>
                 <td><?= $item['price'] ?></td>

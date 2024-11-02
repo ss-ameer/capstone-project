@@ -75,12 +75,20 @@
         @extend .table-bordered;
         @extend .align-middle;
 
-        // th {
-        //     @extend .text-center;
-        // }
-
         tbody {
             @extend .table-group-divider;
+
+            td {
+                white-space: nowrap; 
+                overflow: hidden; 
+                // text-overflow: ellipsis; 
+            }
+
+            td.too-long {
+                max-width: 200px;
+                white-space: nowrap;
+                overflow-x: auto;
+            }
         }
     }
 }
