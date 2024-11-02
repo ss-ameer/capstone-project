@@ -26,7 +26,7 @@
                     'data' => ['item_name' => $item['item_name']]
                 ],
             ]; ?>
-            <tr class="item" data-officer-id="<?= $item['item_id'] ?>">
+            <tr class="item" data-officer-id="<?= $item['item_id'] ?>" style="width: 100%;">
                 <td><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
                 <td><?= $item['item_name'] ?></td>
                 <td><?= $item['description'] ?></td>

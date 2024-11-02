@@ -90,8 +90,8 @@
     span:not(.fw-bold) {
 
         @extend .text-nowrap !optional;
-        @extend .overflow-x-auto !optional;;
         @extend .w-75 !optional;
+        @extend .overflow-x-auto !optional;
         @extend .text-end !optional;
 
     }
