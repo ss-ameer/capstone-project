@@ -129,8 +129,8 @@
                         </div>
 
                         <div class="col-12">
-                            <div class="c-section">
-                                <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="">
                                     <div class="c-title-container">
                                         <span class="lead">Dispatch Officer</span>
                                     </div>
@@ -142,8 +142,8 @@
                         </div>
 
                         <div class="col-12">
-                            <div class="c-section">
-                                <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="#table-units">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
                                     <div class="c-title-container">
                                         <span class="lead">Units</span>
                                     </div>
@@ -155,8 +155,8 @@
                         </div>
 
                         <div class="col-12">
-                            <div class="c-section">
-                                <div class="c-section-header_table" data-bs-toggle="collapse" data-bs-target="#table-items">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
                                         <span class="lead">Items</span>
                                     </div>
