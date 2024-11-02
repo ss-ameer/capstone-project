@@ -1199,6 +1199,12 @@
         return [];
     }    
 
+    function getUnitTypes() {
+        $result = dbGetTableData('truck_types');
+
+        return $result;
+    }
+
     function getUnitsFiltered($unit_type_id) {
         
         $trucks = getUnits();

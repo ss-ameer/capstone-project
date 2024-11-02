@@ -158,6 +158,19 @@
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
                                     <div class="c-title-container">
+                                        <span class="lead">Unit Types</span>
+                                    </div>
+                                </div>
+                                <div class="c-table-container">
+                                    <?php include_once PATH . 'components/comp-table-unit_types-master.php'; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
+                                    <div class="c-title-container">
                                         <span class="lead">Operator</span>
                                     </div>
                                 </div>
