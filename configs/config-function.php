@@ -1172,10 +1172,15 @@
         return []; 
     }
 
+    function getOperators() {
+        $result = dbGetTableData('drivers');
+
+        return $result;
+    }
+
     function getUnits() {
         global $conn;
     
-        // Query to fetch trucks along with their truck_type, created_at, and updated_at
         $query = "
             SELECT t.id, t.truck_number, t.truck_type_id, t.status, t.created_at, t.updated_at, tt.type_name AS truck_type
             FROM trucks t

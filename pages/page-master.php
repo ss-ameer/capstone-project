@@ -104,7 +104,7 @@
                                 </div>
                             </div>    
                         </div>
-
+                        
                         <div class="col-12 collapse master-create">
                             <div class="c-section">
                                 <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-driver-container">
@@ -150,6 +150,19 @@
                                 </div>
                                 <div class="c-table-container">
                                     <?php include_once PATH . 'components/comp-table-units-master.php'; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
+                                    <div class="c-title-container">
+                                        <span class="lead">Operator</span>
+                                    </div>
+                                </div>
+                                <div class="c-table-container">
+                                    <?php include_once PATH . 'components/comp-table-operators-master.php'; ?>
                                 </div>
                             </div>
                         </div>
