@@ -1205,6 +1205,16 @@
         return $result;
     }
 
+    function getOrders() {
+        $result = dbGetTableData('orders');
+
+        // add proper address display
+        // $address = 
+        // array_push($result, 'address');
+
+        return $result;
+    }
+
     function getOrderItems () {
         $result = dbGetTableData('order_items');
 
