@@ -1,5 +1,5 @@
 <!-- comp-table-clients-master.php -->
-<table class="table-client" id="table-clients">
+<table class="table-clients" id="table-clients">
     <thead>
         <tr>
             <th scope="col">ID</th>
