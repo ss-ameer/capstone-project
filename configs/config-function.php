@@ -1205,6 +1205,12 @@
         return $result;
     }
 
+    function getOrderItems () {
+        $result = dbGetTableData('order_items');
+
+        return $result;
+    }
+
     function getUnitsFiltered($unit_type_id) {
         
         $trucks = getUnits();
