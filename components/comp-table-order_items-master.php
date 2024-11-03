@@ -67,7 +67,7 @@
                 <td class="c-flex-center g-3">
                     <button class="btn btn-primary btn-sm edit-btn"
                         data-action = "edit"
-                        data-table = "drivers"
+                        data-table = "order_items"
                         data-id-column = "id" 
                         data-columns = '<?= json_encode($columns) ?>'
                         data-id = "<?= $order_item['id'] ?>" >

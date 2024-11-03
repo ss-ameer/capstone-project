@@ -33,7 +33,7 @@
                 <td class="c-flex-center g-3">
                     <button class="btn btn-primary btn-sm edit-btn"
                         data-action = "edit"
-                        data-table = "drivers"
+                        data-table = "unit-types"
                         data-id-column = "id" 
                         data-columns = '<?= json_encode($columns) ?>'
                         data-id = "<?= $unit_type['id'] ?>" >

@@ -55,7 +55,7 @@
 
                     <button class="btn btn-danger btn-sm delete-btn"
                         data-action="delete" 
-                        data-table="operators" 
+                        data-table="drivers" 
                         data-id-column="id" 
                         data-id="<?= $operator['id'] ?>" 
                         data-name="<?= $operator['name'] ?>"
