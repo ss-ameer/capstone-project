@@ -1178,6 +1178,12 @@
         return $result;
     }
 
+    function getClients() {
+        $result = dbGetTableData('clients');
+
+        return $result;
+    }
+
     function getUnits() {
         global $conn;
     

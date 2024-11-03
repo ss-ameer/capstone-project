@@ -218,6 +218,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-12">
+                            <div class="c-section bg-light">
+                                <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
+                                    <div class="c-title-container">
+                                        <span class="lead">Clients</span>
+                                    </div>
+                                </div>
+                                <div class="c-table-container">
+                                    <?php include_once PATH . 'components/comp-table-clients-master.php'; ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
