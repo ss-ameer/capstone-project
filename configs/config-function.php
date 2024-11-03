@@ -1206,24 +1206,6 @@
     }
     
     function getAddresses() {
-        // global $conn;
-    
-        // $query = "
-        //     SELECT t.id, t.truck_number, t.truck_type_id, t.status, t.created_at, t.updated_at, tt.type_name AS truck_type
-        //     FROM trucks t
-        //     LEFT JOIN truck_types tt ON t.truck_type_id = tt.id";
-    
-        // $result = $conn->query($query);
-    
-        // if ($result->num_rows > 0) {
-        //     $trucks = [];
-        //     while ($row = $result->fetch_assoc()) {
-        //         $trucks[] = $row; 
-        //     }
-        //     return $trucks; 
-        // }
-    
-        // return [];
 
         $result = dbGetTableData('addresses');
 
