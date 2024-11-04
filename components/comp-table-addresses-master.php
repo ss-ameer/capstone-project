@@ -13,7 +13,8 @@
     </thead>
     <tbody>
         <?php 
-            $addresses = getAddresses();
+            $initial_limit = 10;
+            $addresses = getAddresses($initial_limit, 0);
             $dependencies = [
                 ['table' => 'orders', 'column' => 'address_id'],
                 ['table' => 'addresses', 'column' => 'address_id']
@@ -21,7 +22,6 @@
             ?>
         <?php foreach ($addresses as $address) : ?>
             <?php 
-                // $client = dbGetTableData($clients, 'name', '', 'client_id = ' . intval($address['client_id']));
                 $columns = [
                     [   
                         'type' => 'select',
@@ -63,4 +63,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="addresses" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

@@ -1,6 +1,10 @@
 <?php 
 // config-function.php
 
+    // ini_set('display_errors', 1);
+    // ini_set('display_startup_errors', 1);
+    // error_reporting(E_ALL);
+
     session_start();
 
     if (isset($_SESSION['user_info'])) {
@@ -298,6 +302,78 @@
                     } else {
                         echo json_encode(['success' => false, 'message' => 'Failed to update record.']);
                     }
+                    break;
+
+                case 'table show more':
+                    $table = $_POST['table_id']; 
+                    $offset = $_POST['offset'];
+
+                    $limit = 10;
+
+                    $total_count = dbGetTableCount($table);
+
+                    $data = dbGetTableData($table, '*', '', '', '', $limit, $offset);
+
+                    $columns = [];
+
+                    switch ($table) {
+                        case 'addresses':
+                            foreach ($data as &$address){
+                                $address['columns'] = [
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'clients',
+                                        'columns' => 'client_id',
+                                        'display' => 'name',
+                                        'data' => ['client_id' => $address['client_id']]
+                                    ]
+                                ];
+                            }
+                            break;
+                        
+                            case 'orders':
+                                foreach ($data as &$order){
+                                    $order['columns'] = [
+                                        [
+                                            'type' => 'text',
+                                            'data' => ['created_at' => $order['created_at']]
+                                        ],
+                                        [
+                                            'type' => 'select',
+                                            'table' => 'addresses',
+                                            'columns' => 'address_id',
+                                            'display' => 'address_id',
+                                            'data' => ['address_id' => $order['address_id']]
+                                        ],
+                                        [
+                                            'type' => 'select',
+                                            'table' => 'clients',
+                                            'columns' => 'client_id',
+                                            'display' => 'name',
+                                            'data' => ['client_id' => $order['client_id']]
+                                        ],
+                                        [
+                                            'type' => 'text',
+                                            'data' => ['total_qty' => $order['total_qty']]
+                                        ],
+                                        [
+                                            'type' => 'text',
+                                            'data' => ['total_amount' => $order['total_amount']]
+                                        ],
+                                        [
+                                            'type' => 'select manual',
+                                            'options' => ['pending', 'complete', 'canceled'],
+                                            'data' => ['status' => $order['status']]
+                                        ]
+                                    ];
+                                }
+                                break;
+                            default:
+                                break;
+                            
+                    }
+
+                    echo json_encode(['data' => $data, 'total_count' => $total_count]);
                     break;
 
                 default:
@@ -903,22 +979,48 @@
         echo json_encode($clients);
     }
 
-    function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '') {
+    /**
+     * Retrieves data from a database table.
+     *
+     * @param string $tableName The name of the table to query.
+     * @param string|array $columns The columns to select. If an array, the values will be sanitized and joined with commas.
+     * @param string $joins The joins to include in the query. If empty, no joins will be added.
+     * @param string $where The WHERE clause of the query. If empty, no WHERE clause will be added.
+     * @param string $orderBy The ORDER BY clause of the query. If empty, no ORDER BY clause will be added.
+     *
+     * @return array The results of the query, as an array of associative arrays, where each associative array
+     *     represents a row of the result set.
+     */
+    
+    function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '', $limit = null , $offset = null) {
         global $conn;
     
-        // Sanitize the table name and columns
+         // Sanitize the table name and columns
         $tableName = mysqli_real_escape_string($conn, $tableName);
         $columns = is_array($columns) ? implode(', ', array_map(fn($col) => mysqli_real_escape_string($conn, $col), $columns)) : $columns;
-    
+
         // Build the SQL query
-        $sql = "SELECT $columns FROM $tableName" . 
-            (!empty($joins) ? " $joins" : "") . 
-            (!empty($where) ? " WHERE $where" : "") . 
-            (!empty($orderBy) ? " ORDER BY $orderBy" : "");
-    
+        $sql = "SELECT $columns FROM $tableName" .
+            (!empty($joins) ? " $joins" : "") .
+            (!empty($where) ? " WHERE $where" : "") .
+            (!empty($orderBy) ? " ORDER BY $orderBy" : "") .
+            (!empty($limit) ? " LIMIT $limit" : "") .
+            (!empty($offset) ? " OFFSET $offset" : "");
+
         // Execute the query and fetch data
         $result = $conn->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    function dbGetTableCount($table, $where = '') {
+        global $conn;
+        $query = "SELECT COUNT(*) as count FROM $table";
+        if ($where) {
+            $query .= " WHERE $where";
+        }
+        $result = $conn->query($query);
+        $row = $result->fetch_assoc();
+        return $row['count'];
     }
 
     function dbAddRecord($table, $data) {
@@ -1205,9 +1307,9 @@
         return [];
     }
     
-    function getAddresses() {
+    function getAddresses($limit = 10, $offset = 0) {
 
-        $result = dbGetTableData('addresses');
+        $result = dbGetTableData('addresses', '*', '', '', '', $limit, $offset);
 
         return $result;
     }
@@ -1218,8 +1320,8 @@
         return $result;
     }
 
-    function getOrders() {
-        $result = dbGetTableData('orders');
+    function getOrders($limit = 0, $offset = 0) {
+        $result = dbGetTableData('orders', limit: $limit, offset: $offset);
 
         // add proper address display
         // $address = 

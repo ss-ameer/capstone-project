@@ -1714,7 +1714,6 @@ $(document).ready(function(){
                 
                 form_group.append($select);
             } else if (field.type === 'select' && field.table) {
-                // Create select dropdown with options from foreign key table
                 var $select = $(`<select class="form-select" name="${label}"></select>`);
 
                 $.ajax({
@@ -1729,7 +1728,6 @@ $(document).ready(function(){
                     },
                     success: function (options) {
                         options.forEach(function (option) {
-                            console.log('RESULT: ' + option['id']);
                             var $option = $('<option></option>').val(option[field.columns]).text(option[field.display]);
                             if (option[field.columns] == value) $option.prop('selected', true);
                             $select.append($option);
@@ -1787,7 +1785,125 @@ $(document).ready(function(){
             }
         });
 
-    })
+    });
+
+        $(document).on('click', '.show-more-btn', function() {
+            var table_id = $(this).data('table-id');
+            var offset = $(this).data('offset') || 0;
+            var dependencies = $(this).data('dependencies');
+
+            $.ajax({
+                type: 'POST',
+                url: config_function_url,
+                dataType: 'json',
+                data: {
+                    table_id: table_id,
+                    offset: offset,
+                    action: 'table show more'
+                },
+                success: function(response) {
+                    var result = response;
+                    var data = result.data;
+                    var total_count = result.total_count;
+
+                    data.forEach(function(row) {
+                        var new_row = '';
+
+                        switch (table_id) {
+                            case 'addresses':
+                                new_row = `
+                                    <tr class="address" style="width: 100%;">
+                                        <td>${String(row.address_id).padStart(4,"0")}</td>
+                                        <td>${row.client_id}</td>
+                                        <td>${row.city}</td>
+                                        <td>${row.barangay}</td>
+                                        <td>${row.street}</td>
+                                        <td>${row.house_number}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action = "edit"
+                                                data-table = "addresses"
+                                                data-id-column = "address_id" 
+                                                data-columns = '${JSON.stringify(row.columns)}'
+                                                data-id = "${row.address_id}" >
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete" 
+                                                data-table="addresses" 
+                                                data-id-column="address_id" 
+                                                data-id="${row.address_id}" 
+                                                data-name="${row.address_id}"
+                                                data-dependencies='${dependencies}'
+                                            >
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`
+                                break;
+
+                            case 'orders':
+                                console.log(dependencies);
+                                new_row = `
+                                    <tr class="order" data-officer-id="${row.id}" style="width: 100%;">
+                                        <td>${String(row.id).padStart(4, '0')}</td>
+                                        <td>${row.created_at}</td>
+                                        <td>${row.client_id}</td>
+                                        <td>${row.address_id}</td>
+                                        <td>${row.total_qty}</td>
+                                        <td>${row.total_amount}</td>
+                                        <td>${row.status}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action="edit"
+                                                data-table="orders"
+                                                data-id-column="id" 
+                                                data-columns='${JSON.stringify(row.columns)}'
+                                                data-id="${row.id}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete" 
+                                                data-table="orders" 
+                                                data-id-column="id" 
+                                                data-id="${row.id}" 
+                                                data-name="${row.id}"
+                                                data-dependencies='${JSON.stringify(dependencies)}'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+
+                            default:
+                                break
+                        }
+
+                        $('#table-' + table_id + ' tbody').append(new_row);
+                    });
+
+                    offset += data.length;
+
+                    $('.show-more-btn[data-table-id="' + table_id + '"]').data('offset', offset);
+                    
+                    if (offset >= total_count || total_count <= 10) {
+                        $('#table-' + table_id + ' tfoot').hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error: ", status, error);
+                }
+            })
+        });
+
+        $(document).on('click', '.delete-btn', function() { 
+            var dependencies = $(this).data('dependencies');
+            array_check = Array.isArray(dependencies);
+            console.log("Value: " + dependencies);
+            console.log("Is Array: " + array_check);
+        });
 
     updateDispatchTables();
     

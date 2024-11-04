@@ -14,7 +14,8 @@
     </thead>
     <tbody>
         <?php 
-            $orders = getOrders();
+            $initial_limit = 10;
+            $orders = getOrders(limit: $initial_limit);
             $dependencies = [
                 ['table' => 'order_items', 'column' => 'order_id']
             ];
@@ -49,8 +50,8 @@
                 ],
                 [
                     'type' => 'select manual',
-                    'options' => ['available', 'in_use', 'maintenance', 'out_of_service'],
-                    'data' => ['status' => $unit['status']]
+                    'options' => ['pending', 'complete', 'canceled'],
+                    'data' => ['status' => $order['status']]
                 ]
             ]; ?>
             <tr class="order-item" data-officer-id="<?= $order['id'] ?>" style="width: 100%;">
@@ -77,7 +78,7 @@
                         data-id-column="id" 
                         data-id="<?= $order['id'] ?>" 
                         data-name="<?= $order['id'] ?>"
-                        data-dependencies='<?= json_encode($dependencies) ?>'
+                        data-dependencies = '<?= json_encode($dependencies) ?>'
                     >
                         <i class="bi bi-trash-fill"></i>
                     </button>
@@ -85,4 +86,14 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="orders" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>
+<?php var_dump(json_encode($dependencies)); ?>
