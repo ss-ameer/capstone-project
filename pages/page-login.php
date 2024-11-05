@@ -1,6 +1,4 @@
 <?php 
-    session_start();
-
     include_once('../configs/config-function.php');
 ?>
 <!DOCTYPE html>
