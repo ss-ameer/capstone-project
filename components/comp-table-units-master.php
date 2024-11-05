@@ -1,5 +1,5 @@
 <!-- comp-table-units-master.php -->
-<table class="table-bordered" id="table-units">
+<table class="table-bordered" id="table-trucks">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -13,7 +13,8 @@
     </thead>
     <tbody>
         <?php 
-            $units = getUnits();
+            $initial_limit = 10;
+            $units = getUnits(limit: $initial_limit);
             $dependencies = [['table' => 'dispatch', 'column' => 'truck_id']];
         ?>
         <?php foreach ($units as $unit) : ?>
@@ -67,4 +68,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="trucks" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

@@ -2066,6 +2066,38 @@ $(document).ready(function(){
                                     </tr>`;
                                 break;
 
+                            case 'trucks':
+                                new_row = `
+                                    <tr class="unit" data-officer-id="${row.id}">
+                                        <td>${String(row.id).padStart(4, '0')}</td>
+                                        <td>${row.truck_number}</td>
+                                        <td>${row.truck_type}</td>
+                                        <td>${row.status}</td>
+                                        <td>${row.created_at}</td>
+                                        <td>${row.updated_at}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action="edit"
+                                                data-table="trucks"
+                                                data-id-column="id"
+                                                data-columns='${JSON.stringify(row.columns)}'
+                                                data-id="${row.id}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete"
+                                                data-table="trucks"
+                                                data-id-column="id"
+                                                data-id="${row.id}"
+                                                data-name="${row.truck_number}"
+                                                data-dependencies='${JSON.stringify(dependencies)}'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                                break;
+
                             default:
                                 break
                         }

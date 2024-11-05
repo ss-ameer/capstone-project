@@ -500,6 +500,29 @@
                                     ]
                                 ];
                             }
+                            break;
+
+                        case 'trucks':
+                            foreach($data as &$truck) {
+                                $truck['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['truck_number' => $unit['truck_number']]
+                                    ],
+                                    [   
+                                        'type' => 'select',
+                                        'table' => 'truck_types',
+                                        'columns' => 'id',
+                                        'display' => 'type_name',
+                                        'data' => ['truck_type_id' => $unit['truck_type']]
+                                    ],
+                                    [
+                                        'type' => 'select manual',
+                                        'options' => ['available', 'in_use', 'maintenance', 'out_of_service'],
+                                        'data' => ['status' => $unit['status']]
+                                    ]
+                                ];
+                            }
 
                         default:
                             break;
@@ -1414,13 +1437,18 @@
         return $result;
     }
 
-    function getUnits() {
+    function getUnits($limit = 10, $offset = 0) {
+
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+
         global $conn;
     
         $query = "
             SELECT t.id, t.truck_number, t.truck_type_id, t.status, t.created_at, t.updated_at, tt.type_name AS truck_type
             FROM trucks t
-            LEFT JOIN truck_types tt ON t.truck_type_id = tt.id";
+            LEFT JOIN truck_types tt ON t.truck_type_id = tt.id
+            LIMIT $limit OFFSET $offset";
     
         $result = $conn->query($query);
     
@@ -1438,6 +1466,13 @@
     function getAddresses($limit = 10, $offset = 0) {
 
         $result = dbGetTableData('addresses', '*', '', '', '', $limit, $offset);
+
+        return $result;
+    }
+
+    function getTrucks($limit = 10, $offset = 0) {
+
+        $result = dbGetTableData('trucks', '*', '', '', '', $limit, $offset);
 
         return $result;
     }
