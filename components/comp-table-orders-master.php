@@ -96,4 +96,4 @@
         </tr>
     </tfoot>
 </table>
-<?php var_dump(json_encode($dependencies)); ?>
+<?php // var_dump(json_encode($dependencies)); ?>
