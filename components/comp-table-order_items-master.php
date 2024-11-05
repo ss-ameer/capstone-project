@@ -14,7 +14,8 @@
     </thead>
     <tbody>
         <?php 
-            $order_items = getOrderItems();
+            $initial_limit = 10;
+            $order_items = getOrderItems(limit: $initial_limit);
             $dependencies = [
                 ['table' => 'order_items', 'column' => 'truck_type_id']
             ];
@@ -88,4 +89,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="order_items" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

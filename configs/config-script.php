@@ -1844,7 +1844,6 @@ $(document).ready(function(){
                                 break;
 
                             case 'orders':
-                                console.log(dependencies);
                                 new_row = `
                                     <tr class="order" data-officer-id="${row.id}" style="width: 100%;">
                                         <td>${String(row.id).padStart(4, '0')}</td>
@@ -1876,6 +1875,40 @@ $(document).ready(function(){
                                         </td>
                                     </tr>
                                 `;
+                                break;
+                            
+                            case 'order_items':
+                                new_row = `
+                                    <tr class="order-item" style="width: 100%;">
+                                    <td>${String(row.id).padStart(4, '0')}</td>
+                                    <td>${row.order_id}</td>
+                                    <td>${row.item_id}</td>
+                                    <td>${row.truck_type_id}</td>
+                                    <td>${row.price}</td>
+                                    <td>${row.item_total}</td>
+                                    <td>${row.status}</td>
+                                    <td class="c-flex-center g-3">
+                                        <button class="btn btn-primary btn-sm edit-btn"
+                                            data-action = "edit"
+                                            data-table = "order_items"
+                                            data-id-column = "id" 
+                                            data-columns = '${row.columns}'
+                                            data-id = "${row.id}" >
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+
+                                        <button class="btn btn-danger btn-sm delete-btn"
+                                            data-action="delete" 
+                                            data-table="order_items" 
+                                            data-id-column="id" 
+                                            data-id="${row.id}" 
+                                            data-name="${row.id}"
+                                            data-dependencies='${JSON.stringify(dependencies)}'>
+                                            <i class="bi bi-trash-fill"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
+                                break;
 
                             default:
                                 break

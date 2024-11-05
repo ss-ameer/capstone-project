@@ -312,7 +312,7 @@
 
                     $total_count = dbGetTableCount($table);
 
-                    $data = dbGetTableData($table, '*', '', '', '', $limit, $offset);
+                    $data = dbGetTableData($table,limit: $limit, offset: $offset);
 
                     $columns = [];
 
@@ -330,46 +330,88 @@
                                 ];
                             }
                             break;
-                        
-                            case 'orders':
-                                foreach ($data as &$order){
-                                    $order['columns'] = [
-                                        [
-                                            'type' => 'text',
-                                            'data' => ['created_at' => $order['created_at']]
-                                        ],
-                                        [
-                                            'type' => 'select',
-                                            'table' => 'addresses',
-                                            'columns' => 'address_id',
-                                            'display' => 'address_id',
-                                            'data' => ['address_id' => $order['address_id']]
-                                        ],
-                                        [
-                                            'type' => 'select',
-                                            'table' => 'clients',
-                                            'columns' => 'client_id',
-                                            'display' => 'name',
-                                            'data' => ['client_id' => $order['client_id']]
-                                        ],
-                                        [
-                                            'type' => 'text',
-                                            'data' => ['total_qty' => $order['total_qty']]
-                                        ],
-                                        [
-                                            'type' => 'text',
-                                            'data' => ['total_amount' => $order['total_amount']]
-                                        ],
-                                        [
-                                            'type' => 'select manual',
-                                            'options' => ['pending', 'complete', 'canceled'],
-                                            'data' => ['status' => $order['status']]
-                                        ]
-                                    ];
-                                }
-                                break;
-                            default:
-                                break;
+                            
+                        case 'orders':
+                            foreach ($data as &$order){
+                                $order['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['created_at' => $order['created_at']]
+                                    ],
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'addresses',
+                                        'columns' => 'address_id',
+                                        'display' => 'address_id',
+                                        'data' => ['address_id' => $order['address_id']]
+                                    ],
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'clients',
+                                        'columns' => 'client_id',
+                                        'display' => 'name',
+                                        'data' => ['client_id' => $order['client_id']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['total_qty' => $order['total_qty']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['total_amount' => $order['total_amount']]
+                                    ],
+                                    [
+                                        'type' => 'select manual',
+                                        'options' => ['pending', 'complete', 'canceled'],
+                                        'data' => ['status' => $order['status']]
+                                    ]
+                                ];
+                            }
+                            break;
+
+                        case 'order_items':
+                            foreach ($data as &$order_item){
+                                $order_item['columns'] = [
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'orders',
+                                        'columns' => 'id',
+                                        'display' => 'id',
+                                        'data' => ['order_id' => $order_item['order_id']]
+                                    ],
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'items',
+                                        'columns' => 'item_id',
+                                        'display' => 'item_name',
+                                        'data' => ['item_id' => $order_item['item_id']]
+                                    ],
+                                    [
+                                        'type' => 'select',
+                                        'table' => 'truck_types',
+                                        'columns' => 'id',
+                                        'display' => 'type_name',
+                                        'data' => ['truck_type_id' => $order_item['truck_type_id']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['price' => $order_item['price']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['item_total' => $order_item['item_total']]
+                                    ],
+                                    [
+                                        'type' => 'select manual',
+                                        'options' => ['pending', 'in-queue', 'in-progress', 'failed', 'completed', 'canceled'],
+                                        'data' => ['status' => $order_item['status']]
+                                    ]
+                                ];
+                            }
+                            break;
+
+                        default:
+                            break;
                             
                     }
 
@@ -1330,8 +1372,8 @@
         return $result;
     }
 
-    function getOrderItems () {
-        $result = dbGetTableData('order_items');
+    function getOrderItems ($limit = 0, $offset = 0) {
+        $result = dbGetTableData('order_items', limit: $limit, offset: $offset);
 
         return $result;
     }
