@@ -1,5 +1,5 @@
 <!-- comp-table-unit_types-master.php -->
-<table class="table-bordered" id="table-unit_types">
+<table class="table-bordered" id="table-truck_types">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -10,7 +10,8 @@
     </thead>
     <tbody>
         <?php 
-            $unit_types = getUnitTypes();
+            $initial_limit = 10;
+            $unit_types = getUnitTypes(limit: $initial_limit);
             $dependencies = [
                 ['table' => 'order_items', 'column' => 'truck_type_id']
             ];
@@ -33,7 +34,7 @@
                 <td class="c-flex-center g-3">
                     <button class="btn btn-primary btn-sm edit-btn"
                         data-action = "edit"
-                        data-table = "unit-types"
+                        data-table = "truck_types"
                         data-id-column = "id" 
                         data-columns = '<?= json_encode($columns) ?>'
                         data-id = "<?= $unit_type['id'] ?>" >
@@ -42,7 +43,7 @@
 
                     <button class="btn btn-danger btn-sm delete-btn"
                         data-action="delete" 
-                        data-table="unit_types" 
+                        data-table="truck_types" 
                         data-id-column="id" 
                         data-id="<?= $unit_type['id'] ?>" 
                         data-name="<?= $unit_type['type_name'] ?>"
@@ -54,4 +55,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="truck_types" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

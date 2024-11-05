@@ -312,7 +312,7 @@
 
                     $total_count = dbGetTableCount($table);
 
-                    $data = dbGetTableData($table,limit: $limit, offset: $offset);
+                    $data = dbGetTableData($table, limit: $limit, offset: $offset);
 
                     $columns = [];
 
@@ -410,13 +410,28 @@
                             }
                             break;
 
+                        case 'truck_types':
+                            foreach ($data as &$unit_type){
+                                $unit_type['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['type_name' => $unit_type['type_name']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['capacity' => $unit_type['capacity']]
+                                    ]
+                                ];
+                            }
+                            break;
+
                         case 'clients':
                             foreach ($data as &$client){
                                 $client['columns'] = [
                                     [
                                         'type' => 'text',
                                         'data' => ['name' => $client['name']]
-                                    ]
+                                    ],
                                 ];
                             }
                             break;
