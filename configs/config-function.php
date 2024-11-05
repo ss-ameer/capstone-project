@@ -410,6 +410,17 @@
                             }
                             break;
 
+                        case 'clients':
+                            foreach ($data as &$client){
+                                $client['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['name' => $client['name']]
+                                    ]
+                                ];
+                            }
+                            break;
+
                         default:
                             break;
                             
@@ -1316,14 +1327,14 @@
         return []; 
     }
 
-    function getOperators() {
-        $result = dbGetTableData('drivers');
+    function getOperators($limit = 0, $offset = 0) {
+        $result = dbGetTableData('drivers', limit: $limit, offset: $offset);
 
         return $result;
     }
 
-    function getClients() {
-        $result = dbGetTableData('clients');
+    function getClients($limit = 0, $offset = 0) {
+        $result = dbGetTableData('clients', limit: $limit, offset: $offset);
 
         return $result;
     }
@@ -1356,8 +1367,8 @@
         return $result;
     }
 
-    function getUnitTypes() {
-        $result = dbGetTableData('truck_types');
+    function getUnitTypes($limit = 0, $offset = 0) {
+        $result = dbGetTableData('truck_types', offset: $offset, limit: $limit);
 
         return $result;
     }

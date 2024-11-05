@@ -1910,6 +1910,34 @@ $(document).ready(function(){
                                 </tr>`;
                                 break;
 
+                            case 'clients':
+                                new_row = `
+                                    <tr class="client" style="width: 100%;">
+                                        <td>${String(row.client_id).padStart(4, '0')}</td>
+                                        <td>${row.name}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action="edit"
+                                                data-table="clients"
+                                                data-id-column="client_id"
+                                                data-columns='${JSON.stringify(row.columns)}'
+                                                data-id="${row.client_id}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete"
+                                                data-table="clients"
+                                                data-id-column="client_id"
+                                                data-id="${row.client_id}"
+                                                data-name="${row.client_id}"
+                                                data-dependencies='${JSON.stringify(dependencies)}'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                                break;
+
                             default:
                                 break
                         }
