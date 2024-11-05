@@ -2000,6 +2000,41 @@ $(document).ready(function(){
                                     </tr>`;
                                 break;
 
+                            case 'dispatch_officers':
+                                new_row = `
+                                    <tr class="officer" data-officer-id="${row.id}">
+                                        <td>${String(row.id).padStart(4, '0')}</td>
+                                        <td>${row.name}</td>
+                                        <td>${row.role}</td>
+                                        <td>${row.created_at}</td>
+                                        <td>${row.updated_at}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action="edit"
+                                                data-table="dispatch_officers"
+                                                data-id-column="id"
+                                                data-columns='${JSON.stringify(row.columns)}'
+                                                data-id="${row.id}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <span 
+                                                ${getCurrentOfficer('id') == row.id ? 'class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="Can\'t delete while logged in."' : ''}>
+                                                <button class="btn btn-danger btn-sm delete-btn 
+                                                    ${getCurrentOfficer('id') == row.id ? 'disabled' : ''}"
+                                                    data-action="delete"
+                                                    data-table="dispatch_officers"
+                                                    data-id-column="id"
+                                                    data-id="${row.id}"
+                                                    data-name="${row.name}"
+                                                    data-dependencies='${JSON.stringify(dependencies)}'>
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>`;
+                                break;
+
                             default:
                                 break
                         }
@@ -2021,12 +2056,29 @@ $(document).ready(function(){
             })
         });
 
-        $(document).on('click', '.delete-btn', function() { 
-            var dependencies = $(this).data('dependencies');
-            array_check = Array.isArray(dependencies);
-            console.log("Value: " + dependencies);
-            console.log("Is Array: " + array_check);
-        });
+        // $(document).on('click', '.delete-btn', function() { 
+        //     var dependencies = $(this).data('dependencies');
+        //     array_check = Array.isArray(dependencies);
+        //     console.log("Value: " + dependencies);
+        //     console.log("Is Array: " + array_check);
+        // });
+
+    function getCurrentOfficer(type) {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'get current officer',
+                type: type
+            },
+            success: function(response) {
+                var result = response.current_officer;
+                console.log(result);
+                return result;
+            }
+        })
+    }
 
     updateDispatchTables();
     

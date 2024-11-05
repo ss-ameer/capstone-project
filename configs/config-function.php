@@ -461,6 +461,22 @@
                                     ]
                                 ];
                             }
+                        
+                        case 'dispatch_officers':
+                            foreach ($data as &$officer){
+                                $officer['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['name' => $officer['name']] 
+                                    ],
+                    
+                                    [
+                                        'type' => 'select manual',
+                                        'options' => ['officer', 'master'],
+                                        'data' => ['role' => $officer['role']]
+                                    ]
+                                ];
+                            }
 
                         default:
                             break;
@@ -469,6 +485,12 @@
 
                     echo json_encode(['data' => $data, 'total_count' => $total_count]);
                     break;
+                
+                case 'get current officers':
+                    $type = $_POST['type'];
+                    $current_officer = getCurrentOfficer($type);
+
+                    echo json_encode($current_officer);
 
                 default:
                     break;
@@ -1784,10 +1806,10 @@
         }
     }
 
-    function getDispatchOfficers () {
+    function getDispatchOfficers ($limit = 0, $offset = 0) {
         global $conn;
         
-        $result = dbGetTableData('dispatch_officers');
+        $result = dbGetTableData('dispatch_officers', limit: $limit, offset: $offset);
 
         return $result;
     }

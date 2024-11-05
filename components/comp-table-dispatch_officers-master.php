@@ -1,5 +1,5 @@
 <!-- comp-table-dispatch_officers.php -->
-<table class="table" id="table-users">
+<table class="table" id="table-dispatch_officers">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -12,7 +12,8 @@
     </thead>
     <tbody>
         <?php 
-            $dispatch_officers = getDispatchOfficers();
+            $initial_limit = 10;
+            $dispatch_officers = getDispatchOfficers($initial_limit);
             $dependencies = [['table' => 'dispatch', 'column' => 'dispatch_officer_id']];
         ?>
         <?php foreach ($dispatch_officers as $officer) : ?>
@@ -67,4 +68,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="dispatch_officers" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>
