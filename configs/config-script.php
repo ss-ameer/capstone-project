@@ -1967,6 +1967,39 @@ $(document).ready(function(){
                                     </tr>`;
                                 break;
 
+                            case 'items':
+                                new_row = `
+                                    <tr class="item" data-officer-id="${row.item_id}" style="width: 100%;">
+                                        <td>${String(row.item_id).padStart(4, '0')}</td>
+                                        <td>${row.item_name}</td>
+                                        <td class="too-long">${row.description}</td>
+                                        <td>${row.category}</td>
+                                        <td>${row.density}</td>
+                                        <td>${row.price}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action = "edit"
+                                                data-table = "items"
+                                                data-id-column = "item_id" 
+                                                data-columns = '${JSON.stringify(columns)}'
+                                                data-id = "${row.item_id}" >
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete" 
+                                                data-table="items" 
+                                                data-id-column="item_id" 
+                                                data-id="${row.item_id}" 
+                                                data-name="${row.item_name}"
+                                                data-dependencies='${JSON.stringify(dependencies)}'
+                                            >
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                                break;
+
                             default:
                                 break
                         }

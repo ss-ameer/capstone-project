@@ -13,8 +13,8 @@
     </thead>
     <tbody>
         <?php 
-            getItems();
-            $items = $_SESSION['items'];
+            $initial_limit = 10;
+            $items = returnItems(limit: $initial_limit);
             $dependencies = [
                 ['table' => 'order_items', 'column' => 'item_id']
             ];
@@ -25,6 +25,22 @@
                     'type' => 'text',
                     'data' => ['item_name' => $item['item_name']]
                 ],
+                [
+                    'type' => 'text',
+                    'data' => ['description' => $item['description']]
+                ],
+                [
+                    'type' => 'text',
+                    'data' => ['category' => $item['category']]
+                ],
+                [
+                    'type' => 'text',
+                    'data' => ['density' => $item['density']]
+                ],
+                [
+                    'type' => 'text',
+                    'data' => ['price' => $item['price']]
+                ]
             ]; ?>
             <tr class="item" data-officer-id="<?= $item['item_id'] ?>" style="width: 100%;">
                 <td><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
@@ -57,4 +73,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="7" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="items" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

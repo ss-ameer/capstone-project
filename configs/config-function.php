@@ -436,6 +436,32 @@
                             }
                             break;
 
+                        case 'items':
+                            foreach($data as &$item){
+                                $item['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['item_name' => $item['item_name']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['description' => $item['description']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['category' => $item['category']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['density' => $item['density']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['price' => $item['price']]
+                                    ]
+                                ];
+                            }
+
                         default:
                             break;
                             
@@ -498,7 +524,7 @@
 
     }
 
-    function getItems () {
+    function getItems ($limit = 0, $offset = 0) {
         global $conn;
 
         $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, density, price FROM items");
@@ -512,23 +538,6 @@
 
         $_SESSION['items'] = $items;
         $stmt->close();
-    }
-
-    function returnItems () {
-        global $conn;
-
-        $stmt = $conn -> prepare("SELECT item_id, item_name, description, category, density, price FROM items");
-        $stmt -> execute();
-        $result = $stmt -> get_result();
-
-        $items = [];
-        while ($row = $result -> fetch_assoc()) {
-            $items[] = $row;
-        }
-
-        $stmt->close();
-
-        return $items;
     }
 
     function addItem() {
@@ -1344,6 +1353,12 @@
 
     function getOperators($limit = 0, $offset = 0) {
         $result = dbGetTableData('drivers', limit: $limit, offset: $offset);
+
+        return $result;
+    }
+
+    function returnItems($limit = 0, $offset = 0) {
+        $result = dbGetTableData('items', limit: $limit, offset: $offset);
 
         return $result;
     }
