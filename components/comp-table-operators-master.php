@@ -1,5 +1,5 @@
 <!-- comp-table-operators-master.php -->
-<table class="table-bordered" id="table-operators">
+<table class="table-bordered" id="table-drivers">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -35,7 +35,7 @@
                     'type' => 'select manual',
                     'options' => ['available', 'on_trip', 'unavailable'], 
                     'data' => ['status' => $operator['status']]
-                ],
+                ]
             ]; ?>
             <tr class="operator" data-officer-id="<?= $operator['id'] ?>" style="width: 100%;">
                 <td><?= str_pad($operator['id'], 4, '0', STR_PAD_LEFT) ?></td>
@@ -67,4 +67,13 @@
             </tr>
         <?php endforeach; ?>
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <a href="#" class="show-more-btn" data-table-id="drivers" data-offset="<?= $initial_limit ?>" data-dependencies = '<?= json_encode($dependencies) ?>'>
+                    Show More
+                </a>
+            </td>
+        </tr>
+    </tfoot>
 </table>

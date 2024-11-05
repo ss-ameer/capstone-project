@@ -478,6 +478,29 @@
                                 ];
                             }
 
+                        case 'drivers':
+                            foreach ($data as &$driver) {
+                                $driver['columns'] = [
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['name' => $operator['name']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['license_number' => $operator['license_number']]
+                                    ],
+                                    [
+                                        'type' => 'text',
+                                        'data' => ['phone_number' => $operator['phone_number']]
+                                    ],
+                                    [
+                                        'type' => 'select manual',
+                                        'options' => ['available', 'on_trip', 'unavailable'], 
+                                        'data' => ['status' => $operator['status']]
+                                    ]
+                                ];
+                            }
+
                         default:
                             break;
                             

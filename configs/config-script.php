@@ -2035,6 +2035,37 @@ $(document).ready(function(){
                                     </tr>`;
                                 break;
 
+                            case 'drivers':
+                                new_row = `
+                                    <tr class="operator" data-officer-id="${row.id}" style="width: 100%;">
+                                        <td>${String(row.id).padStart(4, '0')}</td>
+                                        <td>${row.name}</td>
+                                        <td>${row.license_number}</td>
+                                        <td>${row.phone_number}</td>
+                                        <td>${row.status}</td>
+                                        <td class="c-flex-center g-3">
+                                            <button class="btn btn-primary btn-sm edit-btn"
+                                                data-action="edit"
+                                                data-table="drivers"
+                                                data-id-column="id"
+                                                data-columns='${JSON.stringify(row.columns)}'
+                                                data-id="${row.id}">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </button>
+
+                                            <button class="btn btn-danger btn-sm delete-btn"
+                                                data-action="delete"
+                                                data-table="drivers"
+                                                data-id-column="id"
+                                                data-id="${row.id}"
+                                                data-name="${row.name}"
+                                                data-dependencies='${JSON.stringify(dependencies)}'>
+                                                <i class="bi bi-trash-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>`;
+                                break;
+
                             default:
                                 break
                         }
