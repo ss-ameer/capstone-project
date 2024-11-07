@@ -123,12 +123,12 @@
 
                     <div class="row g-3 mt-2">
                         <div class="col-12">
-                            <div class="c-section-toggler" data-bs-target="collapse">
+                            <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".master-view">
                                 <a class="fs-5" href="#">Views</a>
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="">
                                     <div class="c-title-container">
@@ -141,7 +141,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
                                     <div class="c-title-container">
@@ -154,7 +154,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
                                     <div class="c-title-container">
@@ -167,7 +167,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-units">
                                     <div class="c-title-container">
@@ -180,7 +180,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
@@ -193,7 +193,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
@@ -206,7 +206,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
@@ -219,7 +219,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
@@ -232,7 +232,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-12 collapse master-view">
                             <div class="c-section bg-light">
                                 <div class="c-section-header_table bg-light" data-bs-toggle="collapse" data-bs-target="#table-items">
                                     <div class="c-title-container">
