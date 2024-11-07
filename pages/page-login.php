@@ -23,21 +23,39 @@
 
 </header>
 <main>
-    <div class="container">
-    <form id="login-form">
-    <div class="">
-        <label for="login-name" class="form-label">Name</label>
-        <input type="text" id="login-name" class="form-control">
-    </div>
-    <div class="">
-        <lable for="login-password" class="form-label">Password</lable>
-        <input type="text" id="login-password" class="form-control">
-    </div>
-    <button type="submit" class="btn btn-success">Login</button>
-    </form>
-    <div id="feedback">
-        <!-- where feedback will display -->
-    </div>
+    <div class="container-fluid vh-100 d-flex flex-column align-items-center justify-content-center">
+
+        <div class="title-section w-25 border rounded text-center p-3 shadow">
+            <h3>
+                Eslaya 
+            </h3>
+            <small>Dispatch System</small>
+        </div>
+            
+        <form id="login-form" class="border shadow rounded p-3 w-25 mt-3">
+            <div class="container">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="login-name" class="form-label">Name</label>
+                        <input type="text" id="login-name" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <lable for="login-password" class="form-label">Password</lable>
+                        <input type="text" id="login-password" class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success">Login</button>
+                    </div>
+                    <div class="col-12">
+                        <div id="feedback">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+        
     </div>
 </main>
 <footer>
