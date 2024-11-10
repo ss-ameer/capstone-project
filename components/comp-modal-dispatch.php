@@ -169,6 +169,7 @@
             <div class="modal-footer">
                 <div class="container-fluid d-flex justify-content-center">
                     <div>
+                        <!-- style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" -->
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" id="print-dispatch-slip" class="btn btn-success">Print Dispatch Slip</button>
                         <button type="button" id="confirm-in-transit" class="btn btn-primary">Confirm Dispatch</button>

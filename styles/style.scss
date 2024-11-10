@@ -160,6 +160,14 @@ body {
         font-size: smaller;
     }
 }
+
+#dispatch-modal {
+    .modal-footer{
+        button {
+            @extend .btn-sm;
+        }
+    }
+}
 // @media print {
     
 //     body {
