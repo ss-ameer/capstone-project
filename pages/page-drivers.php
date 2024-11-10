@@ -49,7 +49,7 @@
                                             <tr>
                                                 <th scope="col">ID</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Category</th>
+                                                <th scope="col">Phone</th>
                                                 <th scope="col">Lisence</th>
                                                 <th scope="col">Status</th>
                                             </tr>
