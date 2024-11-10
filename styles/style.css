@@ -12300,4 +12300,8 @@ body {
 #dispatch-modal .fine-print {
   font-size: x-small;
   color: lightblue;
+}
+
+#logs-table td {
+  font-size: smaller;
 }/*# sourceMappingURL=style.css.map */

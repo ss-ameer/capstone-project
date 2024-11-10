@@ -1,5 +1,5 @@
 <!-- comp-table-logs.php -->
-<table>
+<table id="logs-table">
     <thead>
         <tr>
             <th scope="col">Entity</th>
@@ -10,7 +10,7 @@
             <th scope="col">Time</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="font-monospace ">
         <!-- logs will be dynamically added -->
         <?php $logs = getLogs(); ?>
         <?php foreach ($logs as $log) :?>
