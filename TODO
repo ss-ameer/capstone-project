@@ -7,7 +7,7 @@ Sir Drew Recomendations:
         - [ ] master
         - [ ] orders
     [ ] Pill badge(notif)
-    [ ] Buttons(Liitan sa print)custom size
+    [x] Buttons(Liitan sa print)custom size
     [ ] Report kung bakit di naideliver
     [ ] Gawa ng listahan ng reason kung bakit hindi pinick up tas pipiliin nalang sa cancel order pag nag failed(Reason)
     [ ] Dropdown sa notes 
@@ -18,7 +18,7 @@ Sir Drew Recomendations:
     [ ] Items-mbStrimwidth 50characters
     [ ] Modal para madisplay see more or view more
     [ ] Create active
-    [ ] Font typgraphy
+    [x] Font typgraphy
 
 To Fix:
     [ ] fix empty fields scenario.
