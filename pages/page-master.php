@@ -125,6 +125,7 @@
                         <div class="col-12">
                             <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".master-view">
                                 <a class="fs-5" href="#">Views</a>
+                                
                             </div>
                         </div>
 

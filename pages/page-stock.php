@@ -62,7 +62,8 @@
                                             <td><?= $item['category'] ?></td>
                                             <td class="text-center"><?= $item['density'] ?></td>
                                             <td class="text-center"><?= $item['price'] ?></td>
-                                            <td><?= $item['description'] ?></td>
+                                            <td><?php $description = $item['description'];
+                                                    echo mb_strimwidth($description, 0, 50, '...') ?></td>
                                         </tr>
 
                                         <?php endforeach; ?>

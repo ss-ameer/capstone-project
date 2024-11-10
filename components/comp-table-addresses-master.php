@@ -17,7 +17,6 @@
             $addresses = getAddresses($initial_limit, 0);
             $dependencies = [
                 ['table' => 'orders', 'column' => 'address_id'],
-                ['table' => 'addresses', 'column' => 'address_id']
             ];
             ?>
         <?php foreach ($addresses as $address) : ?>
