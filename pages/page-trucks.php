@@ -36,8 +36,11 @@
 
                         <div class="row mt-3 g-3">
                             <div class="col-12">
-                                <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target="#units-table">
+                                <!-- <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target="#units-table">
                                     <a href="#" class="fs-5">Units Table</a>
+                                </div> -->
+                                <div class="c-section-toggler">
+                                    <span href="#" class="fs-5">Units Table</span>
                                 </div>
                             </div>
                             

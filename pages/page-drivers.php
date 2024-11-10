@@ -34,8 +34,11 @@
                         <div class="row mt-3 g-3">
 
                             <div class="col-12">
-                                <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".drivers-table">
+                                <!-- <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".drivers-table">
                                     <a class="fs-5" href="#">Drivers Table</a>
+                                </div> -->
+                                <div class="c-section-toggler">
+                                    <span class="fs-5" href="#">Drivers Table</span>
                                 </div>
                             </div>
 

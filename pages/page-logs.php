@@ -36,16 +36,17 @@
                 <div class="container">
                     <div class="row mt-3 g-3">
                         <div class="col-12">
-                            <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".logs-table">
-                                <a class="fs-5" href="#">Logs Table</a>
+                            <!-- <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".logs-table">
+                                <span class="fs-5" href="#">Logs Table</span>
+                            </div> -->
+                            <div class="c-section-toggler">
+                                <span class="fs-5" href="#">Logs Table</span>
                             </div>
                         </div>
 
                         <div class="col-12 logs-table">
                             <div class="c-table-container">
-                                <div>
-                                    <?php include PATH . 'components/comp-table-logs.php' ?>
-                                </div>
+                                <?php include PATH . 'components/comp-table-logs.php' ?>
                             </div>
                         </div>
                     </div>

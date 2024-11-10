@@ -34,8 +34,11 @@
                     <div class="row mt-3 g-3">
 
                         <div class="col-12">
-                            <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".items-table">
+                            <!-- <div class="border rounded-5 text-center p-2 shadow" data-bs-toggle="collapse" data-bs-target=".items-table">
                                 <a class="fs-5" href="#">Items Table</a>
+                            </div> -->
+                            <div class="c-section-toggler">
+                                <span class="fs-5" href="#">Items Table</span>
                             </div>
                         </div>
 
