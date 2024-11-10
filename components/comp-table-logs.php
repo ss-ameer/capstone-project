@@ -19,7 +19,7 @@
                 $entity = ucfirst($log['entity_type']);
                 $event = ucfirst($log['event_type']);
                 $dateTime = new DateTime($log['timestamp']);
-                $date = $dateTime->format('Y-m-d'); 
+                $date = $dateTime->format('M-d-Y'); 
                 $time = $dateTime->format('H:i:s'); 
             ?>
             <tr>
