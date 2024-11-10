@@ -1,3 +1,23 @@
+Sir Drew Recomendations:
+    [ ] TAGS 
+    [ ] UI
+    [ ] FAILED(Give Reason)
+    [ ] Pag bayad na column failed or COD
+    [ ] TABS and Nabs
+    [ ] Pill badge(notif)
+    [ ] Buttons(Liitan sa print)custom size
+    [ ] Report kung bakit di naideliver
+    [ ] Gawa ng listahan ng reason kung bakit hindi pinick up tas pipiliin nalang sa cancel order pag nag failed(Reason)
+    [ ] Dropdown sa notes 
+    [ ] Liitan ang logs small tag
+    [ ] Record ng nabenta ngayon araw na to details ng inorder kung ilan 
+    [ ] Logs display ng date january 2, 2022 php code strtotime month date yr
+    [ ] Operator Template
+    [ ] Items-mbStrimwidth 50characters
+    [ ] Modal para madisplay see more or view more
+    [ ] Create active
+    [ ] Font typgraphy
+
 To Fix:
     [ ] fix empty fields scenario.
         [ ] orders
