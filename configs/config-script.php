@@ -230,7 +230,9 @@ $(document).ready(function(){
                 $('#feedback').html(response);
                 if(response.includes('success')){
                     $('#feedback').html(response);
-                    goToIndex(); // Redirect to the login page
+                    setTimeout(function() {
+                        goToIndex(); // Redirect to the login page
+                    }, 2000);
                 }
             }
         })
@@ -242,8 +244,9 @@ $(document).ready(function(){
             type: 'POST',
             data: { action: 'logout' },
             success: function(response) {
-                console.log("Success" + response);
+                // console.log("Success" + response);
                 $('#feedback').html(response);
+                alert('Logged out successfully.');
                 goToIndex(); 
             }
         })

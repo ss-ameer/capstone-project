@@ -752,8 +752,6 @@
 
         global $conn;
 
-        echo ' reached login function';
-
         $name = $_POST['name'];
         $password = $_POST['password'];
 
@@ -772,11 +770,21 @@
             $stmt -> fetch();
             
             if (password_verify($password, $db_hashed_password)) {
-                session_start();
+                // session_start();
                 $userInfo = getUserInfo($db_id);
                 $_SESSION['user_info'] = $userInfo;
-                echo $_SESSION['user_info']['name'];
+                // echo $_SESSION['user_info']['name'];
                 echo '<div class="alert alert-success">Login successful.</div>';
+
+                $log_data = [
+                    'entity_type' => 'dispatch_officers',
+                    'entity_id' => $_SESSION['user_info']['id'],
+                    'event_type' => 'Login',
+                    'event_description' => 'Logged in: ' . $_SESSION['user_info']['name'],
+                    'user_id' => $_SESSION['user_info']['id']
+                ];
+
+                logEvent($log_data);
 
             } else { echo '<div class="alert alert-danger">Invalid credentials.</div>';}
         } else { echo '<div class="alert alert-danger">User not found.</div>'; }
@@ -784,6 +792,16 @@
 
     function logout() {
         
+        $log_data = [
+            'entity_type' => 'dispatch_officers',
+            'entity_id' => $_SESSION['user_info']['id'],
+            'event_type' => 'Logout',
+            'event_description' => 'Logged out: ' . $_SESSION['user_info']['name'],
+            'user_id' => $_SESSION['user_info']['id']
+        ];
+
+        logEvent($log_data);
+
         session_start();
         session_unset();
         session_destroy();
@@ -1847,17 +1865,17 @@
         echo str_pad($title, 30, ' .');
     };
     
-    function logEvent($logData) {
+    function logEvent($log_data) {
         global $conn;
         $stmt = $conn->prepare("INSERT INTO logs (entity_type, entity_id, event_type, event_description, user_id) VALUES (?, ?, ?, ?, ?)");
 
         $stmt->bind_param(
             "sisss", 
-            $logData['entity_type'], 
-            $logData['entity_id'], 
-            $logData['event_type'], 
-            $logData['event_description'], 
-            $logData['user_id']);
+            $log_data['entity_type'], 
+            $log_data['entity_id'], 
+            $log_data['event_type'], 
+            $log_data['event_description'], 
+            $log_data['user_id']);
         if($stmt->execute()){
             $stmt->close();
             return true;
