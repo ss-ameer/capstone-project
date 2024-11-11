@@ -1861,7 +1861,7 @@
 
     function getLogs() {
         global $conn;
-        $query = "SELECT * FROM logs";
+        $query = "SELECT * FROM logs ORDER BY id DESC";
         $result = $conn->query($query);
         
         if ($result->num_rows > 0) {
