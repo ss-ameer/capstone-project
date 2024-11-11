@@ -1422,39 +1422,93 @@ $(document).ready(function(){
                     }
                 });
 
-                // Hide the modal after confirming
                 $('#dispatch-modal').modal('hide');
             });
-        } else {
-            // For other statuses, perform the status update without showing the modal
-            $.ajax({
-                url: config_function_url,
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    action: 'update dispatch status',
-                    dispatch_id: dispatch_id,
-                    new_status: action_status,
-                    driver_id: driver_id,
-                    truck_id: truck_id
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert('Dispatch status updated successfully.');
-                        updateDispatchOrderItems(order_id); 
-                        updateDispatchPendingOrders();
-                        updateDispatchTables();
-                    } else {
-                        alert('Failed to update dispatch status.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error updating dispatch status:", error);
-                    alert('An error occurred while updating the dispatch status.');
+
+        } else if (action_status === 'failed') {
+                        
+            $('#modal-dispatch-failed').modal('show');
+
+            $('#modal-dispatch-failed .btn-primary').off('click').on('click', function() {
+                const select_element = $('#failed-reason-select')[0];
+                const selected_option = select_element.options[select_element.selectedIndex];
+                const failed_reason = selected_option.value;
+                const failed_type = selected_option.parentElement.tagName === 'OPTGROUP' ? 
+                                selected_option.parentElement.label : 
+                                "Uncategorized";
+
+                if (!failed_reason) {
+                    alert("Please select a reason for the failed dispatch.");
+                    return;
                 }
+
+                $.ajax({
+                    url: config_function_url,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        action: 'update dispatch status',
+                        dispatch_id: dispatch_id,
+                        new_status: action_status,
+                        driver_id: driver_id,
+                        truck_id: truck_id,
+                        failed_reason: failed_reason,
+                        failed_type: failed_type
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Dispatch status updated to "failed" with reason successfully.');
+                            updateDispatchOrderItems(order_id);
+                            updateDispatchPendingOrders();
+                            updateDispatchTables();
+                        } else {
+                            alert('Failed to update dispatch status.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error updating dispatch status:", error);
+                        alert('An error occurred while updating the dispatch status.');
+                    }
+                });
+
+                $('#modal-dispatch-failed').modal('hide');
             });
         }
+        
+        else {
+            // For other statuses, perform the status update without showing the modal
+            updateDispatchStatus(dispatch_id, action_status, order_id, driver_id, truck_id);
+        }
     });
+
+    function updateDispatchStatus(dispatch_id, action_status, order_id, driver_id, truck_id) {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'update dispatch status',
+                dispatch_id: dispatch_id,
+                new_status: action_status,
+                driver_id: driver_id,
+                truck_id: truck_id
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Dispatch status updated successfully.');
+                    updateDispatchOrderItems(order_id); 
+                    updateDispatchPendingOrders();
+                    updateDispatchTables();
+                } else {
+                    alert('Failed to update dispatch status.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error updating dispatch status:", error);
+                alert('An error occurred while updating the dispatch status.');
+            }
+        });
+    }
 
     $(document).on('click', '#print-dispatch-slip', function() {
         var printContents = document.querySelector('#dispatch-modal .modal-body').innerHTML;
@@ -2142,6 +2196,8 @@ $(document).ready(function(){
             }
         })
     }
+
+    // $('#modal-dispatch-failed').modal('show');
 
     updateDispatchTables();
     

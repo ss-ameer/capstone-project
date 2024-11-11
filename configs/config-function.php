@@ -175,8 +175,10 @@
                 case 'update dispatch status':
                     $dispatch_id = $_POST['dispatch_id'];
                     $new_status = $_POST['new_status'];
+                    $failed_reason = isset($_POST['failed_reason']) ? $_POST['failed_reason'] : null;
+                    $failed_type = isset($_POST['failed_type']) ? $_POST['failed_type'] : null;
 
-                    $results = updateDispatchStatus($dispatch_id, $new_status);
+                    $results = updateDispatchStatus($dispatch_id, $new_status, $failed_reason, $failed_type);
                 
                     echo json_encode($results);
                     break;
@@ -1705,7 +1707,7 @@
         return $dispatches;
     }
 
-    function updateDispatchStatus($dispatch_id, $new_status) {
+    function updateDispatchStatus($dispatch_id, $new_status, $failed_reason, $failed_type) {
         $update_query = "UPDATE dispatch SET status = ?, updated_at = NOW() WHERE id = ?";
         
         if (dbExecuteQuery($update_query, $new_status, $dispatch_id)) {
@@ -1715,16 +1717,7 @@
             $unit_id = $dispatch_data[0]['truck_id'];
             $driver_id = $dispatch_data[0]['driver_id'];
 
-            // Log the dispatch status change
-            $logData = [
-                'entity_type' => 'dispatch',
-                'entity_id' => $dispatch_id,
-                'event_type' => 'update',
-                'event_description' => "Status updated to $new_status.",
-                'user_id' => getCurrentOfficer('id')
-            ];
-
-            logEvent($logData);
+            $log_description = "Status updated to $new_status.";
             
             switch ($new_status) {
                 case 'in-queue':
@@ -1772,6 +1765,10 @@
                     updateOrderItemStatus($order_item_id, $order_item_status);
                     updateUnitStatus($unit_id, $unit_status);
                     updateDriverStatus($driver_id, $driver_status);
+                    
+                    if ($failed_reason && $failed_type) {
+                        $log_description = "Status updated to $new_status. $failed_type $failed_reason";
+                    }
                     break;
 
                 case 'remove':
@@ -1781,6 +1778,16 @@
                 default:
                     break;
             }
+
+            $log_data = [
+                'entity_type' => 'dispatch',
+                'entity_id' => $dispatch_id,
+                'event_type' => 'update',
+                'event_description' => $log_description,
+                'user_id' => getCurrentOfficer('id')
+            ];
+
+            logEvent($log_data);
             
             return ['success' => true, 'message' => 'Dispatch status updated successfully.'];
         }

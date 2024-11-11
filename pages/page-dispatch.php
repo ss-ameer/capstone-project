@@ -24,6 +24,7 @@
 <body>
     <main>
         <?php include PATH . 'components/comp-modal-dispatch.php'; ?>
+        <?php include PATH . 'components/comp-modal-dispatch-failed.php'; ?>
         <div class="container-fluid vh-100 scrollbar-hidden">
             <!-- header -->
             <?php include_once PATH . 'components/comp-header.php'; ?>
