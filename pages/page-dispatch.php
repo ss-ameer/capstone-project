@@ -22,7 +22,7 @@
     <?php include_once PATH . 'configs/config-script.php'; ?>
 </head>
 <body>
-    <main>
+    <main id="main-dispatch">
         <?php include PATH . 'components/comp-modal-dispatch.php'; ?>
         <?php include PATH . 'components/comp-modal-dispatch-failed.php'; ?>
         <div class="container-fluid vh-100 scrollbar-hidden">
@@ -33,8 +33,8 @@
                 <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
-                    <div class="container">
-                        <div class="row mt-3 g-3">
+                    <div class="container my-3">
+                        <div class="row g-3">
                             <div class="col-12">
                                 <div class="border rounded-5 text-center p-2 shadow">
                                     <span class="fs-5">Create Dispatch</span>
@@ -118,66 +118,93 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="c-section bg-primary">
-                                    <!-- header -->
-                                    <div class=" bg-primary c-section-header_table">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="lead text-light">In-Queue</span>
+                                <ul class="nav nav-pills nav-fill nav-justified" id="tab-master" role="tablist">    
+                                    <li class="nav-item" role="presentation" id="tab-in-queue">
+                                        <button class="nav-link active" id="dispatch-in-queue" data-bs-toggle="tab" data-bs-target="#section-in-queue" type="button" role="tab">In-Queue</button>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation" id="tab-in-transit">
+                                        <button class="nav-link" id="dispatch-in-transit" data-bs-toggle="tab" data-bs-target="#section-in-transit" type="button" role="tab">In-Transit</button>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation" id="tab-success">
+                                        <button class="nav-link" id="dispatch-success" data-bs-toggle="tab" data-bs-target="#section-success" type="button" role="tab">Success</button>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation" id="tab-failed">
+                                        <button class="nav-link" id="dispatch-failed" data-bs-toggle="tab" data-bs-target="#section-failed" type="button" role="tab">Failed</button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content" id="tab-content-dispatch">
+                                    <div class="tab-pane fade show active" id="section-in-queue" role="tabpanel">
+                                        
+                                        <div class="c-section bg-primary mt-3">
+                                            <!-- header -->
+                                            <div class=" bg-primary c-section-header_table">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead text-light">In-Queue</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- content -->
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-dispatch-in-queue.php';?>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="section-in-transit" role="tabpanel">
+                                        <div class="c-section bg-info mt-3">
+                                            <!-- header -->
+                                            <div class="c-section-header_table bg-info">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead">In-Transit</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- content -->
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-dispatch-in-transit.php';?>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- content -->
-                                    <div class="c-table-container">
-                                        <?php include PATH . 'components/comp-table-dispatch-in-queue.php';?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="c-section bg-info">
-                                    <!-- header -->
-                                    <div class="c-section-header_table bg-info">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="lead">In-Transit</span>
+                                    <div class="tab-pane fade show" id="section-success" role="tabpanel">
+                                        <div class="c-section bg-success mt-3">
+                                            <!-- header -->
+                                            <div class="c-section-header_table bg-success">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead text-light">Successful</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- content -->
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-dispatch-successful.php';?>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <!-- content -->
-                                    <div class="c-table-container">
-                                        <?php include PATH . 'components/comp-table-dispatch-in-transit.php';?>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div class="tab-pane fade show" id="section-failed" role="tabpanel">
+                                        <div class="c-section bg-dark mt-3">
+                                                <!-- header -->
+                                                <div class="c-section-header_table bg-dark">
+                                                    <div class="d-flex justify-content-between">
+                                                        <span class="lead text-light">Failed</span>
+                                                    </div>
+                                                </div>
 
-                            <div class="col-12">
-                                <div class="c-section bg-success">
-                                    <!-- header -->
-                                    <div class="c-section-header_table bg-success">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="lead text-light">Successful</span>
+                                                <!-- content -->
+                                                <div class="c-table-container">
+                                                    <?php include PATH . 'components/comp-table-dispatch-failed.php';?>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <!-- content -->
-                                    <div class="c-table-container">
-                                        <?php include PATH . 'components/comp-table-dispatch-successful.php';?>
-                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-12">
-                                <div class="c-section bg-dark">
-                                    <!-- header -->
-                                    <div class="c-section-header_table bg-dark">
-                                        <div class="d-flex justify-content-between">
-                                            <span class="lead text-light">Failed</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- content -->
-                                    <div class="c-table-container">
-                                        <?php include PATH . 'components/comp-table-dispatch-failed.php';?>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

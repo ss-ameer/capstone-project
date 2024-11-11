@@ -168,6 +168,29 @@ body {
         }
     }
 }
+
+#main-dispatch {
+    #tab-in-queue {
+        --bs-nav-link-color: #0d6efd;
+        --bs-nav-pills-link-active-bg: #0d6efd;
+        --bs-nav-pills-link-active-color: #fff;
+    }
+    #tab-in-transit {
+        --bs-nav-link-color: #0dcaf0;
+        --bs-nav-pills-link-active-bg: #0dcaf0;
+        --bs-nav-pills-link-active-color: #000;
+    }
+    #tab-success {
+        --bs-nav-link-color: #198754;
+        --bs-nav-pills-link-active-bg: #198754;
+        --bs-nav-pills-link-active-color: #fff;
+    }
+    #tab-failed {
+        --bs-nav-link-color: #000;
+        --bs-nav-pills-link-active-bg: #000;
+        --bs-nav-pills-link-active-color: #fff;
+    }
+}
 // @media print {
     
 //     body {
