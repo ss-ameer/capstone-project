@@ -540,6 +540,13 @@
 
                     echo json_encode($current_officer);
 
+                case 'get dispatch count':
+                    $in_queue_count = dbGetTableCount('dispatch', "status = 'in-queue'");
+                    $in_transit_count = dbGetTableCount('dispatch', "status = 'in-transit'");
+
+                    echo json_encode(['in_queue_count' => $in_queue_count, 'in_transit_count' => $in_transit_count]);
+                    break;
+
                 default:
                     break;
 

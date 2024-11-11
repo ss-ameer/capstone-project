@@ -1308,6 +1308,8 @@ $(document).ready(function(){
                 });
 
                 console.log(response);
+                console.log('hold it');
+                setDispatchCount();
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching dispatch records:");
@@ -2197,9 +2199,28 @@ $(document).ready(function(){
         })
     }
 
+    function setDispatchCount () {
+        $.ajax({
+            url: config_function_url,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'get dispatch count'
+            },
+            success: function(response) {
+                $('.in-queue-count').text(response.in_queue_count);
+                $('.in-transit-count').text(response.in_transit_count);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching dispatch counts:", error);
+            }
+        })
+    }
+
     // $('#modal-dispatch-failed').modal('show');
 
     updateDispatchTables();
+    setDispatchCount();
     
 });
 

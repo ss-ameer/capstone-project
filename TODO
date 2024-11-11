@@ -1,12 +1,12 @@
 Sir Drew Recomendations:
     [ ] TAGS 
-    [ ] UI
     [x] FAILED(Give Reason)
     [ ] Pag bayad na column failed or COD
     [ ] Drop to Tabs:
         [x] master
         [x] orders
-    [ ] Pill badge(notif)
+        [x] dispatch
+    [x] Pill badge(notif)
     [x] Buttons(Liitan sa print)custom size
     [x] Report kung bakit di naideliver
     [x] Gawa ng listahan ng reason kung bakit hindi pinick up tas pipiliin nalang sa cancel order pag nag failed(Reason)

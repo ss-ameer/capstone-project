@@ -120,11 +120,17 @@
                             <div class="col-12">
                                 <ul class="nav nav-pills nav-fill nav-justified" id="tab-master" role="tablist">    
                                     <li class="nav-item" role="presentation" id="tab-in-queue">
-                                        <button class="nav-link active" id="dispatch-in-queue" data-bs-toggle="tab" data-bs-target="#section-in-queue" type="button" role="tab">In-Queue</button>
+                                        <button class="nav-link active position-relative" id="dispatch-in-queue" data-bs-toggle="tab" data-bs-target="#section-in-queue" type="button" role="tab">
+                                            In-Queue
+                                            <span class="badge text-bg-secondary in-queue-count">0</span>
+                                        </button>
                                     </li>
 
                                     <li class="nav-item" role="presentation" id="tab-in-transit">
-                                        <button class="nav-link" id="dispatch-in-transit" data-bs-toggle="tab" data-bs-target="#section-in-transit" type="button" role="tab">In-Transit</button>
+                                        <button class="nav-link position-relative" id="dispatch-in-transit" data-bs-toggle="tab" data-bs-target="#section-in-transit" type="button" role="tab">
+                                            In-Transit 
+                                            <span class="badge text-bg-secondary in-transit-count">0</span>
+                                        </button>
                                     </li>
 
                                     <li class="nav-item" role="presentation" id="tab-success">
