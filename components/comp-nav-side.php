@@ -1,7 +1,7 @@
 <div class="col-2 col-lg-2 col-md-3 col-sm-3 p-0 d-flex flex-column bg-dark shadow border-end" id="nav-side">
     <!-- navigation -->
     <ul class="nav flex-column" style="color: white;">
-        <li class="nav-item d-none">
+        <li class="nav-item">
             <a class="nav-link text-reset" href="#" id="side-dashboard">
                 <i class="bi bi-speedometer"></i> <span class="ms-3">Dashboard</span>
             </a>
