@@ -2003,4 +2003,20 @@
             ];
         }
     }
+
+    function getLatestLoginEvent($user_id) {
+        
+        $tableName = 'logs';
+        $columns = '*'; 
+        $joins = ''; 
+        $where = "event_type = 'login' AND entity_id = $user_id";
+        $orderBy = 'timestamp DESC'; 
+        $limit = 1; 
+    
+        
+        $result = dbGetTableData($tableName, $columns, $joins, $where, $orderBy, $limit);
+    
+        
+        return $result ? $result[0] : null; 
+    }
     
