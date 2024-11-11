@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dispatch</title>
@@ -20,17 +21,19 @@
     <script src="<?php echo ROOT . 'imports/bootstrap/js/bootstrap.bundle.js'?>"></script>
     <script src="<?php echo ROOT . 'imports/jquery/jquery-3.7.1.min.js' ?>"></script>
     <?php include_once PATH . 'configs/config-script.php'; ?>
+
 </head>
 <body>
+
     <main id="main-dispatch">
         <?php include PATH . 'components/comp-modal-dispatch.php'; ?>
         <?php include PATH . 'components/comp-modal-dispatch-failed.php'; ?>
         <div class="container-fluid vh-100 scrollbar-hidden">
             <!-- header -->
-            <?php include_once PATH . 'components/comp-header.php'; ?>
+            <?php include PATH . 'components/comp-header.php'; ?>
             <div class="row c-main-content">
                 <!-- sidebar -->
-                <?php include_once(PATH . 'components/comp-nav-side.php'); ?>
+                <?php include PATH . 'components/comp-nav-side.php'; ?>
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container my-3">
@@ -218,8 +221,6 @@
             </div>
         </div>
     </main>
-    <footer>
-                        
-    </footer>
+
 </body>
 </html>
