@@ -4,7 +4,7 @@
     include_once('../configs/config-function.php');
     $officer_id = getCurrentOfficer('id');
     $officer_info = dbGetTableData('dispatch_officers', '*', '', "id = $officer_id")[0];
-
+    $officer_latest_login = getLatestLoginEvent($officer_info['id']);
 
 ?>
 <!DOCTYPE html>
@@ -38,23 +38,19 @@
                 <!-- main -->
                 <div class="col mh-100 overflow-auto border">
                     <div class="container my-3">
-                        <div class="row g-3">
+                        <div class="row g-3 c-row-align-stretch">
 
                             <div class="col-12">
-                                <div class="container">
-
-                                    <div class="user-info-card my-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><?php echo $officer_info['name']; ?></h5>
-                                                <p class="card-text">
-                                                    <strong>Role:</strong> <?php echo $officer_info['role']; ?><br>
-                                                    <!-- <strong>Last Login:</strong> <?php //echo date("M d, Y - h:i A", strtotime($user_info['last_login'])); ?><br> -->
-                                                </p>
-                                            </div>
-                                        </div>
+                                <div class="c-sec-con">
+                                    <div class="c-sec flex-fill align-center">
+                                        <span class="h5"><?= $officer_info['name']; ?></span><br>
+                                        <span><strong>Role: </strong> <?= $officer_info['role']; ?></span>
                                     </div>
-
+                                    <div class="c-sec">
+                                        <strong>Created: </strong> <?= date("M d, Y - h:i A", strtotime($officer_info['created_at'])); ?><br>
+                                        <strong>Updated: </strong> <?= date("M d, Y - h:i A", strtotime($officer_info['updated_at'])); ?><br>
+                                        <strong>Last Login: </strong> <?= date("M d, Y - h:i A", strtotime($officer_latest_login['timestamp'])); ?><br>
+                                    </div>
                                 </div>
                             </div>
 

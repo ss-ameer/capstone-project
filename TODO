@@ -1,7 +1,5 @@
 Sir Drew Recomendations:
-    [ ] TAGS 
     [x] FAILED(Give Reason)
-    [ ] Pag bayad na column failed or COD
     [ ] Drop to Tabs:
         [x] master
         [x] orders
@@ -13,7 +11,9 @@ Sir Drew Recomendations:
     [x] Dropdown sa notes 
     [x] Liitan ang logs small tag
     [ ] Record ng nabenta ngayon araw na to details ng inorder kung ilan 
-    [x] Logs display ng date january 2, 2022 php code strtotime month date yr
+    [x] Logs display ng date january 2, 2022 php code strtotime month date yr:
+        [x] logs
+        [ ]
     [ ] Operator Template
     [x] Items-mbStrimwidth 50characters
     [x] Font typgraphy

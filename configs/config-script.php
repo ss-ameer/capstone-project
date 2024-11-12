@@ -153,8 +153,6 @@ $(document).ready(function(){
         })
     }
 
-    
-
 // account functions
     function selectAccount(id) {
         var data = {

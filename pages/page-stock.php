@@ -44,7 +44,7 @@
 
                         <div class="col-12 items-table">
                             <div class="c-table-container">
-                                <table class="table-bordered" id="table-stocks">
+                                <table id="table-stocks">
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>

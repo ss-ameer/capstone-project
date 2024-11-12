@@ -742,6 +742,7 @@ progress {
 .container,
 .container-fluid,
 .c-section,
+.c-sec-con,
 .container-xxl,
 .container-xl,
 .container-lg,
@@ -4103,6 +4104,7 @@ textarea.form-control-lg {
 .navbar > .container,
 .navbar > .container-fluid,
 .navbar > .c-section,
+.navbar > .c-sec-con,
 .navbar > .container-sm,
 .navbar > .container-md,
 .navbar > .container-lg,
@@ -7585,7 +7587,7 @@ textarea.form-control-lg {
   display: table-cell !important;
 }
 
-.d-flex, #order-list-pending .order .section, .c-section-header_table .c-title-container, .c-section-header .c-title-container, .c-flex-center, .c-flex-between {
+.d-flex, #order-list-pending .order .section, .c-section-header_table .c-title-container, .c-section-header .c-title-container, .c-flex-center, .c-flex-between, .c-sec-con {
   display: flex !important;
 }
 
@@ -7725,7 +7727,7 @@ textarea.form-control-lg {
   transform: translateY(-50%) !important;
 }
 
-.border, .c-section-toggler, .c-section {
+.border, .c-section-toggler, .c-section, .c-sec-con .c-sec {
   border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
 }
 
@@ -8333,7 +8335,7 @@ textarea.form-control-lg {
   margin-left: auto !important;
 }
 
-.p-0, .c-section {
+.p-0, .c-section, .c-sec-con {
   padding: 0 !important;
 }
 
@@ -8345,7 +8347,7 @@ textarea.form-control-lg {
   padding: 0.5rem !important;
 }
 
-.p-3 {
+.p-3, .c-sec-con .c-sec {
   padding: 1rem !important;
 }
 
@@ -8525,7 +8527,7 @@ textarea.form-control-lg {
   gap: 0.5rem !important;
 }
 
-.gap-3 {
+.gap-3, .c-sec-con {
   gap: 1rem !important;
 }
 
@@ -9169,7 +9171,7 @@ textarea.form-control-lg {
   pointer-events: auto !important;
 }
 
-.rounded, .c-section {
+.rounded, .c-section, .c-sec-con .c-sec {
   border-radius: var(--bs-border-radius) !important;
 }
 
@@ -12289,6 +12291,11 @@ body {
   max-width: 200px;
   white-space: nowrap;
   overflow-x: auto;
+}
+
+.c-row-align-stretch {
+  display: flex;
+  align-items: stretch;
 }
 
 #dispatch-modal span {

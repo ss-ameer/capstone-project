@@ -15,6 +15,19 @@ body {
 }
 
 // group classes
+.c-sec-con {
+    @extend .container-fluid;
+    @extend .p-0;
+    @extend .gap-3;
+    @extend .d-flex;
+
+    .c-sec {
+        @extend .border;
+        @extend .p-3; 
+        @extend .rounded;
+    }
+}
+
 .c-flex-between {
     @extend .d-flex;
     @extend .justify-content-between;
@@ -98,6 +111,11 @@ body {
             }
         }
     }
+}
+
+.c-row-align-stretch {
+    display: flex;
+    align-items: stretch;
 }
 
 #dispatch-form-details {
