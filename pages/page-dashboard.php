@@ -6,6 +6,15 @@
     $officer_info = dbGetTableData('dispatch_officers', '*', '', "id = $officer_id")[0];
     $officer_latest_login = getLatestLoginEvent($officer_info['id']);
 
+    $create_time = date("h:i A", strtotime($officer_info['created_at']));
+    $create_date = date("M d, Y", strtotime($officer_info['created_at']));
+
+    $updated_time = date("h:i A", strtotime($officer_info['updated_at']));
+    $updated_date = date("M d, Y", strtotime($officer_info['updated_at']));
+    
+    $login_time = date("h:i A", strtotime($officer_latest_login['timestamp']));
+    $login_date = date("M d, Y", strtotime($officer_latest_login['timestamp']));
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,14 +51,29 @@
 
                             <div class="col-12">
                                 <div class="c-sec-con">
-                                    <div class="c-sec flex-fill align-center">
-                                        <span class="h5"><?= $officer_info['name']; ?></span><br>
-                                        <span><strong>Role: </strong> <?= $officer_info['role']; ?></span>
+                                    <div class="c-sec flex-fill align-content-center">
+                                        <div class="h5"><?= $officer_info['name']; ?></div>
+                                        <div><strong>Role: </strong> <?= $officer_info['role']; ?></div>
                                     </div>
-                                    <div class="c-sec">
-                                        <strong>Created: </strong> <?= date("M d, Y - h:i A", strtotime($officer_info['created_at'])); ?><br>
-                                        <strong>Updated: </strong> <?= date("M d, Y - h:i A", strtotime($officer_info['updated_at'])); ?><br>
-                                        <strong>Last Login: </strong> <?= date("M d, Y - h:i A", strtotime($officer_latest_login['timestamp'])); ?><br>
+                                    <div class="c-sec flex-grow-1">
+                                        <div class="c-flex-between">
+                                            <strong class="w-50">Created: </strong>
+                                            <div class="c-flex-between flex-fill">
+                                                <span class=""><?= $create_date ?></span> <span><?= $create_time ?></span>  
+                                            </div>
+                                        </div>
+                                        <div class="c-flex-between">
+                                            <strong class="w-50">Updated: </strong> 
+                                            <div class="c-flex-between flex-fill">
+                                                <span class="text-start"><?= $updated_date ?></span> <span><?= $updated_time ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="c-flex-between">
+                                            <strong class="w-50">Last Login: </strong> 
+                                            <div class="c-flex-between flex-fill">
+                                                <span class="text-start"><?= $login_date ?></span> <span><?= $login_time ?></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
