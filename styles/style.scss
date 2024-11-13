@@ -62,7 +62,6 @@ body {
     @extend .p-2 !optional;
     @extend .px-3 !optional;
     @extend .border-bottom !optional;
-    // @extend .border-danger !optional;
 
     .c-title-container {
         @extend .d-flex !optional;
@@ -84,10 +83,7 @@ body {
 }
 
 .c-table-container {
-    // @extend .border;
-    // @extend .rounded;
     @extend .table-responsive;
-    // @extend .container-fluid;
 
     table {
         @extend .table;

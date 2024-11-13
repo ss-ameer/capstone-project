@@ -78,6 +78,73 @@
                                 </div>
                             </div>
 
+                            <div class="col-12">
+                                <div class="c-sec-con">
+                                    <div class="c-sec flex-fill">
+                                        <ul class="nav nav-pills nav-fill nav-justified" id="tab-tables-dashboard" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-table-items" type="button" role="tab">Items</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-operators" type="button" role="tab">Operators</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-units" type="button" role="tab">Units</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                
+                                <div class="tab-content" id="tab-content-tables-dispatch">
+
+                                    <div class="tab-pane fade show active" id="tab-table-items" role="tabpanel">
+                                        <div class="c-section">
+                                            <div class="c-section-header_table">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead">Items Table</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-items.php'; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="tab-table-operators" role="tabpanel">
+                                        <div class="c-section">
+                                            <div class="c-section-header_table">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead">Operators Table</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-operators.php'; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade show" id="tab-table-units" role="tabpanel">
+                                        <div class="c-section">
+                                            <div class="c-section-header_table">
+                                                <div class="d-flex justify-content-between">
+                                                    <span class="lead">Units Table</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="c-table-container">
+                                                <?php include PATH . 'components/comp-table-units.php'; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
