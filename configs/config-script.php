@@ -1309,7 +1309,6 @@ $(document).ready(function(){
                 });
 
                 console.log(response);
-                console.log('hold it');
                 setDispatchCount();
             },
             error: function(xhr, status, error) {
@@ -2218,10 +2217,40 @@ $(document).ready(function(){
         })
     }
 
+    function searchTableRows(input, table, column) {
+        $.ajax({
+            type: 'POST',
+            url: config_function_url,
+            dataType: 'json',
+            data: {
+                input: input,
+                table: table,
+                column: column,
+                action: 'search table rows'
+            },
+            success: function(response) {
+                var results = response.results;
+                
+                if (Array.isArray(results)) {
+                    results.forEach(function(element) {
+                        console.log(element['name']);
+                    });
+                } else {
+                    console.warn('Expected an array but got:', results);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
+            }
+        });
+    }
+
+
     // $('#modal-dispatch-failed').modal('show');
 
     updateDispatchTables();
     setDispatchCount();
+    // searchTableRows('', 'drivers', 'name');
     
 });
 

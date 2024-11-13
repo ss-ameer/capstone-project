@@ -547,6 +547,24 @@
                     echo json_encode(['in_queue_count' => $in_queue_count, 'in_transit_count' => $in_transit_count]);
                     break;
 
+                case 'search table rows':
+                    $input = $_POST['input'];
+                    $table = $_POST['table'];
+                    $column = $_POST['column'];
+
+                    $search_data = [
+                        'column' => $column,
+                        'query' => $input
+                    ];
+
+                    $results = dbGetTableData(tableName: $table, search: $search_data);
+
+                    echo json_encode(['results' => $results]);
+
+                    break;
+
+                
+                // end of switch
                 default:
                     break;
 
@@ -1164,14 +1182,20 @@
      *     represents a row of the result set.
      */
     
-    function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '', $limit = null , $offset = null) {
+    function dbGetTableData($tableName, $columns = '*', $joins = '', $where = '', $orderBy = '', $limit = null , $offset = null, $search = null) {
         global $conn;
     
-         // Sanitize the table name and columns
         $tableName = mysqli_real_escape_string($conn, $tableName);
         $columns = is_array($columns) ? implode(', ', array_map(fn($col) => mysqli_real_escape_string($conn, $col), $columns)) : $columns;
 
-        // Build the SQL query
+        if ($search) {
+            $searchColumn = mysqli_real_escape_string($conn, $search['column']);
+            $searchQuery = mysqli_real_escape_string($conn, $search['query']);
+            $searchWhere = "$searchColumn LIKE '%$searchQuery%'";
+
+            $where = !empty($where) ? "$where AND $searchWhere" : $searchWhere;
+        }
+
         $sql = "SELECT $columns FROM $tableName" .
             (!empty($joins) ? " $joins" : "") .
             (!empty($where) ? " WHERE $where" : "") .
@@ -1179,7 +1203,6 @@
             (!empty($limit) ? " LIMIT $limit" : "") .
             (!empty($offset) ? " OFFSET $offset" : "");
 
-        // Execute the query and fetch data
         $result = $conn->query($sql);
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
