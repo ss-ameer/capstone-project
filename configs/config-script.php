@@ -690,7 +690,7 @@ $(document).ready(function(){
                 console.log(response);
 
                 response.forEach(function(unit){
-                    unitSelect.append('<option value="' + unit.id + '" data-unit-capacity="' + unit.capacity +'">' + unit.type_name + '</option>');
+                    unitSelect.append('<option value="' + unit.id + '" data-unit-capacity="' + unit.capacity + '">' + unit.type_name + '</option>');
                 });
             },
             error: function() {
@@ -721,7 +721,7 @@ $(document).ready(function(){
             let itemId = $(this).find('td').eq(0).text();
             let itemName = $(this).find('td').eq(1).text();
             let itemQty = $(this).find('.item-qty').val();
-            let itemPrice = $(this).find('td').eq(3).text();
+            let itemPrice = $(this).find('.item-price').text();
             let itemTotalPrice = $(this).find('td').eq(4).text();
 
             itemsHtml += 
