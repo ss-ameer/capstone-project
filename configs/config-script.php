@@ -2348,8 +2348,8 @@ $(document).ready(function(){
 
         console.log('fired');
 
-        console.log("Selected Category:", category); // Debug to see category value
-        console.log("Search Query:", query); // Debug to see input query
+        console.log("Selected Category:", category);
+        console.log("Search Query:", query); 
 
         if (current_table_id && category) {
             filterTableRows(current_table_id, category, query);
@@ -2357,29 +2357,24 @@ $(document).ready(function(){
 
     });
 
-        // Listen for changes in the filter inputs
     $('#logs-select-entity, #logs-select-event, #search-input').on('input change', function() {
         filterLogs();
     });
 
     function filterLogs() {
-        // Get the filter values
         const entity = $('#logs-select-entity').val().toLowerCase();
         const event = $('#logs-select-event').val().toLowerCase();
         const searchQuery = $('#logs-search-input').val().trim().toLowerCase();
 
-        // Loop through each row in the logs table body
         $('#logs-table tbody tr').each(function() {
             const rowEntity = $(this).find('td').eq(0).text().toLowerCase();
             const rowId = $(this).find('td').eq(1).text().toLowerCase();
             const rowEvent = $(this).find('td').eq(2).text().toLowerCase();
             
-            // Check if the row matches the filters
             const matchesEntity = (entity === 'all' || rowEntity === entity);
             const matchesEvent = (event === 'all' || rowEvent === event);
             const matchesSearch = (searchQuery === '' || rowId.includes(searchQuery));
 
-            // Show or hide the row based on the filters
             if (matchesEntity && matchesEvent && matchesSearch) {
                 $(this).show();
             } else {
