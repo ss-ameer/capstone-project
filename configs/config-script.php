@@ -739,9 +739,9 @@ $(document).ready(function(){
         $('#preview-total-price').text('Total Price: ' + $('#order-items-total_price span').text());
     });
 
-    $('#orderPreviewPrint').click(function () {
-        window.print();
-    });
+    // $('#orderPreviewPrint').click(function () {
+    //     window.print();
+    // });
 
     $('#add-unit-form').submit(function (event) {
         event.preventDefault();
@@ -1511,6 +1511,33 @@ $(document).ready(function(){
             }
         });
     }
+
+    $(document).on('click', '#orderPreviewPrint', function () {
+        var printContents = document.querySelector('#orderPreviewModal .modal-body').innerHTML;
+        varOriginalContents = document.body.innerHTML;
+
+        var printWindow = window.open('', '_blank', 'height=1000, width=1600');
+
+        printWindow.document.write('<html><head><title>Order Preview</title>');
+        printWindow.document.write('<link rel="stylesheet" href="../styles/style.css">');
+        printWindow.document.write('<link href="../imports/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">');
+        printWindow.document.write(
+            `<style>
+                body { 
+                    font-family: Arial, sans-serif; margin-top: 3em; 
+                }
+            </style>`);
+
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+
+        printWindow.focus();
+        printWindow.document.close();
+        
+        printWindow.print();
+        printWindow.close();
+    })
 
     $(document).on('click', '#print-dispatch-slip', function() {
         var printContents = document.querySelector('#dispatch-modal .modal-body').innerHTML;
