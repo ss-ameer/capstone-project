@@ -44,7 +44,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-reset" href="#" id="side-master">
+            <a class="nav-link text-reset <?php if($_SESSION['user_info']['role'] !== 'master') { echo("disabled"); } ?>" href="#" id="side-master">
                 <i class="bi bi-star"></i> <span class="ms-3">Master</span>
             </a>
         </li>

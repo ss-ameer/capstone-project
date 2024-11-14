@@ -10,6 +10,7 @@
     if (isset($_SESSION['user_info'])) {
         $officer_logged_in_id = $_SESSION['user_info']['id'];
         $officer_logged_in_name = $_SESSION['user_info']['name'];
+        $officer_logged_in_role = $_SESSION['user_info']['role'];
     };
 
     function getCurrentOfficer($return_type) {
