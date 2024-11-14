@@ -2263,12 +2263,20 @@ $(document).ready(function(){
 
     const dropdown_options = {
         dashboard_items: [
+            {value: "id", text: "ID"},
             {value: "name", text: "Name"},
             {value: "category", text: "Category"}
         ],
         dashboard_operators: [
+            {value: "id", text: "ID"},
             {value: "name", text: "Name"},
             {value: "license", text: "License"},
+            {value: "status", text: "Status"},
+        ],
+        dashboard_units: [
+            {value: "id", text: "ID"},
+            {value: "type", text: "Type"},
+            {value: "number", text: "Number"},
             {value: "status", text: "Status"},
         ]
     };
@@ -2296,6 +2304,12 @@ $(document).ready(function(){
         current_table_id = $(this).data('table-id');
         console.log(current_table_id);
         populateSearchDropdown(dropdown_options.dashboard_operators);
+    });
+
+    $('#units-tab').on('click', function() {
+        current_table_id = $(this).data('table-id');
+        console.log(current_table_id);
+        populateSearchDropdown(dropdown_options.dashboard_units);
     });
 
     $('#search-category, #search-input').on('input change', function() {
