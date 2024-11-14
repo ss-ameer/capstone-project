@@ -83,7 +83,7 @@
                                     <div class="c-sec flex-fill">
                                         <ul class="nav nav-pills nav-fill nav-justified" id="tab-tables-dashboard" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-table-items" type="button" role="tab">Items</button>
+                                                <button id="items-tab" data-table-id="table-stocks" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-table-items" type="button" role="tab">Items</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-operators" type="button" role="tab">Operators</button>
@@ -92,6 +92,14 @@
                                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-units" type="button" role="tab">Units</button>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="c-sec-con">
+                                    <div class="c-sec flex-fill">
+                                        <?php include PATH . 'components/comp-dispatch-search.php'; ?>
                                     </div>
                                 </div>
                             </div>

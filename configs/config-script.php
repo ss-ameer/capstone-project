@@ -2245,9 +2245,65 @@ $(document).ready(function(){
         });
     }
 
+    function filterTableRows (table_id, column_name, search_value) {
+        $(`#${table_id} tbody tr`).each(function() {
+            
+            let row = $(this);
+            let cell_text = row.find(`td[data-column="${column_name}"]`).text().toLowerCase().trim();
 
-    // $('#modal-dispatch-failed').modal('show');
+            if (cell_text.includes(search_value.toLowerCase().trim())) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
 
+    let current_table_id = $('#items-tab').data('table-id');
+
+    const dropdown_options = {
+        dispatch_items: [
+            {value: "name", text: "Name"},
+            {value: "category", text: "Category"}
+        ]
+    };
+
+    function populateSearchDropdown(options) {
+        let dropdown = $('#search-dropdown');
+
+        dropdown.empty();
+
+        options.forEach(option => {
+            dropdown.append(new Option(option.text, option.value));
+        });
+
+        console.log("Dropdown populated:", dropdown.html()); // Debug to confirm options added
+    }
+
+    $('#items-tab').on('click', function() {
+        current_table_id = $(this).data('table-id');
+        console.log(current_table_id);
+        populateSearchDropdown(dropdown_options.dispatch_items);
+    });
+
+    $('#search-category, #search-input').on('input change', function() {
+        let category = $('#search-dropdown').val();
+        let query = $('#search-input').val().trim();
+
+        console.log('fired');
+
+        console.log("Selected Category:", category); // Debug to see category value
+        console.log("Search Query:", query); // Debug to see input query
+
+        if (current_table_id && category) {
+            filterTableRows(current_table_id, category, query);
+        }
+
+    });
+
+    // search function
+
+    populateSearchDropdown(dropdown_options.dispatch_items);
     updateDispatchTables();
     setDispatchCount();
     // searchTableRows('', 'drivers', 'name');

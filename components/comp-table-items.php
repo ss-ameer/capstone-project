@@ -15,9 +15,9 @@
         <?php foreach ($_SESSION['items'] as $item) : ?>
         
         <tr class="item" data-id_item="<?= $item['item_id'] ?>">
-            <td><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
-            <td><?= $item['item_name'] ?></td>
-            <td><?= $item['category'] ?></td>
+            <td data-column="id"><?= str_pad($item['item_id'], 4, '0', STR_PAD_LEFT) ?></td>
+            <td data-column="name"><?= $item['item_name'] ?></td>
+            <td data-column="category"><?= $item['category'] ?></td>
             <td class="text-center"><?= $item['density'] ?></td>
             <td class="text-center"><?= $item['price'] ?></td>
             <td><?php $description = $item['description'];
