@@ -38,12 +38,6 @@
                 <div class="col mh-100 overflow-auto">
                     <div class="container py-3">
 
-                            <!-- <div class="col-12">
-                                <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".order-create">
-                                    <a class="fs-5" href="#">Create Order</a>
-                                </div>
-                            </div> -->
-
                         <ul class="nav nav-tabs" id="tab-orders" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="orders-create-tab" data-bs-toggle="tab" data-bs-target="#orders-create" type="button" role="tab">Create</button>
@@ -147,6 +141,7 @@
                                                 </div>
                                                 
                                                 <div class="c-table-container orders-table-container">
+
                                                     <?php include PATH . 'components/comp-table-orders.php'; ?>
                                                 </div>
                                             </div>

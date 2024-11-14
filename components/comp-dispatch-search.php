@@ -1,6 +1,6 @@
 <!-- comp-dispatch-search.php -->
 <div class="search-box input-group">
-    <select name="" id="search-dropdown" class="form-select" style="max-width: 20%;">
+    <select name="" id="search-dropdown" class="form-select" style="max-width: 15%;">
         
     </select>
 

@@ -29,7 +29,7 @@
             <h3>
                 Eslaya 
             </h3>
-            <small>Dispatch System</small>
+            <small>Truck Dispatch System</small>
         </div>
             
         <form id="login-form" class="border shadow rounded p-3 w-25 mt-3">
@@ -37,11 +37,11 @@
                 <div class="row g-3">
                     <div class="col-12">
                         <label for="login-name" class="form-label">Name</label>
-                        <input type="text" id="login-name" class="form-control">
+                        <input type="text" id="login-name" class="form-control" autocomplete="off">
                     </div>
                     <div class="col-12">
                         <lable for="login-password" class="form-label">Password</lable>
-                        <input type="text" id="login-password" class="form-control">
+                        <input type="password" id="login-password" class="form-control">
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-success">Login</button>
