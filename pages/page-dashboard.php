@@ -86,10 +86,10 @@
                                                 <button id="items-tab" data-table-id="table-stocks" class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-table-items" type="button" role="tab">Items</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-operators" type="button" role="tab">Operators</button>
+                                                <button id="operators-tab" data-table-id="table-operators" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-operators" type="button" role="tab">Operators</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-units" type="button" role="tab">Units</button>
+                                                <button id="units-tab" data-table-id="table-units" class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-table-units" type="button" role="tab">Units</button>
                                             </li>
                                         </ul>
                                     </div>

@@ -1,6 +1,6 @@
 <!-- comp-table-units.php -->
 <?php $trucks = getUnits(); ?>
-<table>
+<table id="table-units">
     <thead>
         <tr>
             <th>ID</th>

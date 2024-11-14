@@ -2262,9 +2262,14 @@ $(document).ready(function(){
     let current_table_id = $('#items-tab').data('table-id');
 
     const dropdown_options = {
-        dispatch_items: [
+        dashboard_items: [
             {value: "name", text: "Name"},
             {value: "category", text: "Category"}
+        ],
+        dashboard_operators: [
+            {value: "name", text: "Name"},
+            {value: "license", text: "License"},
+            {value: "status", text: "Status"},
         ]
     };
 
@@ -2277,13 +2282,20 @@ $(document).ready(function(){
             dropdown.append(new Option(option.text, option.value));
         });
 
-        console.log("Dropdown populated:", dropdown.html()); // Debug to confirm options added
+        console.log("Dropdown populated:", dropdown.html()); 
     }
 
+    // tab listeners
     $('#items-tab').on('click', function() {
         current_table_id = $(this).data('table-id');
         console.log(current_table_id);
-        populateSearchDropdown(dropdown_options.dispatch_items);
+        populateSearchDropdown(dropdown_options.dashboard_items);
+    });
+
+    $('#operators-tab').on('click', function() {
+        current_table_id = $(this).data('table-id');
+        console.log(current_table_id);
+        populateSearchDropdown(dropdown_options.dashboard_operators);
     });
 
     $('#search-category, #search-input').on('input change', function() {
@@ -2303,7 +2315,7 @@ $(document).ready(function(){
 
     // search function
 
-    populateSearchDropdown(dropdown_options.dispatch_items);
+    populateSearchDropdown(dropdown_options.dashboard_items);
     updateDispatchTables();
     setDispatchCount();
     // searchTableRows('', 'drivers', 'name');
