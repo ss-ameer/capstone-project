@@ -460,17 +460,20 @@ $(document).ready(function(){
 
         $.ajax ({
             url: config_function_url,
+            dataType: 'json',
             type: 'POST',
             data: orderData,
             success: function(response) {
                 console.log(`Unit type for the first item: ${orderItems[0]['unit_type_id']}`);
                 console.log(response);
-                alert('Order created successfully.');
+                if (response.status == 'success') {
+                    alert('Order created successfully.');
                 
-                $('#order-form')[0].reset();
-                $('.orders-table-container').load(location.href + ' .orders-table-container');
-                $('#order-items-table tbody').empty();
-                calculateOrderSummary();
+                    $('#order-form')[0].reset();
+                    $('.orders-table-container').load(location.href + ' .orders-table-container');
+                    $('#order-items-table tbody').empty();
+                    calculateOrderSummary();
+                };
             },
             error: function() {
                 alert('An error occurred. Please try again.');
