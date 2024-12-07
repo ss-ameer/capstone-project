@@ -62,12 +62,20 @@ body {
     @extend .shadow ;
 }
 
+.header {
+    &:hover {
+        cursor: pointer;
+        @extend .bg-body-secondary !optional;
+    }
+}
+
 .c-section-header {
     @extend .sticky-top !optional;
     @extend .bg-light !optional;
     @extend .p-2 !optional;
     @extend .px-3 !optional;
     @extend .border-bottom !optional;
+    @extend .rounded !optional;
 
     .c-title-container {
         @extend .d-flex !optional;

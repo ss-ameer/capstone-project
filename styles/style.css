@@ -9079,7 +9079,7 @@ textarea.form-control-lg {
   background-color: transparent !important;
 }
 
-.bg-body-secondary {
+.bg-body-secondary, .header:hover {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-secondary-bg-rgb), var(--bs-bg-opacity)) !important;
 }
@@ -9171,7 +9171,7 @@ textarea.form-control-lg {
   pointer-events: auto !important;
 }
 
-.rounded, .c-section, .c-sec-con .c-sec {
+.rounded, .c-section-header, .c-section, .c-sec-con .c-sec {
   border-radius: var(--bs-border-radius) !important;
 }
 
@@ -12281,6 +12281,10 @@ body {
 
 .c-main-content {
   height: 90%;
+}
+
+.header:hover {
+  cursor: pointer;
 }
 
 .c-table-container table tbody td {
