@@ -84,18 +84,18 @@
 <main>
 
 </main>
-<footer>
+<!-- <footer>
     <?php 
-        if(isset($_SESSION['user_info']['name'])) {
-            echo $_SESSION['user_info']['id'] . '<br/>';
-            echo $_SESSION['user_info']['name'] . '<br/>';
-            echo $_SESSION['user_info']['password'] . '<br/>';
-            echo $_SESSION['user_info']['role'] . '<br/>';
-            echo $_SESSION['user_info']['created_at'] . '<br/>';
-            echo $_SESSION['user_info']['updated_at'] . '<br/>';
-        }
+        // if(isset($_SESSION['user_info']['name'])) {
+        //     echo $_SESSION['user_info']['id'] . '<br/>';
+        //     echo $_SESSION['user_info']['name'] . '<br/>';
+        //     echo $_SESSION['user_info']['password'] . '<br/>';
+        //     echo $_SESSION['user_info']['role'] . '<br/>';
+        //     echo $_SESSION['user_info']['created_at'] . '<br/>';
+        //     echo $_SESSION['user_info']['updated_at'] . '<br/>';
+        // }
     ?>
-</footer>
+</footer> -->
 
 </body>
 </html>

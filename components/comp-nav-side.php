@@ -1,49 +1,54 @@
 <div class="col-2 col-lg-2 col-md-3 col-sm-3 p-0 d-flex flex-column bg-dark shadow border-end" id="nav-side">
+    <?php 
+        function checkActiveNav($navItem){
+            if ($navItem == $_SESSION['sidenav_active']) echo 'bg-secondary';
+        };
+    ?>
     <!-- navigation -->
     <ul class="nav flex-column" style="color: white;">
-        <li class="nav-item">
+        <li class="nav-item <?php checkActiveNav('dashboard') ?>">
             <a class="nav-link text-reset" href="#" id="side-dashboard">
                 <i class="bi bi-speedometer"></i> <span class="ms-3">Dashboard</span>
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item <?php checkActiveNav('orders') ?>">
             <a class="nav-link text-reset" href="#" id="side-orders">
                 <i class="bi bi-receipt"></i> <span class="ms-3">Orders</span>
             </a>
         </li> 
 
-        <li class="nav-item">
+        <li class="nav-item <?php checkActiveNav('dispatch') ?>">
             <a class="nav-link text-reset" href="#" id="side-dispatch">
                 <i class="bi bi-send"></i> <span class="ms-3">Dispatch</span>
             </a>
         </li>
 
-        <li class="nav-item d-none">
+        <li class="nav-item d-none <?php checkActiveNav('items') ?>">
             <a class="nav-link text-reset" href="#" id="side-stock">
                 <i class="bi bi-box2"></i> <span class="ms-3">Items</span>
             </a>
         </li>
 
-        <li class="nav-item d-none">
+        <li class="nav-item d-none <?php checkActiveNav('units') ?>">
             <a class="nav-link text-reset" href="#" id="side-trucks">
                 <i class="bi bi-truck"></i> <span class="ms-3">Units</span>
             </a>
         </li>
 
-        <li class="nav-item d-none">
+        <li class="nav-item d-none <?php checkActiveNav('operators') ?>">
             <a class="nav-link text-reset" href="#" id="side-drivers">
                 <i class="bi bi-person"></i> <span class="ms-3">Operators</span>
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item <?php checkActiveNav('logs') ?>">
             <a class="nav-link text-reset" href="#" id="side-logs">
                 <i class="bi bi-file-earmark-text"></i> <span class="ms-3">Logs</span>
             </a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item <?php checkActiveNav('master') ?>">
             <a class="nav-link text-reset <?php if($_SESSION['user_info']['role'] !== 'master') { echo("disabled"); } ?>" href="#" id="side-master">
                 <i class="bi bi-star"></i> <span class="ms-3">Master</span>
             </a>
