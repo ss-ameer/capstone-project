@@ -79,7 +79,7 @@
                     <?= htmlspecialchars('Brgy. ' . $order['barangay'] . ', ' . $order['city']) ?>
                 </td> -->
                 <td> <?= count($order_items); ?> </td>
-                <td><?= htmlspecialchars($order['total_price']) ?></td>
+                <td><?= htmlspecialchars(formatPrice($order['total_price'])) ?></td>
                 <td><?= htmlspecialchars($order['status']) ?></td>
                 <td class="d-flex justify-content-center">
                     <button class="btn btn-secondary btn-sm view-order-btn"
@@ -90,7 +90,7 @@
                         data-client-email="<?= htmlspecialchars($client_email_value) ?>"
                         data-order-date="<?= htmlspecialchars($order['order_date']) ?>"
                         data-order-time="<?= htmlspecialchars($order['order_time']) ?>"
-                        data-total-price="<?= htmlspecialchars($order['total_price']) ?>"
+                        data-total-price="<?= htmlspecialchars(formatPrice($order['total_price'])) ?>"
                         data-status="<?= htmlspecialchars($order['status']) ?>"
                         data-address="<?= htmlspecialchars($order['house_number'] . ' ' . $order['street'] . ', ' . $order['barangay'] . ', ' . $order['city']) ?>"
                         data-order-item-ids="<?= htmlspecialchars($order['order_item_ids']) ?>"

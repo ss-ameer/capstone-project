@@ -19,7 +19,7 @@
             <td data-column="name"><?= $item['item_name'] ?></td>
             <td data-column="category"><?= $item['category'] ?></td>
             <td class="text-center"><?= $item['density'] ?></td>
-            <td class="text-center"><?= $item['price'] ?></td>
+            <td class="text-center"><?= formatPrice($item['price']); ?></td>
             <td><?php $description = $item['description'];
                     echo mb_strimwidth($description, 0, 50, '...') ?></td>
         </tr>

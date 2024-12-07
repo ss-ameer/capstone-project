@@ -414,7 +414,7 @@ $(document).ready(function(){
                     });
                     $("#item-suggestions").html(suggestions).show();
                     $('#item-suggestions li:gt(4)').remove();
-
+                    console.log(data);
                 }
             });
         } else {
@@ -433,7 +433,7 @@ $(document).ready(function(){
                 item_id: row.find('.item-id').text(),
                 quantity: row.find('.item-qty').val(),
                 price: row.find('.item-price').text(),
-                total: row.find('.item-total').text(),
+                total: row.find('.item-total').data('total'),
                 unit_type_id: parseInt(row.find('.item-unit option:selected').val()),
                 unit_capacity: parseFloat(row.find('.item-unit option:selected').data('unit-capacity'))
             };
@@ -454,7 +454,7 @@ $(document).ready(function(){
             },
             items: orderItems,
             total_qty: parseInt($('#order-items-total_qty-input').val()),
-            total_amount: parseFloat($('#order-items-total_price-input').val()),
+            total_amount: parseFloat(formatPrice($('#order-items-total_price-input').val())),
             action: 'create order'
         }
 
@@ -607,7 +607,7 @@ $(document).ready(function(){
         $rows.each(function() {
             var $thisRow = $(this);
             var qty = parseInt($thisRow.find('.item-qty').val());
-            var price = parseFloat($thisRow.find('.item-price').text());
+            var price = parseFloat($thisRow.find('.item-price').data('price'));
             var density = parseFloat($thisRow.find('.item-density').text());
             var selectedOption = $thisRow.find('.item-unit option:selected');
             var unitCapacity = parseFloat(selectedOption.data('unit-capacity'));
@@ -621,7 +621,8 @@ $(document).ready(function(){
             console.log('Volume: ' + volume);
             console.log('Total: ' + total);
 
-            $thisRow.find('.item-total').text(total.toFixed(2));
+            $thisRow.find('.item-total').text(formatPrice(total));
+            $thisRow.find('.item-total').data('total', total);
         });
 
         calculateOrderSummary();
@@ -634,7 +635,7 @@ $(document).ready(function(){
         
         $('#order-items-table tbody tr').each(function() {
             var qty = parseInt($(this).find('.item-qty').val());
-            var total = parseFloat($(this).find('.item-total').text());
+            var total = parseFloat($(this).find('.item-total').data('total'));
 
             totalQty += qty;
             totalPrice += total;
@@ -642,10 +643,10 @@ $(document).ready(function(){
 
         
         $('#order-items-total_qty span').text(`${totalQty}`);
-        $('#order-items-total_price span').text(`${totalPrice}`);
+        $('#order-items-total_price span').text(`${formatPrice(totalPrice)}`);
 
         $('#order-items-total_qty-input').val(totalQty);
-        $('#order-items-total_price-input').val(totalPrice.toFixed(2));
+        $('#order-items-total_price-input').val(formatPrice(totalPrice.toFixed(2)));
 
         console.log('Total QTY:' + totalQty);
         console.log('Total Price:' + totalPrice);
@@ -669,7 +670,7 @@ $(document).ready(function(){
                                 '<button class="btn btn-outline-success input-group-text inc-qty">+</button>' + 
                             '</div>' + 
                         '</td>' +
-                        '<td class="item-price text-center">' + price + '</td>' +
+                        '<td class="item-price text-center" data-price="' + price + '">' + formatPrice(price) + '</td>' +
                         '<td class="item-total text-center">' + price + '</td>' +
                         '<td class="text-center"><i class="bi bi-x-circle fs-6" id="order-item-remove"></i></td>' +
                         '<td class="item-density d-none">' + density + '</td>' +
@@ -725,7 +726,7 @@ $(document).ready(function(){
             let itemName = $(this).find('td').eq(1).text();
             let itemQty = $(this).find('.item-qty').val();
             let itemPrice = $(this).find('.item-price').text();
-            let itemTotalPrice = $(this).find('td').eq(4).text();
+            let itemTotalPrice = $(this).find('td').eq(5).text();
 
             itemsHtml += 
             `<tr>
@@ -822,6 +823,10 @@ $(document).ready(function(){
         });
     });
 
+    function formatPrice(value) {
+        return parseFloat(value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     $(document).on('click', '#order-list-pending .order', function() {
         var orderId = $(this).data('order-id');
         var loadingMessage = 'Loading';
@@ -875,14 +880,14 @@ $(document).ready(function(){
                                     '" data-type-id="' + item.truck_type_id + 
                                     '" data-order-item-id="' + item.id + 
                                     '" data-item-name="' + item.item_name + 
-                                    '" data-item-total="' + item.item_total + 
-                                    '" data-item-price="' + item.item_price + '>' 
+                                    '" data-item-total="' + formatPrice(item.item_total) + 
+                                    '" data-item-price="' + formatPrice(item.item_price) + '>' 
                                     : ''}
                                 <div class="w-50 d-flex justify-content-between">
                                     <span>${item.item_name}</span>
                                     <span>${item.type_name}</span>
                                 </div>
-                                <span>${item.item_total}</span>
+                                <span>${formatPrice(item.item_total)}</span>
                             </li>`;
 
                             $('#order-display-items ul.' + item.status).append(itemHtml);
@@ -908,10 +913,8 @@ $(document).ready(function(){
         });
     });
 
-    // Event listener for the close button
     $(document).on('click', '#dispatch-order-view .btn-close', function() {
         
-        // Hide the order view and show the no_view element
         $('#dispatch-order-view').addClass('d-none');
         setTimeout(function() {
             $('#dispatch-order-view-no_view').find('.lead').text('Select an order to view details.');
@@ -993,7 +996,7 @@ $(document).ready(function(){
                 $('#dispatch-form .order-item-id').text(orderItemId);
                 $('#dispatch-form .item-name').text(itemName);
                 $('#dispatch-form .unit-type').text(typeName);
-                $('#dispatch-form .item-total').text(itemTotal);
+                $('#dispatch-form .item-total').data('total');
 
                 setTimeout(function() {
                     $(`.${$dispatch_form_container}-active`).removeClass('d-none');
@@ -1102,7 +1105,7 @@ $(document).ready(function(){
                                     '" data-type-id="' + item.truck_type_id + 
                                     '" data-order-item-id="' + item.id + 
                                     '" data-item-name="' + item.item_name + 
-                                    '" data-item-total="' + item.item_total +
+                                    '" data-item-total="' + formatPrice(item.item_total) +
                                     '" data-item-total="' + item.truck_capacity + '">' 
                                     : ''}
                                 <div class="w-50 d-flex justify-content-between">
@@ -1172,7 +1175,7 @@ $(document).ready(function(){
                 data-client-name = "${data.client_name}"
                 data-dispatch-address = "${data.house_number} ${data.street} Street, ${data.barangay}, ${data.city}"  
                 data-truck-number = "${data.truck_number}"
-                data-item-price = "${data.item_price}"
+                data-item-price = "${formatPrice(data.item_price)}"
                 data-truck-capacity = "${data.truck_capacity}" 
                 data-client-phone = "${data.client_phone}" 
                 data-client-email = "${data.client_email}"
@@ -1183,7 +1186,7 @@ $(document).ready(function(){
                     <td>${data.id}</td>
                     <td>${data.order_id}</td>
                     <td>${data.item_name}</td>
-                    <td>${data.item_total}</td>
+                    <td>${formatPrice(data.item_total)}</td>
                     <td>${data.driver_name}</td>
                     <td>${data.truck_number}</td>
                     <td>${data.officer_name}</td>
@@ -1335,14 +1338,14 @@ $(document).ready(function(){
         $('#dispatch-id').text(String(data.dispatch_id).padStart(4, '0'));
         $('#dispatch-id').attr('data-dispatch-id', data.dispatch_id);
         $('#item-name').text(data.item_name);
-        $('#item-total').text(data.item_total);
+        $('#item-total').text(formatPrice(data.item_total));
         $('#driver-name').text(data.driver_name);
         $('#truck-number').text(data.truck_number);
         $('#officer-name').text(data.officer_name);
         $('#status').text(data.status);
         $('#client-name').text(data.client_name);
         $('#dispatch-address').text(data.dispatch_address);
-        $('#item-price').text(data.item_price);
+        $('#item-price').text(formatPrice(data.item_price));
         $('#truck-capacity').text(data.truck_capacity);
         $('#client-phone').text(data.client_phone);
         $('#client-email').text(data.client_email);
@@ -1612,7 +1615,7 @@ $(document).ready(function(){
         var client_name = $(this).data('client-name');
         var client_phone = $(this).data('client-phone');
         var client_email = $(this).data('client-email');
-        var total_price = $(this).data('total-price');
+        var total_price = formatPrice($(this).data('total-price'));
         var status = $(this).data('status');
         var address = $(this).data('address');
         var order_items = $(this).data('order-items');

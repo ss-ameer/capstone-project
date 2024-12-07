@@ -42,7 +42,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Name</th>
-                                            <th>Quantity(cbm)</th>
+                                            <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Total Price</th>
                                         </tr>

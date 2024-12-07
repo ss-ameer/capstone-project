@@ -93,8 +93,8 @@
                                                 <tr>
                                                     <td><?= $order_item['id'] ?></td>
                                                     <td><?= $order_item['item_id'] ?></td>
-                                                    <td><?= $order_item['price'] ?></td>
-                                                    <td><?= $order_item['item_total'] ?></td>
+                                                    <td><?= formatPrice($order_item['price']) ?></td>
+                                                    <td><?= formatPrice($order_item['item_total']) ?></td>
                                                     <td><?= $order_item['truck_type_id'] ?></td>
                                                     <td><?= $order_item['status'] ?></td>
                                                 </tr>

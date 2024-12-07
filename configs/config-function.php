@@ -398,11 +398,11 @@
                                     ],
                                     [
                                         'type' => 'text',
-                                        'data' => ['price' => $order_item['price']]
+                                        'data' => ['price' => formatPrice($order_item['price'])]
                                     ],
                                     [
                                         'type' => 'text',
-                                        'data' => ['item_total' => $order_item['item_total']]
+                                        'data' => ['item_total' => formatPrice($order_item['item_total'])]
                                     ],
                                     [
                                         'type' => 'select manual',
@@ -583,6 +583,10 @@
     }
 
     $unit_types = dbGetTableData('truck_types');
+
+    function formatPrice($value) {
+        return number_format($value, 2, '.', ',');
+    }
 
     function itemSearch() {
         global $conn;

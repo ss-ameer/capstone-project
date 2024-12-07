@@ -141,7 +141,6 @@
                                                 </div>
                                                 
                                                 <div class="c-table-container orders-table-container">
-
                                                     <?php include PATH . 'components/comp-table-orders.php'; ?>
                                                 </div>
                                             </div>
