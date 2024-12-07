@@ -43,6 +43,33 @@
                                     <span class="fs-5">Create Dispatch</span>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="container p-3 border rounded">
+                                    <div class="d-flex justify-content-center gap-3">
+                                        <div class="p-2 fw-bold">
+                                            Status Legend:
+                                        </div>
+                                        <div class="text-body-secondary bg-secondary-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> Pending
+                                        </div>
+                                        <div class="text-primary bg-primary-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> In-Queue
+                                        </div>
+                                        <div class="text-info bg-info-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> In-Transit
+                                        </div>
+                                        <div class="text-success bg-success-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> Success
+                                        </div>
+                                        <div class="text-dark bg-success-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> Failed
+                                        </div>
+                                        <div class="text-danger bg-danger-subtle p-2 rounded">
+                                            <i class="bi bi-circle-fill"></i> Canceled
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- pending orders list -->
                             <div class="col-md-6 col-sm-12">
                                 <div id="order-list-container" class="container p-0 border rounded" style="max-height: 400px; height: 400px; overflow-y: auto;">
