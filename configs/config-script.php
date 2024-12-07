@@ -2342,20 +2342,20 @@ $(document).ready(function(){
         populateSearchDropdown(dropdown_options.dashboard_units);
     });
 
-    // $('#search-category, #search-input').on('input change', function() {
-    //     let category = $('#search-dropdown').val();
-    //     let query = $('#search-input').val().trim();
+    $('#search-category, #search-input').on('input change', function() {
+        let category = $('#search-dropdown').val();
+        let query = $('#search-input').val().trim();
 
-    //     console.log('fired');
+        console.log('fired');
 
-    //     console.log("Selected Category:", category);
-    //     console.log("Search Query:", query); 
+        console.log("Selected Category:", category);
+        console.log("Search Query:", query); 
 
-    //     if (current_table_id && category) {
-    //         filterTableRows(current_table_id, category, query);
-    //     }
+        if (current_table_id && category) {
+            filterTableRows(current_table_id, category, query);
+        }
 
-    // });
+    });
 
     $('#logs-select-entity, #logs-select-event, #logs-search-input').on('input change', function() {
         console.log('fired');
@@ -2384,7 +2384,14 @@ $(document).ready(function(){
         });
     }
 
-    // search function
+    $('.master-create .header').on('click', function(){
+        const icon = $(this).find(".icon"); 
+        const currentClass = icon.attr("class"); 
+        const toggleClass = icon.data("toggle-icon"); 
+
+        icon.attr("class", toggleClass + " icon"); 
+        icon.data("toggle-icon", currentClass.replace("icon", "").trim()); 
+    })
 
     populateSearchDropdown(dropdown_options.dashboard_items);
     updateDispatchTables();

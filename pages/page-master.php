@@ -55,13 +55,15 @@
                                 <div class="row mt-3 g-3">
                                     <div class="col-12 master-create">
                                         <div class="c-section">
-                                            <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-user-container">
-                                                <div class="c-title-container">
+                                            <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target="#add-user-container">
+                                                <div class="c-title-container c-flex-between c-flex-between">
                                                     <!-- title -->
                                                     <span class="lead">Add User</span>
+                                                    <!-- icon -->
+                                                    <i class="bi bi-caret-down-fill icon" data-toggle-icon="bi-caret-left-fill"></i>
                                                 </div>
                                             </div>
-                                            <div class="p-3 collapse" id="add-user-container">
+                                            <div class="p-3 collapse show" id="add-user-container">
                                                 <!-- user form -->
                                                 <?php include_once('../components/comp-form-register.php') ?>
                                             </div>
@@ -70,11 +72,12 @@
 
                                     <div class="col-12 master-create">
                                         <div class="c-section">
-                                            <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-item-container">
-                                                <div class="c-title-container">
+                                            <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target="#add-item-container">
+                                                <div class="c-title-container c-flex-between c-flex-between">
                                                     <!-- title -->
                                                     <span class="lead">Add Item</span>
                                                     <!-- icon -->
+                                                    <i class="bi bi-caret-left-fill icon" data-toggle-icon="bi-caret-down-fill"></i>
                                                 </div>
                                             </div>
                                             <div class="p-3 collapse" id="add-item-container">
@@ -86,10 +89,12 @@
 
                                     <div class="col-6 master-create">
                                         <div class="c-section">
-                                            <div class="c-section-header" data-bs-toggle="collapse" data-bs-target=".units-section">
-                                                <div class="c-title-container">
+                                            <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target=".units-section">
+                                                <div class="c-title-container c-flex-between">
                                                     <!-- title -->
                                                     <span class="lead">Add Unit</span>
+                                                    <!-- icon -->
+                                                    <i class="bi bi-caret-left-fill icon" data-toggle-icon="bi-caret-down-fill"></i>
                                                 </div>
                                             </div>
                                             <div class="p-3 units-section collapse" id="add-unit-container">
@@ -101,10 +106,12 @@
 
                                     <div class="col-6 master-create">
                                         <div class="c-section">
-                                            <div class="c-section-header" data-bs-toggle="collapse" data-bs-target=".units-section">
-                                                <div class="c-title-container">
+                                            <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target=".units-section">
+                                                <div class="c-title-container c-flex-between">
                                                     <!-- title -->
                                                     <span class="lead">Add Unit Type</span>
+                                                    <!-- icon -->
+                                                    <i class="bi bi-caret-left-fill icon" data-toggle-icon="bi-caret-down-fill"></i>
                                                 </div>
                                             </div>
                                             <div class="p-3 units-section collapse" id="add-unit_type-container">
@@ -116,10 +123,12 @@
                                     
                                     <div class="col-12 master-create">
                                         <div class="c-section">
-                                            <div class="c-section-header" data-bs-toggle="collapse" data-bs-target="#add-driver-container">
-                                                <div class="c-title-container">
+                                            <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target="#add-driver-container">
+                                                <div class="c-title-container c-flex-between">
                                                     <!-- title -->
                                                     <span class="lead">Add Operator</span>
+                                                    <!-- icon -->
+                                                    <i class="bi bi-caret-left-fill icon" data-toggle-icon="bi-caret-down-fill"></i>
                                                 </div>
                                             </div>
                                             <div class="p-3 collapse" id="add-driver-container">
