@@ -2342,22 +2342,23 @@ $(document).ready(function(){
         populateSearchDropdown(dropdown_options.dashboard_units);
     });
 
-    $('#search-category, #search-input').on('input change', function() {
-        let category = $('#search-dropdown').val();
-        let query = $('#search-input').val().trim();
+    // $('#search-category, #search-input').on('input change', function() {
+    //     let category = $('#search-dropdown').val();
+    //     let query = $('#search-input').val().trim();
 
+    //     console.log('fired');
+
+    //     console.log("Selected Category:", category);
+    //     console.log("Search Query:", query); 
+
+    //     if (current_table_id && category) {
+    //         filterTableRows(current_table_id, category, query);
+    //     }
+
+    // });
+
+    $('#logs-select-entity, #logs-select-event, #logs-search-input').on('input change', function() {
         console.log('fired');
-
-        console.log("Selected Category:", category);
-        console.log("Search Query:", query); 
-
-        if (current_table_id && category) {
-            filterTableRows(current_table_id, category, query);
-        }
-
-    });
-
-    $('#logs-select-entity, #logs-select-event, #search-input').on('input change', function() {
         filterLogs();
     });
 

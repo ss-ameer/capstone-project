@@ -85,7 +85,7 @@
 
                                                 <div class="col">
                                                     <div class="input-group">
-                                                        <label for="" class="input-group-text">ID</label>
+                                                        <label for="logs-search-input" class="input-group-text">ID</label>
                                                         <input class="form-control" type="text" name="" id="logs-search-input" placeholder="Search...">
                                                     </div>
                                                 </div>
