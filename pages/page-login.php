@@ -25,11 +25,14 @@
 <main>
     <div class="container-fluid vh-100 d-flex flex-column align-items-center justify-content-center">
 
-        <div class="title-section w-25 border rounded text-center p-3 shadow">
-            <h3>
-                Eslaya 
-            </h3>
-            <small>Truck Dispatch System</small>
+        <div class="title-section w-25 border rounded p-3 shadow d-flex justify-content-center">
+            <div class="me-2">
+                <img src="../icon.png" class="img-thumbnail" alt="logo" style="height: 65px; width: 75px">
+            </div>
+            <div>
+                <h3>Eslaya</h3>
+                <small>Truck Dispatch System</small>
+            </div>
         </div>
             
         <form id="login-form" class="border shadow rounded p-3 w-25 mt-3">
