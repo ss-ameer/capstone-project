@@ -36,8 +36,8 @@
             <div class="container">
                 <div class="row g-3">
                     <div class="col-12">
-                        <label for="login-name" class="form-label">Name</label>
-                        <input type="text" id="login-name" class="form-control" autocomplete="off">
+                        <label for="login-username" class="form-label">Username</label>
+                        <input type="text" id="login-username" class="form-control" autocomplete="off">
                     </div>
                     <div class="col-12">
                         <lable for="login-password" class="form-label">Password</lable>

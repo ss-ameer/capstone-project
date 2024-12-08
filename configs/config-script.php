@@ -196,6 +196,7 @@ $(document).ready(function(){
     function register(){
         var data = {
             name: $('#register-name').val(),
+            username: $('#register-username').val(),
             password: $('#register-password').val(),
             password_rep: $('#register-password_rep').val(),
             acc_type: $('#register-check').prop('checked'),
@@ -215,7 +216,7 @@ $(document).ready(function(){
 
     function login() {
         var data = {
-            name: $('#login-name').val(),
+            username: $('#login-username').val(),
             password: $('#login-password').val(),
             action: 'login'
         };

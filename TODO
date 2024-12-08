@@ -3,18 +3,18 @@ Recomendations:
 
 Alexander S. Cochanco:
     [x] Remove category in search and use Like % - %
-    [ ] Use username instead of name in log details
+    [x] Use username instead of name in log details
     [ ] Put brands logo in the login page
     [x] Granulize forms instead of placing all in a single page
-    [ ] Place proper table in all fields
+    [x] Place proper table in all fields
     [ ] CMS features
 
 Angelito I. Cunanan Jr:
-    [ ] amount
-    [ ] ui grid lines/borders/
+    [x] amount
+    [x] ui grid lines/borders/
     [ ] table sizes (width)
-    [ ] alignment
-    [ ] realtime
+    [x] alignment
+    [x] realtime
 
 Sir Drew Recomendations:
     [x] FAILED(Give Reason)

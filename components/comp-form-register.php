@@ -11,6 +11,13 @@
 
             <div class="col-12">
                 <div class="form-floating">
+                    <input name="username" type="text" id="register-username" class="form-control" placeholder="Username">
+                    <label for="register-name" class="form-label">Username</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-floating">
                     <input name="password" type="password" id="register-password" class="form-control" placeholder="Password">
                     <label for="register-password" class="form-label">Password</label>
                 </div>

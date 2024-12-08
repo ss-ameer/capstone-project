@@ -53,6 +53,7 @@
                                 <div class="c-sec-con">
                                     <div class="c-sec flex-fill align-content-center">
                                         <div class="h5"><?= $officer_info['name']; ?></div>
+                                        <div><strong>Username: </strong><?= $officer_info['username'] ?></div>
                                         <div><strong>Role: </strong> <?= $officer_info['role']; ?></div>
                                     </div>
                                     <div class="c-sec flex-grow-1">

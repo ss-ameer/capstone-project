@@ -61,7 +61,7 @@
                                         <div class="text-success bg-success-subtle p-2 rounded">
                                             <i class="bi bi-circle-fill"></i> Success
                                         </div>
-                                        <div class="text-dark bg-success-subtle p-2 rounded">
+                                        <div class="text-dark bg-dark-subtle p-2 rounded">
                                             <i class="bi bi-circle-fill"></i> Failed
                                         </div>
                                         <div class="text-danger bg-danger-subtle p-2 rounded">

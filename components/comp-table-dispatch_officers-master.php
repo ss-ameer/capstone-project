@@ -24,6 +24,11 @@
                 ],
 
                 [
+                    'type' => 'text',
+                    'data' => ['username' => $officer['username']] 
+                ],
+
+                [
                     'type' => 'select manual',
                     'options' => ['officer', 'master'],
                     'data' => ['role' => $officer['role']]
@@ -32,6 +37,7 @@
             <tr class="officer" data-officer-id="<?= $officer['id'] ?>">
                 <td><?= str_pad($officer['id'], 4, '0', STR_PAD_LEFT) ?></td>
                 <td><?= $officer['name'] ?></td>
+                <td><?= $officer['username'] ?></td>
                 <td><?= $officer['role'] ?></td>
                 <td><?= $officer['created_at'] ?></td>
                 <td><?= $officer['updated_at'] ?></td>

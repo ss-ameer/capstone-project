@@ -701,12 +701,13 @@
         global $conn;
 
         $name = $_POST['name'];
+        $username = $_POST['username'];
         $password = $_POST['password'];
         $password_rep = $_POST['password_rep'];
         $acc_type = $_POST['acc_type'] == 'true' ? 0 : 1;
 
         // check: filled
-        if (empty($name) || empty($password) || empty($password_rep)) {
+        if (empty($name) || empty($username) || empty($password) || empty($password_rep)) {
             echo '<div class="alert alert-danger">All fields are required.</div>';
             exit();
         }
@@ -721,15 +722,14 @@
         
         $acc_type = $acc_type ? 'officer' : 'master';
 
-        $stmt = $conn -> prepare ("INSERT INTO dispatch_officers (name, password, role) VALUES (?, ?, ?)");
-        $stmt -> bind_param("sss", $name, $hashed_password, $acc_type);
+        $stmt = $conn -> prepare ("INSERT INTO dispatch_officers (name, username, password, role) VALUES (?, ?, ?, ?)");
+        $stmt -> bind_param("ssss", $name, $username, $hashed_password, $acc_type);
 
         $stmt -> execute();
 
         getAccounts ();
 
         echo '<div class="alert alert-success">Registered successfully.</div>';
-
     }
 
     function getUserInfo($user_id) {
@@ -739,13 +739,14 @@
         $stmt = $conn -> prepare("SELECT * FROM dispatch_officers WHERE id = ?");
         $stmt -> bind_param("i", $user_id);
         $stmt -> execute();
-        $stmt -> bind_result($db_id, $db_name, $db_password, $db_created_at, $db_updated_at, $db_role);
+        $stmt -> bind_result($db_id, $db_name, $db_username, $db_password, $db_created_at, $db_updated_at, $db_role);
         $stmt -> fetch();
         $stmt -> close();
 
         return array(
             'id' => $db_id,
             'name' => $db_name,
+            'username' => $db_username,
             'password' => $db_password,
             'role' => $db_role,
             'created_at' => $db_created_at,
@@ -775,16 +776,16 @@
 
         global $conn;
 
-        $name = $_POST['name'];
+        $username = $_POST['username'];
         $password = $_POST['password'];
 
-        if (empty($name) || empty($password)) {
+        if (empty($username) || empty($password)) {
             echo '<div class="alert alert-danger">All fields are required.</div>';
             return;
         }
 
-        $stmt = $conn -> prepare("SELECT id, password FROM dispatch_officers WHERE name = ?");
-        $stmt -> bind_param("s", $name);
+        $stmt = $conn -> prepare("SELECT id, password FROM dispatch_officers WHERE username = ?");
+        $stmt -> bind_param("s", $username);
         $stmt -> execute();
         $stmt -> store_result();
 
@@ -799,7 +800,7 @@
                 // echo $_SESSION['user_info']['name'];
                 echo '<div class="alert alert-success">Login successful.</div>';
 
-                $log_data = [
+                $log_data = [ 
                     'entity_type' => 'dispatch_officers',
                     'entity_id' => $_SESSION['user_info']['id'],
                     'event_type' => 'Login',

@@ -53,7 +53,8 @@
                         <div class="tab-pane fade show active" id="master-create" role="tabpanel">
                             <div class="container">
                                 <div class="row mt-3 g-3">
-                                    <div class="col-12 master-create">
+                                    <div class="col-12 master-create
+                                    ">
                                         <div class="c-section">
                                             <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target="#add-user-container">
                                                 <div class="c-title-container c-flex-between c-flex-between">
