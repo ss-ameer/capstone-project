@@ -94,7 +94,7 @@
                                                             <th scope="col">ID</th>
                                                             <th scope="col">Name</th>
                                                             <th scope="col">Unit</th></th>
-                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col" style="width: 15%;">Quantity</th>
                                                             <th scope="col">Price(m³)</th>
                                                             <th scope="col">TPrice</th>
                                                             <th scope="col">Action</th>
