@@ -47,7 +47,7 @@
                         <input type="password" id="login-password" class="form-control">
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-success">Login</button>
+                        <button type="submit" class="btn btn-success w-100">Login</button>
                     </div>
                     <div class="col-12">
                         <div id="feedback">
@@ -55,7 +55,6 @@
                     </div>
                 </div>
             </div>
-
 
         </form>
         

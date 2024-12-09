@@ -4,7 +4,7 @@ Recomendations:
 Alexander S. Cochanco:
     [x] Remove category in search and use Like % - %
     [x] Use username instead of name in log details
-    [ ] Put brands logo in the login page
+    [x] Put brands logo in the login page
     [x] Granulize forms instead of placing all in a single page
     [x] Place proper table in all fields
     [ ] CMS features
