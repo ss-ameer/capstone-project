@@ -582,6 +582,8 @@
         }
     }
 
+    include 'config-cms.php';
+
     $unit_types = dbGetTableData('truck_types');
 
     function formatPrice($value) {

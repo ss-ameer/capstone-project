@@ -9,6 +9,7 @@ $(document).ready(function(){
     // const popover = new bootstrap.Popover('.popover-dismiss', { trigger: 'focus' });
 
     var config_function_url = '../configs/config-function.php';
+    var config_content_url = '../configs/config-cms.php';
 
     // PROTOTYPES:
     $.fn.toggleVisibility = function(id) {
@@ -1311,11 +1312,11 @@ $(document).ready(function(){
                     $.each(response[status], function(index, dispatch) {
                         let tableClass = `.dispatch-table.${status.replace('_', '-')}`;
                         $(tableClass + ' tbody').append(defaultTableData(dispatch, actions[status.replace('-', '_')]));
-                        console.log(tableClass);
+                        // console.log(tableClass);
                     });
                 });
 
-                console.log(response);
+                // console.log(response);
                 setDispatchCount();
             },
             error: function(xhr, status, error) {
@@ -2267,7 +2268,7 @@ $(document).ready(function(){
                 
                 if (Array.isArray(results)) {
                     results.forEach(function(element) {
-                        console.log(element['name']);
+                        // console.log(element['name']);
                     });
                 } else {
                     console.warn('Expected an array but got:', results);
@@ -2324,7 +2325,7 @@ $(document).ready(function(){
             dropdown.append(new Option(option.text, option.value));
         });
 
-        console.log("Dropdown populated:", dropdown.html()); 
+        // console.log("Dropdown populated:", dropdown.html()); 
     }
 
     // tab listeners
@@ -2397,10 +2398,60 @@ $(document).ready(function(){
         icon.data("toggle-icon", currentClass.replace("icon", "").trim()); 
     })
 
+    $('#content-form-main_title').on('submit', function(event){
+        event.preventDefault();
+
+        var id = '#content-input-main_title';
+        var column = 'main_title';
+        var value = $(id).val();
+
+        // console.log(value);
+
+        updateContent(column, value, id);
+    })
+
+    function updateContent(column, value, element = null, url=config_function_url, action = 'content update', successCallback = null, errorCallback = null) {
+        const data = {
+            column: column,
+            value: value,
+            cms_action: action
+        };
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function (response) {                
+                if (response.status === 'success') {
+                    reloadElementById('#header-row');
+                    $(element).attr('placeholder', value);
+                    alert('Update successful.');
+                } else {
+                    alert('Update failed.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Response: ' + xhr.responseText);
+                console.error('Error:', status, error);
+            }
+        });
+    }
+
+    function reloadElementById(elementId) {
+        $(elementId).load(window.location.href + ' ' + elementId, function(response, status, xhr) {
+            if (status == 'error') {
+                console.log('Error loading the element: ' + xhr.status + ' ' + xhr.statusText);
+            } else {
+                // console.log('Element reloaded successfully.');
+            }
+        });
+    }
+
     populateSearchDropdown(dropdown_options.dashboard_items);
     updateDispatchTables();
     setDispatchCount();
-    // searchTableRows('', 'drivers', 'name');
+    searchTableRows('', 'drivers', 'name');
     
 });
 

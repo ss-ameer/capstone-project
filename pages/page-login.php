@@ -30,7 +30,7 @@
                 <img src="../icon.png" class="img-thumbnail" alt="logo" style="height: 65px; width: 75px">
             </div>
             <div>
-                <h3>Eslaya</h3>
+                <h3><?= $cms['main title'] ?></h3>
                 <small>Truck Dispatch System</small>
             </div>
         </div>

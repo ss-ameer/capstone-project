@@ -13,7 +13,7 @@
 
                         <div class="row">
                             <div class="col-12 text-center mt-3">
-                                <h3 class="mt-3">Eslaya Quarrying</h3>
+                                <h3 class="mt-3"><?= $cms['main title'] ?></h3>
                                 <p>
                                     Palayan City, Philippines <br>
                                     Phone: <span id="contact-number">(+63) 912 345 6789</span>

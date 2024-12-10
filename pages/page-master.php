@@ -40,21 +40,24 @@
 
                     <ul class="nav nav-tabs" id="tab-master" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="master-create-tab" data-bs-toggle="tab" data-bs-target="#master-create" type="button" role="tab">Create</button>
+                            <button class="nav-link" id="master-create-tab" data-bs-toggle="tab" data-bs-target="#master-create" type="button" role="tab">Create</button>
                         </li>
 
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="master-views-tab" data-bs-toggle="tab" data-bs-target="#master-views" type="button" role="tab">Views</button>
                         </li>
+
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="master-content-tab" data-bs-toggle="tab" data-bs-target="#master-content" type="button" role="tab">Content</button>
+                        </li>
                     </ul>
 
                     <div class="tab-content" id="tab-content-master">
 
-                        <div class="tab-pane fade show active" id="master-create" role="tabpanel">
+                        <div class="tab-pane fade show" id="master-create" role="tabpanel">
                             <div class="container">
                                 <div class="row mt-3 g-3">
-                                    <div class="col-12 master-create
-                                    ">
+                                    <div class="col-12 master-create">
                                         <div class="c-section">
                                             <div class="c-section-header header" data-bs-toggle="collapse" data-bs-target="#add-user-container">
                                                 <div class="c-title-container c-flex-between c-flex-between">
@@ -145,12 +148,6 @@
                         <div class="tab-pane fade show" id="master-views" role="tabpanel">
                             <div class="container">
                                 <div class="row g-3 mt-2">
-                                    <!-- <div class="col-12">
-                                        <div class="c-section-toggler" data-bs-toggle="collapse" data-bs-target=".master-view">
-                                            <a class="fs-5" href="#">Views</a>
-                                            
-                                        </div>
-                                    </div> -->
 
                                     <div class="col-12 master-view">
                                         <div class="c-section bg-light">
@@ -268,6 +265,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade show active" id="master-content" role="tabpanel">
+                            <div class="container">
+                                <div class="row g-3 mt-2">
+                                    <?php include PATH . 'components/comp-content_section.php' ?>
                                 </div>
                             </div>
                         </div>
