@@ -31,7 +31,7 @@
             </div>
             <div>
                 <h3><?= $cms['main title'] ?></h3>
-                <small>Truck Dispatch System</small>
+                <small><?= $cms['sub title'] ?></small>
             </div>
         </div>
             
