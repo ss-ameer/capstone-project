@@ -3,7 +3,8 @@
     $_SESSION['cms'] = [
         'main title' => getContentData('main_title'),
         'sub title' => getContentData('sub_title'),
-        'contact' => getContentData('contact')
+        'contact' => getContentData('contact'),
+        'address' => getContentData('address'),
     ];
 
     $cms = $_SESSION['cms'];

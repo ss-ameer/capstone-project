@@ -75,4 +75,29 @@
 
     </div>
 
+    <div class="c-section mt-3">
+        
+        <div class="c-section-header">
+            <div class="c-title-container">
+                <span class="lead">Address</span>
+            </div>
+        </div>
+
+        <div class="p-3">
+            <form id="content-form-address">
+                <div class="container">
+                    <div class="row g-1">
+                        <div class="col-10">
+                            <input name="address" id="content-input-address" type="text" class="form-control" style="width: 97%;" placeholder="<?= $cms['address']; ?>">
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-success w-100">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
 </div>

@@ -2434,6 +2434,18 @@ $(document).ready(function(){
         updateContent(column, value, id);
     })
 
+    $('#content-form-address').on('submit', function(event){
+        event.preventDefault();
+
+        var id = '#content-input-address';
+        var column = 'address';
+        var value = $(id).val();
+
+        // console.log(value);
+
+        updateContent(column, value, id);
+    })
+
     function updateContent(column, value, element = null, url=config_function_url, action = 'content update', successCallback = null, errorCallback = null) {
         const data = {
             column: column,
