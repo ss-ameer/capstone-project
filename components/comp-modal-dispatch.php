@@ -88,7 +88,7 @@
 
                                     <div class="c-flex-between">
                                         <strong class="">Number: </strong>
-                                        <span class="" id="client-phone">09978714671</span>
+                                        <span class="" id="client-phone"><?= $cms['contact number'] ?></span>
                                     </div>
 
                                     <div class="c-flex-between">

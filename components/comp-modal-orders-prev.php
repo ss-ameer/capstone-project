@@ -16,7 +16,7 @@
                                 <h3 class="mt-3"><?= $cms['main title'] ?></h3>
                                 <p>
                                     Palayan City, Philippines <br>
-                                    Phone: <span id="contact-number">(+63) 912 345 6789</span>
+                                    Phone: <span id="contact-number"><?= $cms['contact'] ?></span>
                                 </p>
                             </div>
                         </div>

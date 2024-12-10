@@ -2410,6 +2410,18 @@ $(document).ready(function(){
         updateContent(column, value, id);
     })
 
+    $('#content-form-contact').on('submit', function(event){
+        event.preventDefault();
+
+        var id = '#content-input-contact';
+        var column = 'contact';
+        var value = $(id).val();
+
+        // console.log(value);
+
+        updateContent(column, value, id);
+    })
+
     $('#content-form-sub_title').on('submit', function(event){
         event.preventDefault();
 
